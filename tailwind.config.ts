@@ -8,9 +8,8 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        'bikotic-pink': '#b0236f',
-        'bikotic-dark-pink': '#6a1542',
-        'bikotic-orange': '#f97316',
+        'bikotic-blue': '#4a4b88',
+        'bikotic-blue-dark': '#3a3b6b',
       },
     },
   },
