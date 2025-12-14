@@ -10,6 +10,7 @@ module.exports = {
       colors: {
         'bikotic-pink': '#b0236f',
         'bikotic-dark-pink': '#6a1542',
+        'bikotic-orange': '#f97316',
       },
     },
   },
