@@ -1,0 +1,2 @@
+# bikotic-genesis
+bikotic magazine
