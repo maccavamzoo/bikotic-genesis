@@ -1,117 +1,207 @@
 export default function Home() {
   return (
-    <main className="min-h-screen p-4 md:p-8 font-sans max-w-7xl mx-auto">
-      {/* Header */}
-      <header className="border-b-2 border-bikotic-pink pb-4 mb-8 md:mb-12">
-        <h1 className="text-4xl md:text-5xl lg:text-6xl m-0 text-bikotic-pink font-bold">
-          BIKOTIC
-        </h1>
-        <p className="text-lg md:text-xl mt-2 text-gray-600">
-          Visual Bike Comparisons & Reviews
-        </p>
-      </header>
-
-      {/* Hero Section - Shows pink gradient */}
-      <section className="bg-gradient-to-br from-bikotic-pink to-bikotic-dark-pink text-white p-8 md:p-12 lg:p-16 rounded-xl mb-8 md:mb-12 text-center">
-        <h2 className="text-3xl md:text-4xl lg:text-5xl mb-4">
-          Compare Bikes Visually
-        </h2>
-        <p className="text-lg md:text-xl mb-6 md:mb-8 opacity-90 max-w-3xl mx-auto">
-          The ultimate tool for visual bike comparisons. See real geometry differences, fade between models, and make informed decisions.
-        </p>
-        {/* Orange CTA button */}
-        <button className="bg-bikotic-orange text-white border-none px-6 md:px-8 py-3 md:py-4 text-base md:text-lg font-bold rounded-lg cursor-pointer hover:bg-orange-600 transition-all shadow-lg hover:shadow-xl">
-          Launch Comparison Tool
-        </button>
-      </section>
-
-      {/* Featured Content */}
-      <section>
-        <h2 className="text-2xl md:text-3xl lg:text-4xl mb-6 md:mb-8 text-bikotic-dark-pink font-bold">
-          Latest Comparisons
-        </h2>
+    <main className="min-h-screen bg-white p-4 md:p-8">
+      <div className="max-w-7xl mx-auto">
         
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-          {/* Article Card 1 */}
-          <article className="border border-gray-300 rounded-lg p-6 hover:shadow-lg transition-shadow hover:border-bikotic-pink">
-            <h3 className="text-xl md:text-2xl mb-4 text-bikotic-pink font-semibold">
-              Specialized Tarmac SL8 vs Trek Madone Gen 7
-            </h3>
-            <p className="text-gray-600 leading-relaxed mb-4">
-              The ultimate aero vs lightweight showdown. We compare geometry, aerodynamics, and real-world performance.
-            </p>
-            <a href="#" className="text-bikotic-orange no-underline font-semibold hover:underline inline-flex items-center gap-1">
-              Read comparison →
-            </a>
-          </article>
+        {/* Title */}
+        <div className="text-center mb-12">
+          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+            BIKOTIC Color Palette Options
+          </h1>
+          <p className="text-xl text-gray-600">
+            Carbon, Modern, Racing Aesthetic - Pick Your Style
+          </p>
+        </div>
 
-          {/* Article Card 2 */}
-          <article className="border border-gray-300 rounded-lg p-6 hover:shadow-lg transition-shadow hover:border-bikotic-pink">
-            <h3 className="text-xl md:text-2xl mb-4 text-bikotic-pink font-semibold">
-              Best Road Bikes Under $3000 (2025)
-            </h3>
-            <p className="text-gray-600 leading-relaxed mb-4">
-              Our comprehensive buyer's guide for the best value road bikes. Real geometry comparisons included.
-            </p>
-            <a href="#" className="text-bikotic-orange no-underline font-semibold hover:underline inline-flex items-center gap-1">
-              Read guide →
-            </a>
-          </article>
-
-          {/* Article Card 3 - With orange accent background */}
-          <article className="border-2 border-bikotic-orange rounded-lg p-6 bg-orange-50 hover:shadow-lg transition-shadow">
-            <div className="inline-block bg-bikotic-orange text-white text-xs font-bold px-3 py-1 rounded-full mb-3">
-              FEATURED
+        {/* OPTION 1: Carbon + Racing Red */}
+        <section className="mb-16 rounded-xl overflow-hidden border-4 border-gray-300">
+          <div className="bg-[#0a0a0a] text-white p-8">
+            <div className="mb-6">
+              <h2 className="text-3xl font-bold mb-2">Option 1: Carbon + Racing Red</h2>
+              <p className="text-gray-400">F1 vibes - Ferrari, McLaren, aggressive performance</p>
             </div>
-            <h3 className="text-xl md:text-2xl mb-4 text-bikotic-dark-pink font-semibold">
-              Latest YouTube Review
-            </h3>
-            <p className="text-gray-700 leading-relaxed mb-4">
-              Watch our latest bike review on the BIKOTIC YouTube channel with 18K subscribers.
-            </p>
-            <a href="#" className="text-bikotic-orange no-underline font-semibold hover:underline inline-flex items-center gap-1">
-              Watch now →
-            </a>
-          </article>
-        </div>
-      </section>
+            
+            {/* Color swatches */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+              <div>
+                <div className="h-20 bg-[#0a0a0a] border border-gray-700 rounded mb-2"></div>
+                <p className="text-sm">Deep Black #0a0a0a</p>
+              </div>
+              <div>
+                <div className="h-20 bg-[#2d2d2d] rounded mb-2"></div>
+                <p className="text-sm">Carbon Gray #2d2d2d</p>
+              </div>
+              <div>
+                <div className="h-20 bg-[#f5f5f5] rounded mb-2"></div>
+                <p className="text-sm text-gray-900">Off-White #f5f5f5</p>
+              </div>
+              <div>
+                <div className="h-20 bg-[#dc2626] rounded mb-2"></div>
+                <p className="text-sm">Racing Red #dc2626</p>
+              </div>
+            </div>
 
-      {/* Color Palette Preview Section */}
-      <section className="mt-12 md:mt-16 p-8 bg-gray-50 rounded-xl">
-        <h2 className="text-2xl md:text-3xl mb-6 text-gray-800 font-bold text-center">
-          Your Color Palette Preview
-        </h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {/* Pink */}
-          <div className="text-center">
-            <div className="w-full h-32 bg-bikotic-pink rounded-lg mb-3 shadow-md"></div>
-            <p className="font-bold text-bikotic-pink">BIKOTIC Pink</p>
-            <p className="text-sm text-gray-600">#b0236f</p>
-            <p className="text-xs text-gray-500 mt-2">Primary brand color</p>
-          </div>
-          
-          {/* Dark Pink */}
-          <div className="text-center">
-            <div className="w-full h-32 bg-bikotic-dark-pink rounded-lg mb-3 shadow-md"></div>
-            <p className="font-bold text-bikotic-dark-pink">Dark Pink</p>
-            <p className="text-sm text-gray-600">#6a1542</p>
-            <p className="text-xs text-gray-500 mt-2">Secondary/gradients</p>
-          </div>
-          
-          {/* Orange */}
-          <div className="text-center">
-            <div className="w-full h-32 bg-bikotic-orange rounded-lg mb-3 shadow-md"></div>
-            <p className="font-bold text-bikotic-orange">Action Orange</p>
-            <p className="text-sm text-gray-600">#f97316</p>
-            <p className="text-xs text-gray-500 mt-2">CTAs & links</p>
-          </div>
-        </div>
-      </section>
+            {/* Sample hero */}
+            <div className="bg-gradient-to-br from-[#2d2d2d] to-[#0a0a0a] p-8 rounded-lg text-center mb-6">
+              <h3 className="text-3xl font-bold mb-4">Compare Bikes Visually</h3>
+              <p className="text-gray-300 mb-6">Precision geometry comparison for serious cyclists</p>
+              <button className="bg-[#dc2626] text-white px-8 py-4 rounded-lg font-bold hover:bg-red-700 transition-colors">
+                Launch Comparison Tool
+              </button>
+            </div>
 
-      {/* Footer */}
-      <footer className="mt-12 md:mt-16 pt-6 md:pt-8 border-t border-gray-300 text-gray-600 text-center">
-        <p>© 2025 BIKOTIC - Visual Bike Comparisons Since 2017</p>
-      </footer>
+            {/* Sample card */}
+            <div className="bg-[#2d2d2d] p-6 rounded-lg border border-gray-700">
+              <h4 className="text-xl font-bold mb-3 text-white">Specialized Tarmac SL8 vs Trek Madone</h4>
+              <p className="text-gray-400 mb-4">Aero vs lightweight - the ultimate carbon race bike showdown</p>
+              <a href="#" className="text-[#dc2626] font-semibold hover:underline">Read comparison →</a>
+            </div>
+          </div>
+        </section>
+
+        {/* OPTION 2: Carbon + Electric Blue */}
+        <section className="mb-16 rounded-xl overflow-hidden border-4 border-gray-300">
+          <div className="bg-[#0a0a0a] text-white p-8">
+            <div className="mb-6">
+              <h2 className="text-3xl font-bold mb-2">Option 2: Carbon + Electric Blue</h2>
+              <p className="text-gray-400">High-tech racing - Shimano Di2, precision engineering</p>
+            </div>
+            
+            {/* Color swatches */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+              <div>
+                <div className="h-20 bg-[#0a0a0a] border border-gray-700 rounded mb-2"></div>
+                <p className="text-sm">Deep Black #0a0a0a</p>
+              </div>
+              <div>
+                <div className="h-20 bg-[#2d2d2d] rounded mb-2"></div>
+                <p className="text-sm">Carbon Gray #2d2d2d</p>
+              </div>
+              <div>
+                <div className="h-20 bg-[#f5f5f5] rounded mb-2"></div>
+                <p className="text-sm text-gray-900">Off-White #f5f5f5</p>
+              </div>
+              <div>
+                <div className="h-20 bg-[#3b82f6] rounded mb-2"></div>
+                <p className="text-sm">Electric Blue #3b82f6</p>
+              </div>
+            </div>
+
+            {/* Sample hero */}
+            <div className="bg-gradient-to-br from-[#2d2d2d] to-[#0a0a0a] p-8 rounded-lg text-center mb-6">
+              <h3 className="text-3xl font-bold mb-4">Compare Bikes Visually</h3>
+              <p className="text-gray-300 mb-6">Precision geometry comparison for serious cyclists</p>
+              <button className="bg-[#3b82f6] text-white px-8 py-4 rounded-lg font-bold hover:bg-blue-600 transition-colors">
+                Launch Comparison Tool
+              </button>
+            </div>
+
+            {/* Sample card */}
+            <div className="bg-[#2d2d2d] p-6 rounded-lg border border-gray-700">
+              <h4 className="text-xl font-bold mb-3 text-white">Specialized Tarmac SL8 vs Trek Madone</h4>
+              <p className="text-gray-400 mb-4">Aero vs lightweight - the ultimate carbon race bike showdown</p>
+              <a href="#" className="text-[#3b82f6] font-semibold hover:underline">Read comparison →</a>
+            </div>
+          </div>
+        </section>
+
+        {/* OPTION 3: Carbon + Neon Green */}
+        <section className="mb-16 rounded-xl overflow-hidden border-4 border-gray-300">
+          <div className="bg-[#0a0a0a] text-white p-8">
+            <div className="mb-6">
+              <h2 className="text-3xl font-bold mb-2">Option 3: Carbon + Neon Green</h2>
+              <p className="text-gray-400">Modern racing tech - SRAM AXS, cutting edge</p>
+            </div>
+            
+            {/* Color swatches */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+              <div>
+                <div className="h-20 bg-[#0a0a0a] border border-gray-700 rounded mb-2"></div>
+                <p className="text-sm">Deep Black #0a0a0a</p>
+              </div>
+              <div>
+                <div className="h-20 bg-[#2d2d2d] rounded mb-2"></div>
+                <p className="text-sm">Carbon Gray #2d2d2d</p>
+              </div>
+              <div>
+                <div className="h-20 bg-[#f5f5f5] rounded mb-2"></div>
+                <p className="text-sm text-gray-900">Off-White #f5f5f5</p>
+              </div>
+              <div>
+                <div className="h-20 bg-[#10b981] rounded mb-2"></div>
+                <p className="text-sm">Neon Green #10b981</p>
+              </div>
+            </div>
+
+            {/* Sample hero */}
+            <div className="bg-gradient-to-br from-[#2d2d2d] to-[#0a0a0a] p-8 rounded-lg text-center mb-6">
+              <h3 className="text-3xl font-bold mb-4">Compare Bikes Visually</h3>
+              <p className="text-gray-300 mb-6">Precision geometry comparison for serious cyclists</p>
+              <button className="bg-[#10b981] text-white px-8 py-4 rounded-lg font-bold hover:bg-green-600 transition-colors">
+                Launch Comparison Tool
+              </button>
+            </div>
+
+            {/* Sample card */}
+            <div className="bg-[#2d2d2d] p-6 rounded-lg border border-gray-700">
+              <h4 className="text-xl font-bold mb-3 text-white">Specialized Tarmac SL8 vs Trek Madone</h4>
+              <p className="text-gray-400 mb-4">Aero vs lightweight - the ultimate carbon race bike showdown</p>
+              <a href="#" className="text-[#10b981] font-semibold hover:underline">Read comparison →</a>
+            </div>
+          </div>
+        </section>
+
+        {/* OPTION 4: Matte Carbon Minimalist */}
+        <section className="mb-16 rounded-xl overflow-hidden border-4 border-gray-300">
+          <div className="bg-[#111111] text-white p-8">
+            <div className="mb-6">
+              <h2 className="text-3xl font-bold mb-2">Option 4: Matte Carbon Minimalist</h2>
+              <p className="text-[#a3a3a3]">Ultra premium - Cervelo, Pinarello, understated luxury</p>
+            </div>
+            
+            {/* Color swatches */}
+            <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-8">
+              <div>
+                <div className="h-20 bg-[#111111] border border-gray-700 rounded mb-2"></div>
+                <p className="text-sm">Matte Black #111111</p>
+              </div>
+              <div>
+                <div className="h-20 bg-[#1f1f1f] rounded mb-2"></div>
+                <p className="text-sm">Carbon #1f1f1f</p>
+              </div>
+              <div>
+                <div className="h-20 bg-[#e5e5e5] rounded mb-2"></div>
+                <p className="text-sm text-gray-900">Soft White #e5e5e5</p>
+              </div>
+              <div>
+                <div className="h-20 bg-[#737373] rounded mb-2"></div>
+                <p className="text-sm">Metal Gray #737373</p>
+              </div>
+              <div>
+                <div className="h-20 bg-[#dc2626] rounded mb-2"></div>
+                <p className="text-sm">Red Accent #dc2626</p>
+              </div>
+            </div>
+
+            {/* Sample hero */}
+            <div className="bg-gradient-to-br from-[#1f1f1f] to-[#111111] p-8 rounded-lg text-center mb-6 border border-[#2d2d2d]">
+              <h3 className="text-3xl font-bold mb-4 text-[#e5e5e5]">Compare Bikes Visually</h3>
+              <p className="text-[#a3a3a3] mb-6">Precision geometry comparison for serious cyclists</p>
+              <button className="bg-[#737373] text-white px-8 py-4 rounded-lg font-bold hover:bg-[#525252] transition-colors border border-[#525252]">
+                Launch Comparison Tool
+              </button>
+            </div>
+
+            {/* Sample card */}
+            <div className="bg-[#1f1f1f] p-6 rounded-lg border border-[#2d2d2d]">
+              <h4 className="text-xl font-bold mb-3 text-[#e5e5e5]">Specialized Tarmac SL8 vs Trek Madone</h4>
+              <p className="text-[#a3a3a3] mb-4">Aero vs lightweight - the ultimate carbon race bike showdown</p>
+              <a href="#" className="text-[#dc2626] font-semibold hover:underline">Read comparison →</a>
+            </div>
+          </div>
+        </section>
+
+      </div>
     </main>
   );
 }
