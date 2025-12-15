@@ -4,65 +4,188 @@ export default function Home() {
       <div className="max-w-7xl mx-auto">
 
         {/* Hero Section */}
-        <section className="bg-white border-2 border-gray-200 p-8 md:p-12 lg:p-16 rounded-xl mb-8 md:mb-12 text-center shadow-sm">
+        <section className="bg-white border-2 border-gray-200 p-8 md:p-12 lg:p-16 rounded-xl mb-12 text-center shadow-sm">
           <h1 className="text-3xl md:text-4xl lg:text-5xl mb-4 text-[#0a0a0a] font-bold">
-            Compare Bikes Visually
+            Visual Bike Comparisons & Pro Tools
           </h1>
           <p className="text-lg md:text-xl mb-6 md:mb-8 text-[#525252] max-w-3xl mx-auto">
-            The ultimate tool for visual bike comparisons. See real geometry differences, fade between models, and make informed decisions.
+            Compare bikes visually, use professional cycling calculators, and read expert reviews from our YouTube channel.
           </p>
-          <button className="bg-bikotic-blue text-white border-none px-6 md:px-8 py-3 md:py-4 text-base md:text-lg font-bold rounded-lg cursor-pointer hover:bg-bikotic-blue-dark transition-colors shadow-md">
-            Launch Comparison Tool
+          <button className="bg-bikotic-blue text-white border-none px-8 py-4 text-lg font-bold rounded-lg cursor-pointer hover:bg-bikotic-blue-dark transition-colors shadow-md">
+            Launch Visual Comparison Tool
           </button>
         </section>
 
-        {/* Featured Content */}
-        <section>
-          <h2 className="text-2xl md:text-3xl lg:text-4xl mb-6 md:mb-8 text-[#0a0a0a] font-bold">
-            Latest Comparisons
-          </h2>
+        {/* Cycling Tools Section */}
+        <section className="mb-12">
+          <div className="flex items-center justify-between mb-6">
+            <h2 className="text-2xl md:text-3xl text-[#0a0a0a] font-bold">
+              Cycling Calculators & Tools
+            </h2>
+            <a href="/tools" className="text-bikotic-blue font-semibold hover:underline">
+              View all →
+            </a>
+          </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {/* Tool Card 1 */}
+            <article className="bg-white border-2 border-gray-200 rounded-lg p-6 hover:border-bikotic-blue hover:shadow-lg transition-all">
+              <div className="w-12 h-12 bg-bikotic-blue rounded-lg flex items-center justify-center mb-4">
+                <span className="text-white text-2xl font-bold">⚙️</span>
+              </div>
+              <h3 className="text-xl font-bold mb-3 text-[#0a0a0a]">
+                Gear Ratio Calculator
+              </h3>
+              <p className="text-[#525252] mb-4">
+                Calculate optimal gear ratios for climbing, sprinting, and time trials.
+              </p>
+              <a href="/tools/gear-calculator" className="text-bikotic-blue font-semibold hover:underline">
+                Use tool →
+              </a>
+            </article>
+
+            {/* Tool Card 2 */}
+            <article className="bg-white border-2 border-gray-200 rounded-lg p-6 hover:border-bikotic-blue hover:shadow-lg transition-all">
+              <div className="w-12 h-12 bg-bikotic-blue rounded-lg flex items-center justify-center mb-4">
+                <span className="text-white text-2xl font-bold">💨</span>
+              </div>
+              <h3 className="text-xl font-bold mb-3 text-[#0a0a0a]">
+                Tire Pressure Calculator
+              </h3>
+              <p className="text-[#525252] mb-4">
+                Find your optimal tire pressure based on weight, tire size, and conditions.
+              </p>
+              <a href="/tools/tire-pressure" className="text-bikotic-blue font-semibold hover:underline">
+                Use tool →
+              </a>
+            </article>
+
+            {/* Tool Card 3 */}
+            <article className="bg-white border-2 border-gray-200 rounded-lg p-6 hover:border-bikotic-blue hover:shadow-lg transition-all">
+              <div className="w-12 h-12 bg-bikotic-blue rounded-lg flex items-center justify-center mb-4">
+                <span className="text-white text-2xl font-bold">📊</span>
+              </div>
+              <h3 className="text-xl font-bold mb-3 text-[#0a0a0a]">
+                FTP Calculator
+              </h3>
+              <p className="text-[#525252] mb-4">
+                Estimate your Functional Threshold Power and training zones.
+              </p>
+              <a href="/tools/ftp-calculator" className="text-bikotic-blue font-semibold hover:underline">
+                Use tool →
+              </a>
+            </article>
+          </div>
+        </section>
+
+        {/* Latest Articles Section */}
+        <section className="mb-12">
+          <div className="flex items-center justify-between mb-6">
+            <h2 className="text-2xl md:text-3xl text-[#0a0a0a] font-bold">
+              Latest Articles & Guides
+            </h2>
+            <a href="/articles" className="text-bikotic-blue font-semibold hover:underline">
+              View all →
+            </a>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {/* Article Card 1 */}
             <article className="bg-white border-2 border-gray-200 rounded-lg p-6 hover:border-bikotic-blue hover:shadow-lg transition-all">
-              <h3 className="text-xl md:text-2xl mb-4 text-[#0a0a0a] font-bold">
-                Specialized Tarmac SL8 vs Trek Madone Gen 7
+              <div className="text-xs text-bikotic-blue font-bold mb-2">COMPARISON</div>
+              <h3 className="text-xl font-bold mb-3 text-[#0a0a0a]">
+                Shimano Dura-Ace vs SRAM Red AXS
               </h3>
-              <p className="text-[#525252] leading-relaxed mb-4">
-                The ultimate aero vs lightweight showdown. We compare geometry, aerodynamics, and real-world performance.
+              <p className="text-[#525252] mb-4">
+                In-depth comparison of the two flagship groupsets. Weight, shifting performance, and value analysis.
               </p>
-              <a href="/articles/test-article" className="text-bikotic-blue no-underline font-semibold hover:underline">
-                Read comparison →
+              <a href="/articles/shimano-vs-sram" className="text-bikotic-blue font-semibold hover:underline">
+                Read article →
               </a>
             </article>
 
             {/* Article Card 2 */}
             <article className="bg-white border-2 border-gray-200 rounded-lg p-6 hover:border-bikotic-blue hover:shadow-lg transition-all">
-              <h3 className="text-xl md:text-2xl mb-4 text-[#0a0a0a] font-bold">
-                Best Road Bikes Under $3000 (2025)
+              <div className="text-xs text-bikotic-blue font-bold mb-2">BUYER'S GUIDE</div>
+              <h3 className="text-xl font-bold mb-3 text-[#0a0a0a]">
+                Best Aero Wheels Under $2000
               </h3>
-              <p className="text-[#525252] leading-relaxed mb-4">
-                Our comprehensive buyer's guide for the best value road bikes. Real geometry comparisons included.
+              <p className="text-[#525252] mb-4">
+                Our top picks for aero wheels that won't break the bank. Real-world testing included.
               </p>
-              <a href="#" className="text-bikotic-blue no-underline font-semibold hover:underline">
+              <a href="/articles/best-aero-wheels" className="text-bikotic-blue font-semibold hover:underline">
                 Read guide →
               </a>
             </article>
 
             {/* Article Card 3 */}
             <article className="bg-white border-2 border-gray-200 rounded-lg p-6 hover:border-bikotic-blue hover:shadow-lg transition-all">
-              <h3 className="text-xl md:text-2xl mb-4 text-[#0a0a0a] font-bold">
-                Latest YouTube Review
+              <div className="text-xs text-bikotic-blue font-bold mb-2">ANALYSIS</div>
+              <h3 className="text-xl font-bold mb-3 text-[#0a0a0a]">
+                Aero vs Lightweight: What Actually Matters?
               </h3>
-              <p className="text-[#525252] leading-relaxed mb-4">
-                Watch our latest bike review on the BIKOTIC YouTube channel with 18K subscribers.
+              <p className="text-[#525252] mb-4">
+                We crunch the numbers on aero savings vs weight penalties for different riding scenarios.
               </p>
-              <a href="#" className="text-bikotic-blue no-underline font-semibold hover:underline">
-                Watch now →
+              <a href="/articles/test-article" className="text-bikotic-blue font-semibold hover:underline">
+                Read analysis →
               </a>
             </article>
           </div>
         </section>
+
+        {/* YouTube Reviews Section */}
+        <section className="mb-12">
+          <div className="flex items-center justify-between mb-6">
+            <h2 className="text-2xl md:text-3xl text-[#0a0a0a] font-bold">
+              Latest Video Reviews
+            </h2>
+            <a href="https://youtube.com/@bikotic" target="_blank" className="text-bikotic-blue font-semibold hover:underline">
+              View channel →
+            </a>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {/* Video Card 1 */}
+            <article className="bg-white border-2 border-gray-200 rounded-lg overflow-hidden hover:border-bikotic-blue hover:shadow-lg transition-all">
+              <div className="aspect-video bg-gray-300 flex items-center justify-center">
+                <span className="text-6xl">▶️</span>
+              </div>
+              <div className="p-6">
+                <div className="text-xs text-bikotic-blue font-bold mb-2">VIDEO REVIEW</div>
+                <h3 className="text-xl font-bold mb-3 text-[#0a0a0a]">
+                  Specialized Tarmac SL8 - Full Review
+                </h3>
+                <p className="text-[#525252] mb-4">
+                  Our complete review of the latest Tarmac. Geometry analysis, weight weigh-in, and ride impressions.
+                </p>
+                <a href="/reviews/tarmac-sl8" className="text-bikotic-blue font-semibold hover:underline">
+                  Watch review →
+                </a>
+              </div>
+            </article>
+
+            {/* Video Card 2 */}
+            <article className="bg-white border-2 border-gray-200 rounded-lg overflow-hidden hover:border-bikotic-blue hover:shadow-lg transition-all">
+              <div className="aspect-video bg-gray-300 flex items-center justify-center">
+                <span className="text-6xl">▶️</span>
+              </div>
+              <div className="p-6">
+                <div className="text-xs text-bikotic-blue font-bold mb-2">VIDEO COMPARISON</div>
+                <h3 className="text-xl font-bold mb-3 text-[#0a0a0a]">
+                  Trek Madone vs Cervelo S5 - Back to Back Test
+                </h3>
+                <p className="text-[#525252] mb-4">
+                  We ride both bikes on the same route to compare aero performance and handling.
+                </p>
+                <a href="/reviews/madone-vs-s5" className="text-bikotic-blue font-semibold hover:underline">
+                  Watch comparison →
+                </a>
+              </div>
+            </article>
+          </div>
+        </section>
+
       </div>
     </main>
   );
