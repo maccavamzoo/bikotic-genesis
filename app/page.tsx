@@ -1,23 +1,13 @@
 export default function Home() {
   return (
-    <main className="min-h-screen bg-[#fafafa] p-4 md:p-8 font-sans">
+    <main className="min-h-screen p-4 md:p-8 font-sans">
       <div className="max-w-7xl mx-auto">
-        
-        {/* Header */}
-        <header className="bg-white border-b-2 border-gray-200 pb-4 mb-8 md:mb-12 px-6 pt-6 rounded-t-xl">
-          <h1 className="text-4xl md:text-5xl lg:text-6xl m-0 text-[#0a0a0a] font-bold">
-            BIKOTIC
-          </h1>
-          <p className="text-lg md:text-xl mt-2 text-[#525252]">
-            Visual Bike Comparisons & Reviews
-          </p>
-        </header>
 
         {/* Hero Section */}
         <section className="bg-white border-2 border-gray-200 p-8 md:p-12 lg:p-16 rounded-xl mb-8 md:mb-12 text-center shadow-sm">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl mb-4 text-[#0a0a0a] font-bold">
+          <h1 className="text-3xl md:text-4xl lg:text-5xl mb-4 text-[#0a0a0a] font-bold">
             Compare Bikes Visually
-          </h2>
+          </h1>
           <p className="text-lg md:text-xl mb-6 md:mb-8 text-[#525252] max-w-3xl mx-auto">
             The ultimate tool for visual bike comparisons. See real geometry differences, fade between models, and make informed decisions.
           </p>
@@ -41,7 +31,7 @@ export default function Home() {
               <p className="text-[#525252] leading-relaxed mb-4">
                 The ultimate aero vs lightweight showdown. We compare geometry, aerodynamics, and real-world performance.
               </p>
-              <a href="#" className="text-bikotic-blue no-underline font-semibold hover:underline">
+              <a href="/articles/test-article" className="text-bikotic-blue no-underline font-semibold hover:underline">
                 Read comparison →
               </a>
             </article>
@@ -73,11 +63,6 @@ export default function Home() {
             </article>
           </div>
         </section>
-
-        {/* Footer */}
-        <footer className="mt-12 md:mt-16 pt-6 md:pt-8 border-t-2 border-gray-200 text-[#525252] text-center bg-white px-6 pb-6 rounded-b-xl">
-          <p>© 2025 BIKOTIC - Visual Bike Comparisons Since 2017</p>
-        </footer>
       </div>
     </main>
   );
