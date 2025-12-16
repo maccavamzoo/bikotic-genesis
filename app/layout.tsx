@@ -44,6 +44,12 @@ export default function RootLayout({
                 Articles
               </Link>
               <Link 
+                href="/reviews" 
+                className="text-gray-700 hover:text-bikotic-blue font-semibold transition-colors"
+              >
+                Reviews
+              </Link>
+              <Link 
                 href="/app" 
                 className="bg-bikotic-blue text-white px-4 py-2 rounded-lg font-bold hover:bg-bikotic-blue-dark transition-colors"
               >
@@ -75,6 +81,11 @@ export default function RootLayout({
                   <li>
                     <Link href="/articles" className="text-gray-600 hover:text-bikotic-blue text-sm">
                       Latest Articles
+                    </Link>
+                  </li>
+                  <li>
+                    <Link href="/reviews" className="text-gray-600 hover:text-bikotic-blue text-sm">
+                      Video Reviews
                     </Link>
                   </li>
                   <li>
