@@ -22,14 +22,11 @@ export default function Home() {
             <h2 className="text-2xl md:text-3xl text-[#0a0a0a] font-bold">
               Cycling Calculators & Tools
             </h2>
-            <a href="/tools" className="text-bikotic-blue font-semibold hover:underline">
-              View all →
-            </a>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {/* Tool Card 1 */}
-            <article className="bg-white border-2 border-gray-200 rounded-lg p-6 hover:border-bikotic-blue hover:shadow-lg transition-all">
+            <a href="/tools/gear-calculator" className="bg-white border-2 border-gray-200 rounded-lg p-6 hover:border-bikotic-blue hover:shadow-lg transition-all block">
               <div className="w-12 h-12 bg-bikotic-blue rounded-lg flex items-center justify-center mb-4">
                 <span className="text-white text-2xl font-bold">⚙️</span>
               </div>
@@ -39,13 +36,13 @@ export default function Home() {
               <p className="text-[#525252] mb-4">
                 Calculate optimal gear ratios for climbing, sprinting, and time trials.
               </p>
-              <a href="/tools/gear-calculator" className="text-bikotic-blue font-semibold hover:underline">
+              <span className="text-bikotic-blue font-semibold hover:underline">
                 Use tool →
-              </a>
-            </article>
+              </span>
+            </a>
 
             {/* Tool Card 2 */}
-            <article className="bg-white border-2 border-gray-200 rounded-lg p-6 hover:border-bikotic-blue hover:shadow-lg transition-all">
+            <a href="/tools/tire-pressure" className="bg-white border-2 border-gray-200 rounded-lg p-6 hover:border-bikotic-blue hover:shadow-lg transition-all block">
               <div className="w-12 h-12 bg-bikotic-blue rounded-lg flex items-center justify-center mb-4">
                 <span className="text-white text-2xl font-bold">💨</span>
               </div>
@@ -55,13 +52,13 @@ export default function Home() {
               <p className="text-[#525252] mb-4">
                 Find your optimal tire pressure based on weight, tire size, and conditions.
               </p>
-              <a href="/tools/tire-pressure" className="text-bikotic-blue font-semibold hover:underline">
+              <span className="text-bikotic-blue font-semibold hover:underline">
                 Use tool →
-              </a>
-            </article>
+              </span>
+            </a>
 
             {/* Tool Card 3 */}
-            <article className="bg-white border-2 border-gray-200 rounded-lg p-6 hover:border-bikotic-blue hover:shadow-lg transition-all">
+            <a href="/tools/ftp-calculator" className="bg-white border-2 border-gray-200 rounded-lg p-6 hover:border-bikotic-blue hover:shadow-lg transition-all block">
               <div className="w-12 h-12 bg-bikotic-blue rounded-lg flex items-center justify-center mb-4">
                 <span className="text-white text-2xl font-bold">📊</span>
               </div>
@@ -71,10 +68,10 @@ export default function Home() {
               <p className="text-[#525252] mb-4">
                 Estimate your Functional Threshold Power and training zones.
               </p>
-              <a href="/tools/ftp-calculator" className="text-bikotic-blue font-semibold hover:underline">
+              <span className="text-bikotic-blue font-semibold hover:underline">
                 Use tool →
-              </a>
-            </article>
+              </span>
+            </a>
           </div>
         </section>
 
@@ -90,8 +87,8 @@ export default function Home() {
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {/* Article Card 1 - REAL */}
-            <article className="bg-white border-2 border-gray-200 rounded-lg p-6 hover:border-bikotic-blue hover:shadow-lg transition-all">
+            {/* Article Card 1 */}
+            <a href="/articles/test-article" className="bg-white border-2 border-gray-200 rounded-lg p-6 hover:border-bikotic-blue hover:shadow-lg transition-all block">
               <div className="text-xs text-bikotic-blue font-bold mb-2">COMPARISON</div>
               <h3 className="text-xl font-bold mb-3 text-[#0a0a0a]">
                 Specialized Tarmac SL8 vs Trek Madone Gen 7
@@ -99,34 +96,10 @@ export default function Home() {
               <p className="text-[#525252] mb-4">
                 The ultimate aero vs lightweight race bike showdown. Geometry, aerodynamics, and performance analysis.
               </p>
-              <a href="/articles/test-article" className="text-bikotic-blue font-semibold hover:underline">
+              <span className="text-bikotic-blue font-semibold hover:underline">
                 Read article →
-              </a>
-            </article>
-
-            {/* Article Card 2 - PLACEHOLDER */}
-            <article className="bg-white border-2 border-gray-200 rounded-lg p-6 hover:border-bikotic-blue hover:shadow-lg transition-all opacity-60">
-              <div className="text-xs text-bikotic-blue font-bold mb-2">BUYER'S GUIDE</div>
-              <h3 className="text-xl font-bold mb-3 text-[#0a0a0a]">
-                Best Aero Wheels Under $2000
-              </h3>
-              <p className="text-[#525252] mb-4">
-                Our top picks for aero wheels that won't break the bank. Real-world testing included.
-              </p>
-              <span className="text-gray-400 font-semibold">Coming soon...</span>
-            </article>
-
-            {/* Article Card 3 - PLACEHOLDER */}
-            <article className="bg-white border-2 border-gray-200 rounded-lg p-6 hover:border-bikotic-blue hover:shadow-lg transition-all opacity-60">
-              <div className="text-xs text-bikotic-blue font-bold mb-2">ANALYSIS</div>
-              <h3 className="text-xl font-bold mb-3 text-[#0a0a0a]">
-                Aero vs Lightweight: What Actually Matters?
-              </h3>
-              <p className="text-[#525252] mb-4">
-                We crunch the numbers on aero savings vs weight penalties for different riding scenarios.
-              </p>
-              <span className="text-gray-400 font-semibold">Coming soon...</span>
-            </article>
+              </span>
+            </a>
           </div>
         </section>
 
@@ -142,8 +115,8 @@ export default function Home() {
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {/* Video Card 1 - REAL */}
-            <article className="bg-white border-2 border-gray-200 rounded-lg overflow-hidden hover:border-bikotic-blue hover:shadow-lg transition-all">
+            {/* Video Card 1 */}
+            <a href="/reviews/tarmac-sl8" className="bg-white border-2 border-gray-200 rounded-lg overflow-hidden hover:border-bikotic-blue hover:shadow-lg transition-all block">
               <div className="aspect-video bg-gray-300 flex items-center justify-center">
                 <span className="text-6xl">▶️</span>
               </div>
@@ -155,28 +128,11 @@ export default function Home() {
                 <p className="text-[#525252] mb-4">
                   Our complete review of the latest Tarmac. Geometry analysis, weight weigh-in, and ride impressions.
                 </p>
-                <a href="/reviews/tarmac-sl8" className="text-bikotic-blue font-semibold hover:underline">
+                <span className="text-bikotic-blue font-semibold hover:underline">
                   Watch review →
-                </a>
+                </span>
               </div>
-            </article>
-
-            {/* Video Card 2 - PLACEHOLDER */}
-            <article className="bg-white border-2 border-gray-200 rounded-lg overflow-hidden hover:border-bikotic-blue hover:shadow-lg transition-all opacity-60">
-              <div className="aspect-video bg-gray-300 flex items-center justify-center">
-                <span className="text-6xl">▶️</span>
-              </div>
-              <div className="p-6">
-                <div className="text-xs text-bikotic-blue font-bold mb-2">COMPARISON</div>
-                <h3 className="text-xl font-bold mb-3 text-[#0a0a0a]">
-                  Trek Madone vs Cervelo S5 - Back to Back Test
-                </h3>
-                <p className="text-[#525252] mb-4">
-                  We ride both bikes on the same route to compare aero performance and handling.
-                </p>
-                <span className="text-gray-400 font-semibold">Coming soon...</span>
-              </div>
-            </article>
+            </a>
           </div>
         </section>
 
