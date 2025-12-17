@@ -90,22 +90,22 @@ export default function Home() {
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {/* Article Card 1 */}
+            {/* Article Card 1 - REAL */}
             <article className="bg-white border-2 border-gray-200 rounded-lg p-6 hover:border-bikotic-blue hover:shadow-lg transition-all">
               <div className="text-xs text-bikotic-blue font-bold mb-2">COMPARISON</div>
               <h3 className="text-xl font-bold mb-3 text-[#0a0a0a]">
-                Shimano Dura-Ace vs SRAM Red AXS
+                Specialized Tarmac SL8 vs Trek Madone Gen 7
               </h3>
               <p className="text-[#525252] mb-4">
-                In-depth comparison of the two flagship groupsets. Weight, shifting performance, and value analysis.
+                The ultimate aero vs lightweight race bike showdown. Geometry, aerodynamics, and performance analysis.
               </p>
-              <a href="/articles/shimano-vs-sram" className="text-bikotic-blue font-semibold hover:underline">
+              <a href="/articles/test-article" className="text-bikotic-blue font-semibold hover:underline">
                 Read article →
               </a>
             </article>
 
-            {/* Article Card 2 */}
-            <article className="bg-white border-2 border-gray-200 rounded-lg p-6 hover:border-bikotic-blue hover:shadow-lg transition-all">
+            {/* Article Card 2 - PLACEHOLDER */}
+            <article className="bg-white border-2 border-gray-200 rounded-lg p-6 hover:border-bikotic-blue hover:shadow-lg transition-all opacity-60">
               <div className="text-xs text-bikotic-blue font-bold mb-2">BUYER'S GUIDE</div>
               <h3 className="text-xl font-bold mb-3 text-[#0a0a0a]">
                 Best Aero Wheels Under $2000
@@ -113,13 +113,11 @@ export default function Home() {
               <p className="text-[#525252] mb-4">
                 Our top picks for aero wheels that won't break the bank. Real-world testing included.
               </p>
-              <a href="/articles/best-aero-wheels" className="text-bikotic-blue font-semibold hover:underline">
-                Read guide →
-              </a>
+              <span className="text-gray-400 font-semibold">Coming soon...</span>
             </article>
 
-            {/* Article Card 3 */}
-            <article className="bg-white border-2 border-gray-200 rounded-lg p-6 hover:border-bikotic-blue hover:shadow-lg transition-all">
+            {/* Article Card 3 - PLACEHOLDER */}
+            <article className="bg-white border-2 border-gray-200 rounded-lg p-6 hover:border-bikotic-blue hover:shadow-lg transition-all opacity-60">
               <div className="text-xs text-bikotic-blue font-bold mb-2">ANALYSIS</div>
               <h3 className="text-xl font-bold mb-3 text-[#0a0a0a]">
                 Aero vs Lightweight: What Actually Matters?
@@ -127,9 +125,7 @@ export default function Home() {
               <p className="text-[#525252] mb-4">
                 We crunch the numbers on aero savings vs weight penalties for different riding scenarios.
               </p>
-              <a href="/articles/test-article" className="text-bikotic-blue font-semibold hover:underline">
-                Read analysis →
-              </a>
+              <span className="text-gray-400 font-semibold">Coming soon...</span>
             </article>
           </div>
         </section>
@@ -140,19 +136,19 @@ export default function Home() {
             <h2 className="text-2xl md:text-3xl text-[#0a0a0a] font-bold">
               Latest Video Reviews
             </h2>
-            <a href="https://youtube.com/@bikotic" target="_blank" className="text-bikotic-blue font-semibold hover:underline">
-              View channel →
+            <a href="/reviews" className="text-bikotic-blue font-semibold hover:underline">
+              View all →
             </a>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {/* Video Card 1 */}
+            {/* Video Card 1 - REAL */}
             <article className="bg-white border-2 border-gray-200 rounded-lg overflow-hidden hover:border-bikotic-blue hover:shadow-lg transition-all">
               <div className="aspect-video bg-gray-300 flex items-center justify-center">
                 <span className="text-6xl">▶️</span>
               </div>
               <div className="p-6">
-                <div className="text-xs text-bikotic-blue font-bold mb-2">VIDEO REVIEW</div>
+                <div className="text-xs text-bikotic-blue font-bold mb-2">ROAD BIKE</div>
                 <h3 className="text-xl font-bold mb-3 text-[#0a0a0a]">
                   Specialized Tarmac SL8 - Full Review
                 </h3>
@@ -165,22 +161,20 @@ export default function Home() {
               </div>
             </article>
 
-            {/* Video Card 2 */}
-            <article className="bg-white border-2 border-gray-200 rounded-lg overflow-hidden hover:border-bikotic-blue hover:shadow-lg transition-all">
+            {/* Video Card 2 - PLACEHOLDER */}
+            <article className="bg-white border-2 border-gray-200 rounded-lg overflow-hidden hover:border-bikotic-blue hover:shadow-lg transition-all opacity-60">
               <div className="aspect-video bg-gray-300 flex items-center justify-center">
                 <span className="text-6xl">▶️</span>
               </div>
               <div className="p-6">
-                <div className="text-xs text-bikotic-blue font-bold mb-2">VIDEO COMPARISON</div>
+                <div className="text-xs text-bikotic-blue font-bold mb-2">COMPARISON</div>
                 <h3 className="text-xl font-bold mb-3 text-[#0a0a0a]">
                   Trek Madone vs Cervelo S5 - Back to Back Test
                 </h3>
                 <p className="text-[#525252] mb-4">
                   We ride both bikes on the same route to compare aero performance and handling.
                 </p>
-                <a href="/reviews/madone-vs-s5" className="text-bikotic-blue font-semibold hover:underline">
-                  Watch comparison →
-                </a>
+                <span className="text-gray-400 font-semibold">Coming soon...</span>
               </div>
             </article>
           </div>
