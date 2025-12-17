@@ -1,9 +1,13 @@
+import { getAllArticles } from '@/lib/mdx'
+
 export const metadata = {
   title: 'Articles & Guides - BIKOTIC',
   description: 'Browse our collection of bike comparisons, buyer guides, and in-depth analysis',
 }
 
 export default function ArticlesPage() {
+  const articles = getAllArticles()
+  
   return (
     <main className="min-h-screen p-4 md:p-8">
       <div className="max-w-7xl mx-auto">
@@ -35,26 +39,37 @@ export default function ArticlesPage() {
         </div>
 
         {/* Articles Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-          
-          {/* Article Card */}
-          <a href="/articles/test-article" className="bg-white border-2 border-gray-200 rounded-lg p-6 hover:border-bikotic-blue hover:shadow-lg transition-all block">
-            <div className="text-xs text-bikotic-blue font-bold mb-2">COMPARISON</div>
-            <h2 className="text-xl md:text-2xl font-bold mb-3 text-gray-900">
-              Specialized Tarmac SL8 vs Trek Madone Gen 7
-            </h2>
-            <p className="text-gray-600 mb-4">
-              The ultimate aero vs lightweight race bike showdown. We compare geometry, aerodynamics, and real-world performance.
-            </p>
-            <div className="flex items-center justify-between">
-              <span className="text-bikotic-blue font-semibold hover:underline">
-                Read article →
-              </span>
-              <span className="text-sm text-gray-500">Jan 15, 2025</span>
-            </div>
-          </a>
-
-        </div>
+        {articles.length > 0 ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+            {articles.map((article) => (
+              <a 
+                key={article.slug}
+                href={`/articles/${article.slug}`} 
+                className="bg-white border-2 border-gray-200 rounded-lg p-6 hover:border-bikotic-blue hover:shadow-lg transition-all block"
+              >
+                <div className="text-xs text-bikotic-blue font-bold mb-2">
+                  {article.category.toUpperCase()}
+                </div>
+                <h2 className="text-xl md:text-2xl font-bold mb-3 text-gray-900">
+                  {article.title}
+                </h2>
+                <p className="text-gray-600 mb-4">
+                  {article.description}
+                </p>
+                <div className="flex items-center justify-between">
+                  <span className="text-bikotic-blue font-semibold hover:underline">
+                    Read article →
+                  </span>
+                  <span className="text-sm text-gray-500">{article.date}</span>
+                </div>
+              </a>
+            ))}
+          </div>
+        ) : (
+          <div className="text-center py-16">
+            <p className="text-gray-500 text-lg">No articles yet. Check back soon!</p>
+          </div>
+        )}
 
       </div>
     </main>
