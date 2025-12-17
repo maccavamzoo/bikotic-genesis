@@ -4,6 +4,11 @@ import { compileMDX } from 'next-mdx-remote/rsc'
 import remarkGfm from 'remark-gfm'
 
 const components = {
+  img: (props: any) => (
+    <div className="flex justify-center my-8">
+      <img {...props} className="rounded-lg shadow-lg max-w-full h-auto" />
+    </div>
+  ),
   table: (props: any) => (
     <div className="overflow-x-auto my-8">
       <table className="min-w-full divide-y divide-gray-200 border border-gray-300" {...props} />
