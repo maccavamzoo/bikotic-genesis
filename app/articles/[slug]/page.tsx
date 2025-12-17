@@ -2,6 +2,20 @@ import fs from 'fs'
 import path from 'path'
 import { compileMDX } from 'next-mdx-remote/rsc'
 
+const components = {
+  table: (props: any) => (
+    <div className="overflow-x-auto my-8">
+      <table className="min-w-full divide-y divide-gray-200" {...props} />
+    </div>
+  ),
+  th: (props: any) => (
+    <th className="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" {...props} />
+  ),
+  td: (props: any) => (
+    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900" {...props} />
+  ),
+}
+
 export async function generateStaticParams() {
   const articlesDir = path.join(process.cwd(), 'content/articles')
   const files = fs.readdirSync(articlesDir)
@@ -21,6 +35,7 @@ export default async function ArticlePage({
 
   const { content, frontmatter } = await compileMDX({
     source,
+    components,
     options: { parseFrontmatter: true },
   })
 
