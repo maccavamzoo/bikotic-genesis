@@ -1,4 +1,9 @@
+import { getAllArticles, getAllReviews } from '@/lib/mdx'
+
 export default function Home() {
+  const articles = getAllArticles().slice(0, 3) // Latest 3 articles
+  const reviews = getAllReviews().slice(0, 2) // Latest 2 reviews
+  
   return (
     <main className="min-h-screen p-4 md:p-8 font-sans">
       <div className="max-w-7xl mx-auto">
@@ -76,65 +81,83 @@ export default function Home() {
         </section>
 
         {/* Latest Articles Section */}
-        <section className="mb-12">
-          <div className="flex items-center justify-between mb-6">
-            <h2 className="text-2xl md:text-3xl text-[#0a0a0a] font-bold">
-              Latest Articles & Guides
-            </h2>
-            <a href="/articles" className="text-bikotic-blue font-semibold hover:underline">
-              View all →
-            </a>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {/* Article Card 1 */}
-            <a href="/articles/test-article" className="bg-white border-2 border-gray-200 rounded-lg p-6 hover:border-bikotic-blue hover:shadow-lg transition-all block">
-              <div className="text-xs text-bikotic-blue font-bold mb-2">COMPARISON</div>
-              <h3 className="text-xl font-bold mb-3 text-[#0a0a0a]">
-                Specialized Tarmac SL8 vs Trek Madone Gen 7
-              </h3>
-              <p className="text-[#525252] mb-4">
-                The ultimate aero vs lightweight race bike showdown. Geometry, aerodynamics, and performance analysis.
-              </p>
-              <span className="text-bikotic-blue font-semibold hover:underline">
-                Read article →
-              </span>
-            </a>
-          </div>
-        </section>
+        {articles.length > 0 && (
+          <section className="mb-12">
+            <div className="flex items-center justify-between mb-6">
+              <h2 className="text-2xl md:text-3xl text-[#0a0a0a] font-bold">
+                Latest Articles & Guides
+              </h2>
+              <a href="/articles" className="text-bikotic-blue font-semibold hover:underline">
+                View all →
+              </a>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {articles.map((article) => (
+                <a 
+                  key={article.slug}
+                  href={`/articles/${article.slug}`} 
+                  className="bg-white border-2 border-gray-200 rounded-lg p-6 hover:border-bikotic-blue hover:shadow-lg transition-all block"
+                >
+                  <div className="text-xs text-bikotic-blue font-bold mb-2">
+                    {article.category.toUpperCase()}
+                  </div>
+                  <h3 className="text-xl font-bold mb-3 text-[#0a0a0a]">
+                    {article.title}
+                  </h3>
+                  <p className="text-[#525252] mb-4">
+                    {article.description}
+                  </p>
+                  <span className="text-bikotic-blue font-semibold hover:underline">
+                    Read article →
+                  </span>
+                </a>
+              ))}
+            </div>
+          </section>
+        )}
 
         {/* YouTube Reviews Section */}
-        <section className="mb-12">
-          <div className="flex items-center justify-between mb-6">
-            <h2 className="text-2xl md:text-3xl text-[#0a0a0a] font-bold">
-              Latest Video Reviews
-            </h2>
-            <a href="/reviews" className="text-bikotic-blue font-semibold hover:underline">
-              View all →
-            </a>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {/* Video Card 1 */}
-            <a href="/reviews/tarmac-sl8" className="bg-white border-2 border-gray-200 rounded-lg overflow-hidden hover:border-bikotic-blue hover:shadow-lg transition-all block">
-              <div className="aspect-video bg-gray-300 flex items-center justify-center">
-                <span className="text-6xl">▶️</span>
-              </div>
-              <div className="p-6">
-                <div className="text-xs text-bikotic-blue font-bold mb-2">ROAD BIKE</div>
-                <h3 className="text-xl font-bold mb-3 text-[#0a0a0a]">
-                  Specialized Tarmac SL8 - Full Review
-                </h3>
-                <p className="text-[#525252] mb-4">
-                  Our complete review of the latest Tarmac. Geometry analysis, weight weigh-in, and ride impressions.
-                </p>
-                <span className="text-bikotic-blue font-semibold hover:underline">
-                  Watch review →
-                </span>
-              </div>
-            </a>
-          </div>
-        </section>
+        {reviews.length > 0 && (
+          <section className="mb-12">
+            <div className="flex items-center justify-between mb-6">
+              <h2 className="text-2xl md:text-3xl text-[#0a0a0a] font-bold">
+                Latest Video Reviews
+              </h2>
+              <a href="/reviews" className="text-bikotic-blue font-semibold hover:underline">
+                View all →
+              </a>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {reviews.map((review) => (
+                <a 
+                  key={review.slug}
+                  href={`/reviews/${review.slug}`} 
+                  className="bg-white border-2 border-gray-200 rounded-lg overflow-hidden hover:border-bikotic-blue hover:shadow-lg transition-all block"
+                >
+                  <div className="aspect-video bg-gray-300 flex items-center justify-center">
+                    <span className="text-6xl">▶️</span>
+                  </div>
+                  <div className="p-6">
+                    <div className="text-xs text-bikotic-blue font-bold mb-2">
+                      {review.category.toUpperCase()}
+                    </div>
+                    <h3 className="text-xl font-bold mb-3 text-[#0a0a0a]">
+                      {review.title}
+                    </h3>
+                    <p className="text-[#525252] mb-4">
+                      {review.description}
+                    </p>
+                    <span className="text-bikotic-blue font-semibold hover:underline">
+                      Watch review →
+                    </span>
+                  </div>
+                </a>
+              ))}
+            </div>
+          </section>
+        )}
 
       </div>
     </main>
