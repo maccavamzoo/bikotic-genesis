@@ -54,7 +54,7 @@ export default function GearCalculator() {
                   max="180" 
                   step="2.5"
                   onChange={() => (window as any).updateBoth()}
-                  className="w-32 px-3 py-2 border-2 border-gray-200 rounded-lg focus:border-bikotic-blue focus:outline-none"
+                  className="w-32 px-3 py-2 border-2 border-gray-200 rounded-lg focus:border-bikotic-blue focus:outline-none transition-opacity"
                 />
               </div>
 
@@ -67,7 +67,7 @@ export default function GearCalculator() {
                   min="60" 
                   max="120"
                   onChange={() => (window as any).updateBoth()}
-                  className="w-32 px-3 py-2 border-2 border-gray-200 rounded-lg focus:border-bikotic-blue focus:outline-none"
+                  className="w-32 px-3 py-2 border-2 border-gray-200 rounded-lg focus:border-bikotic-blue focus:outline-none transition-opacity"
                 />
               </div>
 
@@ -75,7 +75,7 @@ export default function GearCalculator() {
                 <label htmlFor="method" className="font-semibold text-gray-700">Calculation Method:</label>
                 <select 
                   id="method"
-                  onChange={() => (window as any).updateBoth()}
+                  onChange={() => (window as any).handleMethodChange()}
                   className="w-52 px-3 py-2 border-2 border-gray-200 rounded-lg focus:border-bikotic-blue focus:outline-none"
                 >
                   <option value="ratio">Simple Ratio</option>
@@ -182,7 +182,7 @@ export default function GearCalculator() {
                 <select 
                   id="wheelA"
                   onChange={() => (window as any).updateBoth()}
-                  className="w-full px-3 py-3 border-2 border-gray-200 rounded-lg focus:border-bikotic-blue focus:outline-none"
+                  className="wheel-tyre-input w-full px-3 py-3 border-2 border-gray-200 rounded-lg focus:border-bikotic-blue focus:outline-none transition-opacity"
                 >
                   <option value="622">700c (622mm)</option>
                   <option value="559">26" (559mm)</option>
@@ -201,7 +201,7 @@ export default function GearCalculator() {
                   min="15" 
                   max="60"
                   onChange={() => (window as any).updateBoth()}
-                  className="w-full px-3 py-3 border-2 border-gray-200 rounded-lg focus:border-bikotic-blue focus:outline-none"
+                  className="wheel-tyre-input w-full px-3 py-3 border-2 border-gray-200 rounded-lg focus:border-bikotic-blue focus:outline-none transition-opacity"
                 />
               </div>
             </div>
@@ -227,13 +227,13 @@ export default function GearCalculator() {
               <label className="block mb-2 text-gray-700 font-medium text-sm">Chainring Setup</label>
               <div className="flex gap-2 mb-3">
                 <button 
-                  className="flex-1 py-2 px-4 border-2 border-bikotic-blue text-bikotic-blue rounded-lg font-semibold transition-colors hover:bg-gray-50"
+                  className="flex-1 py-2 px-4 border-2 border-bikotic-blue bg-bikotic-blue text-white rounded-lg font-semibold transition-colors hover:bg-bikotic-blue-dark active"
                   onClick={(e) => (window as any).setupRings('B', '1x', e)}
                 >
                   1x
                 </button>
                 <button 
-                  className="flex-1 py-2 px-4 border-2 border-bikotic-blue bg-bikotic-blue text-white rounded-lg font-semibold transition-colors hover:bg-bikotic-blue-dark active"
+                  className="flex-1 py-2 px-4 border-2 border-bikotic-blue text-bikotic-blue rounded-lg font-semibold transition-colors hover:bg-gray-50"
                   onClick={(e) => (window as any).setupRings('B', '2x', e)}
                 >
                   2x
@@ -243,20 +243,10 @@ export default function GearCalculator() {
                 <input 
                   type="number" 
                   id="ring1B" 
-                  placeholder="Small chainring" 
+                  placeholder="Chainring" 
                   min="20" 
                   max="60" 
-                  defaultValue="34"
-                  onChange={() => (window as any).updateBoth()}
-                  className="flex-1 px-3 py-3 border-2 border-gray-200 rounded-lg focus:border-bikotic-blue focus:outline-none"
-                />
-                <input 
-                  type="number" 
-                  id="ring2B" 
-                  placeholder="Large chainring" 
-                  min="20" 
-                  max="60" 
-                  defaultValue="50"
+                  defaultValue="46"
                   onChange={() => (window as any).updateBoth()}
                   className="flex-1 px-3 py-3 border-2 border-gray-200 rounded-lg focus:border-bikotic-blue focus:outline-none"
                 />
@@ -271,7 +261,7 @@ export default function GearCalculator() {
               <input 
                 type="text" 
                 id="cassetteB" 
-                defaultValue="11,12,13,14,15,17,19,21,24,28"
+                defaultValue="10,11,12,13,15,17,19,21,24,28,32,38,46"
                 onChange={() => (window as any).updateBoth()}
                 className="w-full px-3 py-3 border-2 border-gray-200 rounded-lg focus:border-bikotic-blue focus:outline-none"
               />
@@ -284,7 +274,7 @@ export default function GearCalculator() {
                 <select 
                   id="wheelB"
                   onChange={() => (window as any).updateBoth()}
-                  className="w-full px-3 py-3 border-2 border-gray-200 rounded-lg focus:border-bikotic-blue focus:outline-none"
+                  className="wheel-tyre-input w-full px-3 py-3 border-2 border-gray-200 rounded-lg focus:border-bikotic-blue focus:outline-none transition-opacity"
                 >
                   <option value="622">700c (622mm)</option>
                   <option value="559">26" (559mm)</option>
@@ -303,7 +293,7 @@ export default function GearCalculator() {
                   min="15" 
                   max="60"
                   onChange={() => (window as any).updateBoth()}
-                  className="w-full px-3 py-3 border-2 border-gray-200 rounded-lg focus:border-bikotic-blue focus:outline-none"
+                  className="wheel-tyre-input w-full px-3 py-3 border-2 border-gray-200 rounded-lg focus:border-bikotic-blue focus:outline-none transition-opacity"
                 />
               </div>
             </div>
@@ -345,6 +335,71 @@ export default function GearCalculator() {
         let speedUnit = 'mph';
         let dataA = null;
         let dataB = null;
+        
+        window.handleMethodChange = function() {
+          const method = document.getElementById('method').value;
+          const wheelTyreInputs = document.querySelectorAll('.wheel-tyre-input');
+          const crankInput = document.getElementById('crank');
+          const cadenceInput = document.getElementById('cadence');
+          
+          // ratio: disable wheel, tyre, crank, cadence
+          // inches: disable crank, cadence
+          // development: disable crank, cadence
+          // gain: disable cadence
+          // speed: disable crank
+          
+          if (method === 'ratio') {
+            wheelTyreInputs.forEach(el => {
+              el.disabled = true;
+              el.style.opacity = '0.5';
+              el.style.cursor = 'not-allowed';
+            });
+            crankInput.disabled = true;
+            crankInput.style.opacity = '0.5';
+            crankInput.style.cursor = 'not-allowed';
+            cadenceInput.disabled = true;
+            cadenceInput.style.opacity = '0.5';
+            cadenceInput.style.cursor = 'not-allowed';
+          } else if (method === 'inches' || method === 'development') {
+            wheelTyreInputs.forEach(el => {
+              el.disabled = false;
+              el.style.opacity = '1';
+              el.style.cursor = 'pointer';
+            });
+            crankInput.disabled = true;
+            crankInput.style.opacity = '0.5';
+            crankInput.style.cursor = 'not-allowed';
+            cadenceInput.disabled = true;
+            cadenceInput.style.opacity = '0.5';
+            cadenceInput.style.cursor = 'not-allowed';
+          } else if (method === 'gain') {
+            wheelTyreInputs.forEach(el => {
+              el.disabled = false;
+              el.style.opacity = '1';
+              el.style.cursor = 'pointer';
+            });
+            crankInput.disabled = false;
+            crankInput.style.opacity = '1';
+            crankInput.style.cursor = 'text';
+            cadenceInput.disabled = true;
+            cadenceInput.style.opacity = '0.5';
+            cadenceInput.style.cursor = 'not-allowed';
+          } else if (method === 'speed') {
+            wheelTyreInputs.forEach(el => {
+              el.disabled = false;
+              el.style.opacity = '1';
+              el.style.cursor = 'pointer';
+            });
+            crankInput.disabled = true;
+            crankInput.style.opacity = '0.5';
+            crankInput.style.cursor = 'not-allowed';
+            cadenceInput.disabled = false;
+            cadenceInput.style.opacity = '1';
+            cadenceInput.style.cursor = 'text';
+          }
+          
+          updateBoth();
+        }
         
         window.toggleSpeed = function(unit, event) {
           speedUnit = unit;
@@ -402,7 +457,8 @@ export default function GearCalculator() {
           const inputClass = "flex-1 px-3 py-3 border-2 border-gray-200 rounded-lg focus:border-bikotic-blue focus:outline-none";
           
           if (type === '1x') {
-            container.innerHTML = '<input type="number" id="ring1' + bike + '" placeholder="Chainring teeth" min="20" max="60" value="32" onchange="window.updateBoth()" class="' + inputClass + '">';
+            const defaultVal = bike === 'B' ? '46' : '32';
+            container.innerHTML = '<input type="number" id="ring1' + bike + '" placeholder="Chainring teeth" min="20" max="60" value="' + defaultVal + '" onchange="window.updateBoth()" class="' + inputClass + '">';
           } else {
             container.innerHTML = '<input type="number" id="ring1' + bike + '" placeholder="Small chainring" min="20" max="60" value="34" onchange="window.updateBoth()" class="' + inputClass + '">' +
                                 '<input type="number" id="ring2' + bike + '" placeholder="Large chainring" min="20" max="60" value="50" onchange="window.updateBoth()" class="' + inputClass + '">';
@@ -634,6 +690,7 @@ export default function GearCalculator() {
         if (typeof window !== 'undefined') {
           window.addEventListener('load', function() {
             setTimeout(function() {
+              window.handleMethodChange(); // Set initial disabled states
               window.updateBoth();
             }, 100);
           });
