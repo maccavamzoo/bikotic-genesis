@@ -96,7 +96,7 @@ export default function GearCalculator() {
                 <strong className="text-bikotic-blue">Gear Inches:</strong> The diameter of a penny-farthing wheel that would give the same mechanical advantage. Standard in the US.
               </div>
               <div id="info-development" className="method-info hidden">
-                <strong className="text-bikotic-blue">Development (m/rev):</strong> Distance traveled per pedal revolution in meters. Popular in Europe and track cycling.
+                <strong className="text-bikotic-blue">Development (m/rev):</strong> Distance traveled per pedal revolution in metres. Popular in Europe and track cycling.
               </div>
               <div id="info-gain" className="method-info hidden">
                 <strong className="text-bikotic-blue">Gain Ratio:</strong> Gear ratio × (wheel radius ÷ crank length). More accurate representation of mechanical advantage.
@@ -145,7 +145,7 @@ export default function GearCalculator() {
                   min="20" 
                   max="60" 
                   defaultValue="34"
-                  onChange={() => (window as any).calcBike('A')}
+                  onChange={() => (window as any).updateBoth()}
                   className="flex-1 px-3 py-3 border-2 border-gray-200 rounded-lg focus:border-bikotic-blue focus:outline-none"
                 />
                 <input 
@@ -155,7 +155,7 @@ export default function GearCalculator() {
                   min="20" 
                   max="60" 
                   defaultValue="50"
-                  onChange={() => (window as any).calcBike('A')}
+                  onChange={() => (window as any).updateBoth()}
                   className="flex-1 px-3 py-3 border-2 border-gray-200 rounded-lg focus:border-bikotic-blue focus:outline-none"
                 />
               </div>
@@ -170,21 +170,18 @@ export default function GearCalculator() {
                 type="text" 
                 id="cassetteA" 
                 defaultValue="11,12,13,14,15,17,19,21,23,25,28"
-                onChange={() => (window as any).calcBike('A')}
+                onChange={() => (window as any).updateBoth()}
                 className="w-full px-3 py-3 border-2 border-gray-200 rounded-lg focus:border-bikotic-blue focus:outline-none"
               />
             </div>
 
-            {/* Wheel & Tire */}
+            {/* Wheel & Tyre */}
             <div className="flex gap-3 mb-5">
               <div className="flex-1">
                 <label htmlFor="wheelA" className="block mb-2 text-gray-700 font-medium text-sm">Wheel Size</label>
                 <select 
                   id="wheelA"
-                  onChange={() => {
-                    (window as any).calcBike('A');
-                    (window as any).updateBoth();
-                  }}
+                  onChange={() => (window as any).updateBoth()}
                   className="w-full px-3 py-3 border-2 border-gray-200 rounded-lg focus:border-bikotic-blue focus:outline-none"
                 >
                   <option value="622">700c (622mm)</option>
@@ -196,17 +193,14 @@ export default function GearCalculator() {
                 </select>
               </div>
               <div className="flex-1">
-                <label htmlFor="tireA" className="block mb-2 text-gray-700 font-medium text-sm">Tire Width (mm)</label>
+                <label htmlFor="tyreA" className="block mb-2 text-gray-700 font-medium text-sm">Tyre Width (mm)</label>
                 <input 
                   type="number" 
-                  id="tireA" 
+                  id="tyreA" 
                   defaultValue="25" 
                   min="15" 
                   max="60"
-                  onChange={() => {
-                    (window as any).calcBike('A');
-                    (window as any).updateBoth();
-                  }}
+                  onChange={() => (window as any).updateBoth()}
                   className="w-full px-3 py-3 border-2 border-gray-200 rounded-lg focus:border-bikotic-blue focus:outline-none"
                 />
               </div>
@@ -253,7 +247,7 @@ export default function GearCalculator() {
                   min="20" 
                   max="60" 
                   defaultValue="34"
-                  onChange={() => (window as any).calcBike('B')}
+                  onChange={() => (window as any).updateBoth()}
                   className="flex-1 px-3 py-3 border-2 border-gray-200 rounded-lg focus:border-bikotic-blue focus:outline-none"
                 />
                 <input 
@@ -263,7 +257,7 @@ export default function GearCalculator() {
                   min="20" 
                   max="60" 
                   defaultValue="50"
-                  onChange={() => (window as any).calcBike('B')}
+                  onChange={() => (window as any).updateBoth()}
                   className="flex-1 px-3 py-3 border-2 border-gray-200 rounded-lg focus:border-bikotic-blue focus:outline-none"
                 />
               </div>
@@ -278,21 +272,18 @@ export default function GearCalculator() {
                 type="text" 
                 id="cassetteB" 
                 defaultValue="11,12,13,14,15,17,19,21,24,28"
-                onChange={() => (window as any).calcBike('B')}
+                onChange={() => (window as any).updateBoth()}
                 className="w-full px-3 py-3 border-2 border-gray-200 rounded-lg focus:border-bikotic-blue focus:outline-none"
               />
             </div>
 
-            {/* Wheel & Tire */}
+            {/* Wheel & Tyre */}
             <div className="flex gap-3 mb-5">
               <div className="flex-1">
                 <label htmlFor="wheelB" className="block mb-2 text-gray-700 font-medium text-sm">Wheel Size</label>
                 <select 
                   id="wheelB"
-                  onChange={() => {
-                    (window as any).calcBike('B');
-                    (window as any).updateBoth();
-                  }}
+                  onChange={() => (window as any).updateBoth()}
                   className="w-full px-3 py-3 border-2 border-gray-200 rounded-lg focus:border-bikotic-blue focus:outline-none"
                 >
                   <option value="622">700c (622mm)</option>
@@ -304,17 +295,14 @@ export default function GearCalculator() {
                 </select>
               </div>
               <div className="flex-1">
-                <label htmlFor="wheelB" className="block mb-2 text-gray-700 font-medium text-sm">Tire Width (mm)</label>
+                <label htmlFor="tyreB" className="block mb-2 text-gray-700 font-medium text-sm">Tyre Width (mm)</label>
                 <input 
                   type="number" 
-                  id="tireB" 
+                  id="tyreB" 
                   defaultValue="25" 
                   min="15" 
                   max="60"
-                  onChange={() => {
-                    (window as any).calcBike('B');
-                    (window as any).updateBoth();
-                  }}
+                  onChange={() => (window as any).updateBoth()}
                   className="w-full px-3 py-3 border-2 border-gray-200 rounded-lg focus:border-bikotic-blue focus:outline-none"
                 />
               </div>
@@ -339,13 +327,13 @@ export default function GearCalculator() {
               <strong>1. Choose your calculation method</strong> - Simple ratio for basic comparison, gear inches for US riders, development for European/track riders, gain ratio for accurate mechanical advantage, or speed for practical real-world use.
             </p>
             <p className="mb-3">
-              <strong>2. Set up each bike</strong> - Select 1x or 2x chainring setup, enter your chainring sizes, cassette ratios (comma separated), wheel size, and tire width.
+              <strong>2. Set up each bike</strong> - Select 1x or 2x chainring setup, enter your chainring sizes, cassette ratios (comma separated), wheel size, and tyre width.
             </p>
             <p className="mb-3">
               <strong>3. Adjust cadence and crank length</strong> - Set your preferred cadence (typically 80-100 RPM) and crank arm length if you know it.
             </p>
             <p>
-              <strong>4. Compare the results</strong> - Matching colors show overlapping gears. The visual charts scale relative to each other so you can see which bike has the wider or taller gear range. Usable gears count tells you how many truly different gears you have after accounting for overlaps.
+              <strong>4. Compare the results</strong> - Matching colours show overlapping gears. The visual charts scale relative to each other so you can see which bike has the wider or taller gear range. Usable gears count tells you how many truly different gears you have after accounting for overlaps.
             </p>
           </div>
         </section>
@@ -401,18 +389,6 @@ export default function GearCalculator() {
           }
         }
         
-        window.calcBike = function(bike) {
-          const data = calcGears(bike);
-          if (data) {
-            const vals = data.gears.map(g => parseFloat(g.val));
-            const min = Math.min(...vals);
-            const max = Math.max(...vals);
-            const range = max - min;
-            showChart(data.gears, data.overlaps, bike, min, range);
-            showTable(data, bike);
-          }
-        }
-        
         window.setupRings = function(bike, type, event) {
           const container = document.getElementById('rings' + bike);
           const buttons = event.target.parentElement.querySelectorAll('button');
@@ -426,12 +402,12 @@ export default function GearCalculator() {
           const inputClass = "flex-1 px-3 py-3 border-2 border-gray-200 rounded-lg focus:border-bikotic-blue focus:outline-none";
           
           if (type === '1x') {
-            container.innerHTML = '<input type="number" id="ring1' + bike + '" placeholder="Chainring teeth" min="20" max="60" value="32" onchange="window.calcBike(\\'' + bike + '\\')" class="' + inputClass + '">';
+            container.innerHTML = '<input type="number" id="ring1' + bike + '" placeholder="Chainring teeth" min="20" max="60" value="32" onchange="window.updateBoth()" class="' + inputClass + '">';
           } else {
-            container.innerHTML = '<input type="number" id="ring1' + bike + '" placeholder="Small chainring" min="20" max="60" value="34" onchange="window.calcBike(\\'' + bike + '\\')" class="' + inputClass + '">' +
-                                '<input type="number" id="ring2' + bike + '" placeholder="Large chainring" min="20" max="60" value="50" onchange="window.calcBike(\\'' + bike + '\\')" class="' + inputClass + '">';
+            container.innerHTML = '<input type="number" id="ring1' + bike + '" placeholder="Small chainring" min="20" max="60" value="34" onchange="window.updateBoth()" class="' + inputClass + '">' +
+                                '<input type="number" id="ring2' + bike + '" placeholder="Large chainring" min="20" max="60" value="50" onchange="window.updateBoth()" class="' + inputClass + '">';
           }
-          window.calcBike(bike);
+          window.updateBoth();
         }
         
         function calcGears(bike) {
@@ -448,14 +424,14 @@ export default function GearCalculator() {
           if (rings.length === 0 || cassette.length === 0) return null;
           
           const wheelDia = parseInt(document.getElementById('wheel' + bike).value);
-          const tireWidth = parseInt(document.getElementById('tire' + bike).value || 0);
+          const tyreWidth = parseInt(document.getElementById('tyre' + bike).value || 0);
           const cadence = parseInt(document.getElementById('cadence').value || 90);
           const crankLen = parseFloat(document.getElementById('crank').value || 172.5);
           const method = document.getElementById('method').value;
           
-          const wheelCirc = Math.PI * (wheelDia + 2 * tireWidth) / 1000;
-          const wheelRad = (wheelDia + 2 * tireWidth) / 2000;
-          const wheelInches = (wheelDia + 2 * tireWidth) / 25.4;
+          const wheelCirc = Math.PI * (wheelDia + 2 * tyreWidth) / 1000;
+          const wheelRad = (wheelDia + 2 * tyreWidth) / 2000;
+          const wheelInches = (wheelDia + 2 * tyreWidth) / 25.4;
           
           const gears = [];
           rings.forEach(ring => {
@@ -578,7 +554,7 @@ export default function GearCalculator() {
           switch (method) {
             case 'ratio': title = 'Gear Ratio Distribution'; break;
             case 'inches': title = 'Gear Inches Range'; break;
-            case 'development': title = 'Development Range (meters per revolution)'; break;
+            case 'development': title = 'Development Range (metres per revolution)'; break;
             case 'gain': title = 'Gain Ratio Distribution'; break;
             case 'speed': title = 'Speed Distribution (' + speedUnit + ')'; break;
           }
@@ -647,7 +623,7 @@ export default function GearCalculator() {
           
           let legendText = '';
           if (overlaps.length > 0) {
-            legendText = '<strong>Overlapping Gears:</strong> ' + overlaps.length + ' overlap group(s) found. Matching colors show similar gear ratios.';
+            legendText = '<strong>Overlapping Gears:</strong> ' + overlaps.length + ' overlap group(s) found. Matching colours show similar gear ratios.';
           } else {
             legendText = 'No overlapping gears detected.';
           }
@@ -658,8 +634,7 @@ export default function GearCalculator() {
         if (typeof window !== 'undefined') {
           window.addEventListener('load', function() {
             setTimeout(function() {
-              window.calcBike('A');
-              window.calcBike('B');
+              window.updateBoth();
             }, 100);
           });
         }
