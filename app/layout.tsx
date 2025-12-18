@@ -44,6 +44,12 @@ export default function RootLayout({
                 Articles
               </Link>
               <Link 
+                href="/tools" 
+                className="text-gray-700 hover:text-bikotic-blue font-semibold transition-colors"
+              >
+                Tools
+              </Link>
+              <Link 
                 href="/reviews" 
                 className="text-gray-700 hover:text-bikotic-blue font-semibold transition-colors"
               >
