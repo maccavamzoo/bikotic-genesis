@@ -82,7 +82,7 @@ export default function GearCalculator() {
                   <option value="inches">Gear Inches</option>
                   <option value="development">Development (m/rev)</option>
                   <option value="gain">Gain Ratio</option>
-                  <option value="speed">Speed at Cadence</option>
+                  <option value="speed" selected>Speed at Cadence</option>
                 </select>
               </div>
             </div>
