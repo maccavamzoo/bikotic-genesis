@@ -1,16 +1,6 @@
 'use client'
 
-import { useEffect } from 'react'
-
 export default function GearCalculator() {
-  useEffect(() => {
-    // Initialize calculations after component mounts
-    setTimeout(() => {
-      calcBike('A')
-      calcBike('B')
-    }, 100)
-  }, [])
-
   return (
     <main className="min-h-screen p-4 md:p-8 font-sans bg-[#fafafa]">
       <div className="max-w-7xl mx-auto">
@@ -41,13 +31,13 @@ export default function GearCalculator() {
                 <div className="flex border-2 border-bikotic-blue rounded-lg overflow-hidden">
                   <button 
                     className="px-4 py-2 bg-bikotic-blue text-white font-semibold transition-colors hover:bg-bikotic-blue-dark"
-                    onClick={(e) => toggleSpeed('mph', e)}
+                    onClick={(e) => (window as any).toggleSpeed('mph', e)}
                   >
                     MPH
                   </button>
                   <button 
                     className="px-4 py-2 bg-white text-bikotic-blue font-semibold transition-colors hover:bg-gray-50"
-                    onClick={(e) => toggleSpeed('kph', e)}
+                    onClick={(e) => (window as any).toggleSpeed('kph', e)}
                   >
                     KPH
                   </button>
@@ -63,7 +53,7 @@ export default function GearCalculator() {
                   min="165" 
                   max="180" 
                   step="2.5"
-                  onChange={() => updateBoth()}
+                  onChange={() => (window as any).updateBoth()}
                   className="w-32 px-3 py-2 border-2 border-gray-200 rounded-lg focus:border-bikotic-blue focus:outline-none"
                 />
               </div>
@@ -76,7 +66,7 @@ export default function GearCalculator() {
                   defaultValue="90" 
                   min="60" 
                   max="120"
-                  onChange={() => updateBoth()}
+                  onChange={() => (window as any).updateBoth()}
                   className="w-32 px-3 py-2 border-2 border-gray-200 rounded-lg focus:border-bikotic-blue focus:outline-none"
                 />
               </div>
@@ -85,7 +75,7 @@ export default function GearCalculator() {
                 <label htmlFor="method" className="font-semibold text-gray-700">Calculation Method:</label>
                 <select 
                   id="method"
-                  onChange={() => updateBoth()}
+                  onChange={() => (window as any).updateBoth()}
                   className="w-52 px-3 py-2 border-2 border-gray-200 rounded-lg focus:border-bikotic-blue focus:outline-none"
                 >
                   <option value="ratio">Simple Ratio</option>
@@ -133,13 +123,13 @@ export default function GearCalculator() {
               <div className="flex gap-2 mb-3">
                 <button 
                   className="flex-1 py-2 px-4 border-2 border-bikotic-blue text-bikotic-blue rounded-lg font-semibold transition-colors hover:bg-gray-50"
-                  onClick={(e) => setupRings('A', '1x', e)}
+                  onClick={(e) => (window as any).setupRings('A', '1x', e)}
                 >
                   1x
                 </button>
                 <button 
                   className="flex-1 py-2 px-4 border-2 border-bikotic-blue bg-bikotic-blue text-white rounded-lg font-semibold transition-colors hover:bg-bikotic-blue-dark active"
-                  onClick={(e) => setupRings('A', '2x', e)}
+                  onClick={(e) => (window as any).setupRings('A', '2x', e)}
                 >
                   2x
                 </button>
@@ -152,7 +142,7 @@ export default function GearCalculator() {
                   min="20" 
                   max="60" 
                   defaultValue="34"
-                  onChange={() => calcBike('A')}
+                  onChange={() => (window as any).calcBike('A')}
                   className="flex-1 px-3 py-3 border-2 border-gray-200 rounded-lg focus:border-bikotic-blue focus:outline-none"
                 />
                 <input 
@@ -162,7 +152,7 @@ export default function GearCalculator() {
                   min="20" 
                   max="60" 
                   defaultValue="50"
-                  onChange={() => calcBike('A')}
+                  onChange={() => (window as any).calcBike('A')}
                   className="flex-1 px-3 py-3 border-2 border-gray-200 rounded-lg focus:border-bikotic-blue focus:outline-none"
                 />
               </div>
@@ -177,7 +167,7 @@ export default function GearCalculator() {
                 type="text" 
                 id="cassetteA" 
                 defaultValue="11,12,13,14,15,17,19,21,23,25,28"
-                onChange={() => calcBike('A')}
+                onChange={() => (window as any).calcBike('A')}
                 className="w-full px-3 py-3 border-2 border-gray-200 rounded-lg focus:border-bikotic-blue focus:outline-none"
               />
             </div>
@@ -188,7 +178,7 @@ export default function GearCalculator() {
                 <label htmlFor="wheelA" className="block mb-2 text-gray-700 font-medium text-sm">Wheel Size</label>
                 <select 
                   id="wheelA"
-                  onChange={() => calcBike('A')}
+                  onChange={() => (window as any).calcBike('A')}
                   className="w-full px-3 py-3 border-2 border-gray-200 rounded-lg focus:border-bikotic-blue focus:outline-none"
                 >
                   <option value="622">700c (622mm)</option>
@@ -207,7 +197,7 @@ export default function GearCalculator() {
                   defaultValue="25" 
                   min="15" 
                   max="60"
-                  onChange={() => calcBike('A')}
+                  onChange={() => (window as any).calcBike('A')}
                   className="w-full px-3 py-3 border-2 border-gray-200 rounded-lg focus:border-bikotic-blue focus:outline-none"
                 />
               </div>
@@ -235,13 +225,13 @@ export default function GearCalculator() {
               <div className="flex gap-2 mb-3">
                 <button 
                   className="flex-1 py-2 px-4 border-2 border-bikotic-blue text-bikotic-blue rounded-lg font-semibold transition-colors hover:bg-gray-50"
-                  onClick={(e) => setupRings('B', '1x', e)}
+                  onClick={(e) => (window as any).setupRings('B', '1x', e)}
                 >
                   1x
                 </button>
                 <button 
                   className="flex-1 py-2 px-4 border-2 border-bikotic-blue bg-bikotic-blue text-white rounded-lg font-semibold transition-colors hover:bg-bikotic-blue-dark active"
-                  onClick={(e) => setupRings('B', '2x', e)}
+                  onClick={(e) => (window as any).setupRings('B', '2x', e)}
                 >
                   2x
                 </button>
@@ -254,7 +244,7 @@ export default function GearCalculator() {
                   min="20" 
                   max="60" 
                   defaultValue="34"
-                  onChange={() => calcBike('B')}
+                  onChange={() => (window as any).calcBike('B')}
                   className="flex-1 px-3 py-3 border-2 border-gray-200 rounded-lg focus:border-bikotic-blue focus:outline-none"
                 />
                 <input 
@@ -264,7 +254,7 @@ export default function GearCalculator() {
                   min="20" 
                   max="60" 
                   defaultValue="50"
-                  onChange={() => calcBike('B')}
+                  onChange={() => (window as any).calcBike('B')}
                   className="flex-1 px-3 py-3 border-2 border-gray-200 rounded-lg focus:border-bikotic-blue focus:outline-none"
                 />
               </div>
@@ -279,7 +269,7 @@ export default function GearCalculator() {
                 type="text" 
                 id="cassetteB" 
                 defaultValue="11,12,13,14,15,17,19,21,24,28"
-                onChange={() => calcBike('B')}
+                onChange={() => (window as any).calcBike('B')}
                 className="w-full px-3 py-3 border-2 border-gray-200 rounded-lg focus:border-bikotic-blue focus:outline-none"
               />
             </div>
@@ -290,7 +280,7 @@ export default function GearCalculator() {
                 <label htmlFor="wheelB" className="block mb-2 text-gray-700 font-medium text-sm">Wheel Size</label>
                 <select 
                   id="wheelB"
-                  onChange={() => calcBike('B')}
+                  onChange={() => (window as any).calcBike('B')}
                   className="w-full px-3 py-3 border-2 border-gray-200 rounded-lg focus:border-bikotic-blue focus:outline-none"
                 >
                   <option value="622">700c (622mm)</option>
@@ -309,7 +299,7 @@ export default function GearCalculator() {
                   defaultValue="25" 
                   min="15" 
                   max="60"
-                  onChange={() => calcBike('B')}
+                  onChange={() => (window as any).calcBike('B')}
                   className="w-full px-3 py-3 border-2 border-gray-200 rounded-lg focus:border-bikotic-blue focus:outline-none"
                 />
               </div>
@@ -353,7 +343,7 @@ export default function GearCalculator() {
         let dataA = null;
         let dataB = null;
         
-        function toggleSpeed(unit, event) {
+        window.toggleSpeed = function(unit, event) {
           speedUnit = unit;
           const buttons = event.target.parentElement.querySelectorAll('button');
           buttons.forEach(b => {
@@ -365,7 +355,7 @@ export default function GearCalculator() {
           updateBoth();
         }
         
-        function updateBoth() {
+        window.updateBoth = function() {
           updateInfo();
           dataA = calcGears('A');
           dataB = calcGears('B');
@@ -396,7 +386,7 @@ export default function GearCalculator() {
           }
         }
         
-        function calcBike(bike) {
+        window.calcBike = function(bike) {
           const data = calcGears(bike);
           if (data) {
             const vals = data.gears.map(g => parseFloat(g.val));
@@ -408,7 +398,7 @@ export default function GearCalculator() {
           }
         }
         
-        function setupRings(bike, type, event) {
+        window.setupRings = function(bike, type, event) {
           const container = document.getElementById('rings' + bike);
           const buttons = event.target.parentElement.querySelectorAll('button');
           buttons.forEach(b => {
@@ -421,12 +411,12 @@ export default function GearCalculator() {
           const inputClass = "flex-1 px-3 py-3 border-2 border-gray-200 rounded-lg focus:border-bikotic-blue focus:outline-none";
           
           if (type === '1x') {
-            container.innerHTML = '<input type="number" id="ring1' + bike + '" placeholder="Chainring teeth" min="20" max="60" value="32" onchange="calcBike(\\'' + bike + '\\')" class="' + inputClass + '">';
+            container.innerHTML = '<input type="number" id="ring1' + bike + '" placeholder="Chainring teeth" min="20" max="60" value="32" onchange="window.calcBike(\\'' + bike + '\\')" class="' + inputClass + '">';
           } else {
-            container.innerHTML = '<input type="number" id="ring1' + bike + '" placeholder="Small chainring" min="20" max="60" value="34" onchange="calcBike(\\'' + bike + '\\')" class="' + inputClass + '">' +
-                                '<input type="number" id="ring2' + bike + '" placeholder="Large chainring" min="20" max="60" value="50" onchange="calcBike(\\'' + bike + '\\')" class="' + inputClass + '">';
+            container.innerHTML = '<input type="number" id="ring1' + bike + '" placeholder="Small chainring" min="20" max="60" value="34" onchange="window.calcBike(\\'' + bike + '\\')" class="' + inputClass + '">' +
+                                '<input type="number" id="ring2' + bike + '" placeholder="Large chainring" min="20" max="60" value="50" onchange="window.calcBike(\\'' + bike + '\\')" class="' + inputClass + '">';
           }
-          calcBike(bike);
+          window.calcBike(bike);
         }
         
         function calcGears(bike) {
@@ -635,6 +625,16 @@ export default function GearCalculator() {
             legendText = 'No overlapping gears detected.';
           }
           document.getElementById('legend' + bike).innerHTML = legendText;
+        }
+        
+        // Initialize on load
+        if (typeof window !== 'undefined') {
+          window.addEventListener('load', function() {
+            setTimeout(function() {
+              window.calcBike('A');
+              window.calcBike('B');
+            }, 100);
+          });
         }
       `}} />
     </main>
