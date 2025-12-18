@@ -108,6 +108,9 @@ export default function GearCalculator() {
           </div>
         </div>
 
+        {/* Custom Tooltip */}
+        <div id="tooltip" className="hidden fixed bg-gray-900 text-white px-3 py-2 rounded text-sm pointer-events-none z-50"></div>
+
         {/* Bike Comparison Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           
@@ -178,7 +181,10 @@ export default function GearCalculator() {
                 <label htmlFor="wheelA" className="block mb-2 text-gray-700 font-medium text-sm">Wheel Size</label>
                 <select 
                   id="wheelA"
-                  onChange={() => (window as any).calcBike('A')}
+                  onChange={() => {
+                    (window as any).calcBike('A');
+                    (window as any).updateBoth();
+                  }}
                   className="w-full px-3 py-3 border-2 border-gray-200 rounded-lg focus:border-bikotic-blue focus:outline-none"
                 >
                   <option value="622">700c (622mm)</option>
@@ -197,7 +203,10 @@ export default function GearCalculator() {
                   defaultValue="25" 
                   min="15" 
                   max="60"
-                  onChange={() => (window as any).calcBike('A')}
+                  onChange={() => {
+                    (window as any).calcBike('A');
+                    (window as any).updateBoth();
+                  }}
                   className="w-full px-3 py-3 border-2 border-gray-200 rounded-lg focus:border-bikotic-blue focus:outline-none"
                 />
               </div>
@@ -280,7 +289,10 @@ export default function GearCalculator() {
                 <label htmlFor="wheelB" className="block mb-2 text-gray-700 font-medium text-sm">Wheel Size</label>
                 <select 
                   id="wheelB"
-                  onChange={() => (window as any).calcBike('B')}
+                  onChange={() => {
+                    (window as any).calcBike('B');
+                    (window as any).updateBoth();
+                  }}
                   className="w-full px-3 py-3 border-2 border-gray-200 rounded-lg focus:border-bikotic-blue focus:outline-none"
                 >
                   <option value="622">700c (622mm)</option>
@@ -292,14 +304,17 @@ export default function GearCalculator() {
                 </select>
               </div>
               <div className="flex-1">
-                <label htmlFor="tireB" className="block mb-2 text-gray-700 font-medium text-sm">Tire Width (mm)</label>
+                <label htmlFor="wheelB" className="block mb-2 text-gray-700 font-medium text-sm">Tire Width (mm)</label>
                 <input 
                   type="number" 
                   id="tireB" 
                   defaultValue="25" 
                   min="15" 
                   max="60"
-                  onChange={() => (window as any).calcBike('B')}
+                  onChange={() => {
+                    (window as any).calcBike('B');
+                    (window as any).updateBoth();
+                  }}
                   className="w-full px-3 py-3 border-2 border-gray-200 rounded-lg focus:border-bikotic-blue focus:outline-none"
                 />
               </div>
@@ -337,7 +352,7 @@ export default function GearCalculator() {
 
       </div>
 
-      {/* JavaScript converted to work in Next.js */}
+      {/* JavaScript */}
       <script dangerouslySetInnerHTML={{__html: `
         let speedUnit = 'mph';
         let dataA = null;
@@ -513,6 +528,18 @@ export default function GearCalculator() {
           return overlaps;
         }
         
+        function showTooltip(text, x, y) {
+          const tooltip = document.getElementById('tooltip');
+          tooltip.textContent = text;
+          tooltip.style.left = x + 10 + 'px';
+          tooltip.style.top = y + 10 + 'px';
+          tooltip.classList.remove('hidden');
+        }
+        
+        function hideTooltip() {
+          document.getElementById('tooltip').classList.add('hidden');
+        }
+        
         function showChart(gears, overlaps, bike, minVal, range) {
           const method = document.getElementById('method').value;
           const vals = gears.map(g => parseFloat(g.val));
@@ -544,7 +571,7 @@ export default function GearCalculator() {
             let tooltip = gear.ring + '×' + gear.cog + ': ' + gear.val + gear.unit;
             if (method === 'speed') tooltip += ' at ' + cadence + ' RPM';
             
-            return '<div class="min-w-[12px] bg-gradient-to-t ' + gradient + ' rounded-t cursor-pointer transition-all hover:-translate-y-1 hover:shadow-lg relative" style="height: ' + height + 'px;" title="' + tooltip + '"></div>';
+            return '<div class="min-w-[12px] bg-gradient-to-t ' + gradient + ' rounded-t cursor-pointer transition-all hover:-translate-y-1 hover:shadow-lg relative" style="height: ' + height + 'px;" onmouseenter="showTooltip(\\'' + tooltip + '\\', event.clientX, event.clientY)" onmouseleave="hideTooltip()"></div>';
           }).join('');
           
           let title = '';
@@ -582,14 +609,14 @@ export default function GearCalculator() {
           }
           
           const borderColors = {
-            'overlap-1': 'border-l-red-400 bg-red-50',
-            'overlap-2': 'border-l-cyan-400 bg-cyan-50',
-            'overlap-3': 'border-l-blue-400 bg-blue-50',
-            'overlap-4': 'border-l-green-400 bg-green-50',
-            'overlap-5': 'border-l-yellow-300 bg-yellow-50',
-            'overlap-6': 'border-l-purple-400 bg-purple-50',
-            'overlap-7': 'border-l-teal-400 bg-teal-50',
-            'overlap-8': 'border-l-orange-400 bg-orange-50'
+            'overlap-1': 'border-l-red-400',
+            'overlap-2': 'border-l-cyan-400',
+            'overlap-3': 'border-l-blue-400',
+            'overlap-4': 'border-l-green-400',
+            'overlap-5': 'border-l-yellow-400',
+            'overlap-6': 'border-l-purple-400',
+            'overlap-7': 'border-l-teal-400',
+            'overlap-8': 'border-l-orange-400'
           };
           
           let html = '<div class="grid grid-cols-2 gap-3 p-3 bg-bikotic-blue text-white rounded-lg mb-2 font-semibold text-sm"><div>Gear Combination</div><div class="text-center">' + methodLabel + '</div></div>';
