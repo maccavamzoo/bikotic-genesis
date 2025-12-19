@@ -40,7 +40,7 @@ export default function Home() {
           <section className="mb-12">
             <div className="flex items-center justify-between mb-6">
               <h2 className="text-2xl md:text-3xl text-[#0a0a0a] font-bold">
-                Latest Articles & Guides
+                Latest Articles & Analysis
               </h2>
               <a href="/articles" className="text-bikotic-blue font-semibold hover:underline">
                 View all →
