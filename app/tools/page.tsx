@@ -49,7 +49,7 @@ export default function ToolsPage() {
             More Tools Coming Soon
           </h2>
           <p className="text-[#525252]">
-            We're working on additional calculators including frame size, tyre pressure, FTP zones, and more. Check back soon.
+            More cycling tools are in the works. Check back soon.
           </p>
         </section>
 
