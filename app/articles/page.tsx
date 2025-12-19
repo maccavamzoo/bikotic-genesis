@@ -45,22 +45,33 @@ export default function ArticlesPage() {
               <a 
                 key={article.slug}
                 href={`/articles/${article.slug}`} 
-                className="bg-white border-2 border-gray-200 rounded-lg p-6 hover:border-bikotic-blue hover:shadow-lg transition-all block"
+                className="bg-white border-2 border-gray-200 rounded-lg overflow-hidden hover:border-bikotic-blue hover:shadow-lg transition-all block"
               >
-                <div className="text-xs text-bikotic-blue font-bold mb-2">
-                  {article.category.toUpperCase()}
-                </div>
-                <h2 className="text-xl md:text-2xl font-bold mb-3 text-gray-900">
-                  {article.title}
-                </h2>
-                <p className="text-gray-600 mb-4">
-                  {article.description}
-                </p>
-                <div className="flex items-center justify-between">
-                  <span className="text-bikotic-blue font-semibold hover:underline">
-                    Read article →
-                  </span>
-                  <span className="text-sm text-gray-500">{article.date}</span>
+                {article.featuredImage && (
+                  <div className="aspect-video bg-gray-300 relative overflow-hidden">
+                    <img 
+                      src={article.featuredImage}
+                      alt={article.title}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                )}
+                <div className="p-6">
+                  <div className="text-xs text-bikotic-blue font-bold mb-2">
+                    {article.category.toUpperCase()}
+                  </div>
+                  <h2 className="text-xl md:text-2xl font-bold mb-3 text-gray-900">
+                    {article.title}
+                  </h2>
+                  <p className="text-gray-600 mb-4">
+                    {article.description}
+                  </p>
+                  <div className="flex items-center justify-between">
+                    <span className="text-bikotic-blue font-semibold hover:underline">
+                      Read article →
+                    </span>
+                    <span className="text-sm text-gray-500">{article.date}</span>
+                  </div>
                 </div>
               </a>
             ))}
