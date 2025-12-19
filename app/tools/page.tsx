@@ -9,7 +9,7 @@ export default function ToolsPage() {
             Cycling Calculators & Tools
           </h1>
           <p className="text-lg md:text-xl text-[#525252] max-w-3xl">
-            Professional cycling calculators for gear ratios, training zones, and bike fit. Built for riders who want proper data, not marketing bollocks.
+            Sometimes I build tools to explain concepts in videos, free to use if you find them useful.
           </p>
         </section>
 
