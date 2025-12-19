@@ -20,7 +20,7 @@ export default function RootLayout({
         <header className="bg-white border-b-2 border-gray-200 sticky top-0 z-50">
           <div className="max-w-7xl mx-auto px-4 md:px-8 py-4 flex items-center justify-between">
             {/* Logo */}
-            <Link href="/" className="flex items-center">
+            <Link href="/" className="flex items-center text-bikotic-blue">
               <Image 
                 src="/logo.svg" 
                 alt="BIKOTIC" 
