@@ -50,11 +50,12 @@ export default function ReviewsPage() {
                 href={`/reviews/${review.slug}`} 
                 className="bg-white border-2 border-gray-200 rounded-lg overflow-hidden hover:border-bikotic-blue hover:shadow-lg transition-all block"
               >
-                <div className="aspect-video bg-gray-300 flex items-center justify-center relative">
-                  <span className="text-6xl">▶️</span>
-                  <div className="absolute bottom-2 right-2 bg-black bg-opacity-75 text-white px-2 py-1 text-xs font-bold rounded">
-                    12:34
-                  </div>
+                <div className="aspect-video bg-gray-300 relative overflow-hidden">
+                  <img 
+                    src={`https://img.youtube.com/vi/${review.youtubeId}/maxresdefault.jpg`}
+                    alt={review.title}
+                    className="w-full h-full object-cover"
+                  />
                 </div>
                 <div className="p-6">
                   <div className="text-xs text-bikotic-blue font-bold mb-2">
