@@ -8,6 +8,7 @@ export interface ArticleMeta {
   description: string
   category: string
   date: string
+  featuredImage?: string
 }
 
 export interface ReviewMeta {
@@ -42,6 +43,7 @@ export function getAllArticles(): ArticleMeta[] {
         description: data.description,
         category: data.category,
         date: data.date,
+        featuredImage: data.featuredImage,
       }
     })
   
