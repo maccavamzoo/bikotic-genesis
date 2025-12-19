@@ -1,8 +1,8 @@
 import { getAllArticles } from '@/lib/mdx'
 
 export const metadata = {
-  title: 'Articles & Guides - BIKOTIC',
-  description: 'Browse our collection of bike comparisons, buyer guides, and in-depth analysis',
+  title: 'Bike Articles & Analysis - BIKOTIC',
+  description: 'In-depth articles and analysis on bikes, gear, and cycling tech',
 }
 
 export default function ArticlesPage() {
@@ -15,10 +15,10 @@ export default function ArticlesPage() {
         {/* Header */}
         <div className="mb-8 md:mb-12">
           <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-            Articles & Guides
+            Bike Articles & Analysis
           </h1>
           <p className="text-xl text-gray-600">
-            Expert analysis, comparisons, and buyer guides for serious cyclists
+            Bikotic's opinions on bikes, gear, and cycling tech
           </p>
         </div>
 
