@@ -2,7 +2,7 @@ import { getAllReviews } from '@/lib/mdx'
 
 export const metadata = {
   title: 'Video Reviews - BIKOTIC',
-  description: 'Watch our in-depth bike reviews and comparisons on YouTube',
+  description: 'Bike reviews and whatever else is worth talking about from bikotic\'s YouTube channel',
 }
 
 export default function ReviewsPage() {
@@ -18,7 +18,7 @@ export default function ReviewsPage() {
             Video Reviews
           </h1>
           <p className="text-xl text-gray-600">
-            In-depth bike reviews from our YouTube channel (18K+ subscribers)
+            Bike reviews and whatever else is worth talking about - bikotic's YouTube videos
           </p>
         </div>
 
