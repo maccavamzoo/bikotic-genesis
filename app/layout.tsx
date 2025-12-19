@@ -1,6 +1,7 @@
 import './globals.css'
 import Link from 'next/link'
 import Image from 'next/image'
+import Navigation from './components/Navigation'
 
 export const metadata = {
   title: 'BIKOTIC - Visual Bike Comparison Tool & Reviews',
@@ -30,38 +31,7 @@ export default function RootLayout({
             </Link>
 
             {/* Navigation */}
-            <nav className="flex gap-6 md:gap-8 items-center">
-              <Link 
-                href="/" 
-                className="text-gray-700 hover:text-bikotic-blue font-semibold transition-colors"
-              >
-                Home
-              </Link>
-              <Link 
-                href="/articles" 
-                className="text-gray-700 hover:text-bikotic-blue font-semibold transition-colors"
-              >
-                Articles
-              </Link>
-              <Link 
-                href="/tools" 
-                className="text-gray-700 hover:text-bikotic-blue font-semibold transition-colors"
-              >
-                Tools
-              </Link>
-              <Link 
-                href="/reviews" 
-                className="text-gray-700 hover:text-bikotic-blue font-semibold transition-colors"
-              >
-                Video Reviews
-              </Link>
-              <Link 
-                href="/app" 
-                className="bg-bikotic-blue text-white px-4 py-2 rounded-lg font-bold hover:bg-bikotic-blue-dark transition-colors"
-              >
-                Compare Bikes
-              </Link>
-            </nav>
+            <Navigation />
           </div>
         </header>
 
