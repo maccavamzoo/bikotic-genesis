@@ -10,7 +10,7 @@ module.exports = {
     extend: {
       colors: {
         'bikotic-blue': '#315d93',
-        'bikotic-blue-dark': '#4c91e5',
+        'bikotic-blue-dark': '#5076a5',
       },
       typography: {
         DEFAULT: {
