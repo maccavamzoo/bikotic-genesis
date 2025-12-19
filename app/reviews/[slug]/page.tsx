@@ -1,6 +1,32 @@
 import fs from 'fs'
 import path from 'path'
 import { compileMDX } from 'next-mdx-remote/rsc'
+import remarkGfm from 'remark-gfm'
+
+const components = {
+  img: (props: any) => (
+    <div className="flex justify-center my-8">
+      <img {...props} className="rounded-lg shadow-lg max-w-full h-auto" />
+    </div>
+  ),
+  table: (props: any) => (
+    <div className="overflow-x-auto my-8">
+      <table className="min-w-full divide-y divide-gray-200 border border-gray-300" {...props} />
+    </div>
+  ),
+  thead: (props: any) => (
+    <thead className="bg-gray-50" {...props} />
+  ),
+  th: (props: any) => (
+    <th className="px-6 py-3 text-left text-xs font-bold text-gray-700 uppercase tracking-wider border-b border-gray-300" {...props} />
+  ),
+  td: (props: any) => (
+    <td className="px-6 py-4 text-sm text-gray-900 border-b border-gray-200" {...props} />
+  ),
+  tr: (props: any) => (
+    <tr className="hover:bg-gray-50" {...props} />
+  ),
+}
 
 export async function generateStaticParams() {
   const reviewsDir = path.join(process.cwd(), 'content/reviews')
@@ -21,7 +47,13 @@ export default async function ReviewPage({
 
   const { content, frontmatter } = await compileMDX({
     source,
-    options: { parseFrontmatter: true },
+    components,
+    options: { 
+      parseFrontmatter: true,
+      mdxOptions: {
+        remarkPlugins: [remarkGfm],
+      },
+    },
   })
 
   const youtubeId = (frontmatter as any).youtubeId
