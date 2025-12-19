@@ -12,7 +12,7 @@ export default function Home() {
         <section className="bg-white border-2 border-gray-200 rounded-xl mb-12 shadow-sm overflow-hidden">
           <div className="grid md:grid-cols-2 gap-0">
             {/* Left - Image */}
-            <div className="relative aspect-video">
+            <div className="relative h-full min-h-[300px]">
               <img 
                 src="/images/bikotic-visual-bike-comparison.jpg"
                 alt="Visual bike comparison showing Canyon and Factor bikes side by side"
