@@ -12,7 +12,7 @@ export default function Home() {
         <section className="bg-white border-2 border-gray-200 rounded-xl mb-12 shadow-sm overflow-hidden">
           <div className="grid md:grid-cols-2 gap-0">
             {/* Left - Image */}
-            <div className="relative aspect-video md:aspect-square">
+            <div className="relative aspect-video">
               <img 
                 src="/images/bikotic-visual-bike-comparison.jpg"
                 alt="Visual bike comparison showing Canyon and Factor bikes side by side"
@@ -21,7 +21,7 @@ export default function Home() {
             </div>
             
             {/* Right - Content */}
-            <div className="p-8 md:p-12 lg:p-16 flex flex-col justify-center">
+            <div className="p-6 md:p-8 lg:p-10 flex flex-col justify-center">
               <h1 className="text-3xl md:text-4xl lg:text-5xl mb-4 text-[#0a0a0a] font-bold">
                 Visual Bike Comparison Tool
               </h1>
