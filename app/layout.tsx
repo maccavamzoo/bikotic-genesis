@@ -76,7 +76,7 @@ export default function RootLayout({
               <div>
                 <h3 className="text-lg font-bold text-gray-900 mb-3">BIKOTIC</h3>
                 <p className="text-gray-600 text-sm">
-                  Visual bike comparisons and reviews for serious cyclists since 2017.
+                  "I just really like bikes."
                 </p>
               </div>
 
@@ -85,18 +85,23 @@ export default function RootLayout({
                 <h3 className="text-lg font-bold text-gray-900 mb-3">Quick Links</h3>
                 <ul className="space-y-2">
                   <li>
+                    <Link href="/app" className="text-gray-600 hover:text-bikotic-blue text-sm">
+                      Visual Bike Comparison Tool
+                    </Link>
+                  </li>
+                  <li>
                     <Link href="/articles" className="text-gray-600 hover:text-bikotic-blue text-sm">
                       Latest Articles
                     </Link>
                   </li>
                   <li>
-                    <Link href="/reviews" className="text-gray-600 hover:text-bikotic-blue text-sm">
-                      Video Reviews
+                    <Link href="/tools" className="text-gray-600 hover:text-bikotic-blue text-sm">
+                      Cycling Calculators & Tools
                     </Link>
                   </li>
                   <li>
-                    <Link href="/app" className="text-gray-600 hover:text-bikotic-blue text-sm">
-                      Comparison Tool
+                    <Link href="/reviews" className="text-gray-600 hover:text-bikotic-blue text-sm">
+                      Video Reviews
                     </Link>
                   </li>
                 </ul>
@@ -110,9 +115,12 @@ export default function RootLayout({
                     <a 
                       href="https://youtube.com/@bikotic" 
                       target="_blank"
-                      className="text-gray-600 hover:text-bikotic-blue text-sm"
+                      className="text-gray-600 hover:text-bikotic-blue text-sm flex items-center gap-2"
                     >
-                      YouTube (18K subscribers)
+                      <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                      </svg>
+                      YouTube
                     </a>
                   </li>
                 </ul>
