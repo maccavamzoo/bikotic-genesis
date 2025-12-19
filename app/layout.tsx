@@ -55,7 +55,7 @@ export default function RootLayout({
                   </li>
                   <li>
                     <Link href="/articles" className="text-gray-600 hover:text-bikotic-blue text-sm">
-                      Latest Articles
+                      Latest Articles & Analysis
                     </Link>
                   </li>
                   <li>
