@@ -32,7 +32,7 @@ export default function Navigation() {
           href="/reviews" 
           className="text-gray-700 hover:text-bikotic-blue font-semibold transition-colors"
         >
-          Reviews
+          Video Reviews
         </Link>
         <Link 
           href="/app" 
@@ -89,7 +89,7 @@ export default function Navigation() {
               className="px-4 py-3 text-gray-700 hover:bg-gray-50 hover:text-bikotic-blue font-semibold transition-colors"
               onClick={() => setMobileMenuOpen(false)}
             >
-              Reviews
+              Video Reviews
             </Link>
             <Link 
               href="/app" 
