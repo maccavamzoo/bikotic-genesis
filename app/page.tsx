@@ -9,16 +9,30 @@ export default function Home() {
       <div className="max-w-7xl mx-auto">
 
         {/* Hero Section - Comparison Tool */}
-        <section className="bg-white border-2 border-gray-200 p-8 md:p-12 lg:p-16 rounded-xl mb-12 text-center shadow-sm">
-          <h1 className="text-3xl md:text-4xl lg:text-5xl mb-4 text-[#0a0a0a] font-bold">
-            Visual Bike Comparison Tool
-          </h1>
-          <p className="text-lg md:text-xl mb-6 md:mb-8 text-[#525252] max-w-3xl mx-auto">
-            Compare bikes visually with scaled photos side-by-side. Professional cycling calculators, tools, and expert reviews from our YouTube channel.
-          </p>
-          <button className="bg-bikotic-blue text-white border-none px-8 py-4 text-lg font-bold rounded-lg cursor-pointer hover:bg-bikotic-blue-dark transition-colors shadow-md">
-            Launch Visual Bike Comparison Tool
-          </button>
+        <section className="bg-white border-2 border-gray-200 rounded-xl mb-12 shadow-sm overflow-hidden">
+          <div className="grid md:grid-cols-2 gap-0">
+            {/* Left - Image */}
+            <div className="relative aspect-video md:aspect-square">
+              <img 
+                src="/images/bikotic-visual-bike-comparison.jpg"
+                alt="Visual bike comparison showing Canyon and Factor bikes side by side"
+                className="w-full h-full object-cover"
+              />
+            </div>
+            
+            {/* Right - Content */}
+            <div className="p-8 md:p-12 lg:p-16 flex flex-col justify-center">
+              <h1 className="text-3xl md:text-4xl lg:text-5xl mb-4 text-[#0a0a0a] font-bold">
+                Visual Bike Comparison Tool
+              </h1>
+              <p className="text-lg md:text-xl mb-6 md:mb-8 text-[#525252]">
+                Compare any two Road, MTB, or Gravel bikes from 1,500+ models, overlaid to scale. Fade between images to spot geometry and frame design differences.
+              </p>
+              <button className="bg-bikotic-blue text-white border-none px-8 py-4 text-lg font-bold rounded-lg cursor-pointer hover:bg-bikotic-blue-dark transition-colors shadow-md">
+                Launch Visual Bike Comparison Tool
+              </button>
+            </div>
+          </div>
         </section>
 
         {/* Latest Articles Section */}
