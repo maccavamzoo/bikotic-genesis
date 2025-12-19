@@ -11,13 +11,13 @@ export default function Home() {
         {/* Hero Section - Comparison Tool */}
         <section className="bg-white border-2 border-gray-200 p-8 md:p-12 lg:p-16 rounded-xl mb-12 text-center shadow-sm">
           <h1 className="text-3xl md:text-4xl lg:text-5xl mb-4 text-[#0a0a0a] font-bold">
-            Visual Bike Comparisons & Pro Tools
+            Visual Bike Comparison Tool
           </h1>
           <p className="text-lg md:text-xl mb-6 md:mb-8 text-[#525252] max-w-3xl mx-auto">
-            Compare bikes visually, use professional cycling calculators, and read expert reviews from our YouTube channel.
+            Compare bikes visually with scaled photos side-by-side. Professional cycling calculators, tools, and expert reviews from our YouTube channel.
           </p>
           <button className="bg-bikotic-blue text-white border-none px-8 py-4 text-lg font-bold rounded-lg cursor-pointer hover:bg-bikotic-blue-dark transition-colors shadow-md">
-            Launch Visual Comparison Tool
+            Launch Visual Bike Comparison Tool
           </button>
         </section>
 
