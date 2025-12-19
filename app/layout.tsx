@@ -3,8 +3,8 @@ import Link from 'next/link'
 import Image from 'next/image'
 
 export const metadata = {
-  title: 'BIKOTIC - Visual Bike Comparisons & Reviews',
-  description: 'Compare bikes visually with interactive geometry overlays. Road bikes, MTB, gravel, e-bikes and more.',
+  title: 'BIKOTIC - Visual Bike Comparison Tool & Reviews',
+  description: 'Compare bikes visually with scaled photos side-by-side. Professional cycling calculators, tools, and expert reviews.',
 }
 
 export default function RootLayout({
@@ -59,7 +59,7 @@ export default function RootLayout({
                 href="/app" 
                 className="bg-bikotic-blue text-white px-4 py-2 rounded-lg font-bold hover:bg-bikotic-blue-dark transition-colors"
               >
-                Compare
+                Compare Bikes
               </Link>
             </nav>
           </div>
