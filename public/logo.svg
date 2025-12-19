@@ -9,7 +9,7 @@
       }
 
       .st1 {
-        fill: #4a4b88;
+        fill: currentColor;
       }
     </style>
   </defs>
