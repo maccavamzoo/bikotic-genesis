@@ -53,7 +53,7 @@ export default function RootLayout({
                 href="/reviews" 
                 className="text-gray-700 hover:text-bikotic-blue font-semibold transition-colors"
               >
-                Reviews
+                Video Reviews
               </Link>
               <Link 
                 href="/app" 
