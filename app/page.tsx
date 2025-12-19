@@ -38,20 +38,31 @@ export default function Home() {
                 <a 
                   key={article.slug}
                   href={`/articles/${article.slug}`} 
-                  className="bg-white border-2 border-gray-200 rounded-lg p-6 hover:border-bikotic-blue hover:shadow-lg transition-all block"
+                  className="bg-white border-2 border-gray-200 rounded-lg overflow-hidden hover:border-bikotic-blue hover:shadow-lg transition-all block"
                 >
-                  <div className="text-xs text-bikotic-blue font-bold mb-2">
-                    {article.category.toUpperCase()}
+                  {article.featuredImage && (
+                    <div className="aspect-video bg-gray-300 relative overflow-hidden">
+                      <img 
+                        src={article.featuredImage}
+                        alt={article.title}
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                  )}
+                  <div className="p-6">
+                    <div className="text-xs text-bikotic-blue font-bold mb-2">
+                      {article.category.toUpperCase()}
+                    </div>
+                    <h3 className="text-xl font-bold mb-3 text-[#0a0a0a]">
+                      {article.title}
+                    </h3>
+                    <p className="text-[#525252] mb-4">
+                      {article.description}
+                    </p>
+                    <span className="text-bikotic-blue font-semibold hover:underline">
+                      Read article →
+                    </span>
                   </div>
-                  <h3 className="text-xl font-bold mb-3 text-[#0a0a0a]">
-                    {article.title}
-                  </h3>
-                  <p className="text-[#525252] mb-4">
-                    {article.description}
-                  </p>
-                  <span className="text-bikotic-blue font-semibold hover:underline">
-                    Read article →
-                  </span>
                 </a>
               ))}
             </div>
