@@ -1,0 +1,12 @@
+{
+  "title": "Gear Ratio Calculator",
+  "description": "Compare gear ratios side-by-side between two bikes. Calculate speeds at different cadences, gear inches, development, gain ratios, and identify overlapping gears in 2x setups.",
+  "icon": "⚙️",
+  "features": [
+    "Side-by-side comparison",
+    "Multiple calculation methods",
+    "Overlap detection",
+    "Visual charts"
+  ],
+  "date": "2024-12-15"
+}
