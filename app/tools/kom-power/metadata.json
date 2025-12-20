@@ -1,0 +1,12 @@
+{
+  "title": "KOM Power Calculator",
+  "description": "Work out how much power you'd need to get that Strava KOM. Enter the segment details and see what's required.",
+  "icon": "🏆",
+  "features": [
+    "Calculate required power for any segment",
+    "Power-to-weight analysis",
+    "FTP comparison & sustainability",
+    "Reverse time calculator"
+  ],
+  "date": "2024-12-21"
+}
