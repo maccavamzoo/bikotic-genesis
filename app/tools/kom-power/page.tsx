@@ -106,26 +106,30 @@ export default function KOMPowerCalculator() {
          <label htmlFor="timeMinutes" className="block mb-2 text-gray-700 font-semibold">
           KOM Time (or Your Target)
          </label>
-         <div className="flex gap-2 items-center">
-          <input 
-           type="number" 
-           id="timeMinutes" 
-           placeholder="12"
-           min="0"
-           onChange={() => (window as any).calculatePower()}
-           className="flex-1 px-4 py-2 border-2 border-gray-200 rounded-lg focus:border-bikotic-blue focus:outline-none" 
-          />
-          <span className="text-gray-600 font-semibold">min</span>
-          <input 
-           type="number" 
-           id="timeSeconds" 
-           placeholder="34"
-           min="0"
-           max="59"
-           onChange={() => (window as any).calculatePower()}
-           className="flex-1 px-4 py-2 border-2 border-gray-200 rounded-lg focus:border-bikotic-blue focus:outline-none" 
-          />
-          <span className="text-gray-600 font-semibold">sec</span>
+         <div className="flex flex-col sm:flex-row gap-2 items-stretch sm:items-center">
+          <div className="flex gap-2 items-center flex-1">
+           <input 
+            type="number" 
+            id="timeMinutes" 
+            placeholder="12"
+            min="0"
+            onChange={() => (window as any).calculatePower()}
+            className="flex-1 px-4 py-2 border-2 border-gray-200 rounded-lg focus:border-bikotic-blue focus:outline-none" 
+           />
+           <span className="text-gray-600 font-semibold whitespace-nowrap">min</span>
+          </div>
+          <div className="flex gap-2 items-center flex-1">
+           <input 
+            type="number" 
+            id="timeSeconds" 
+            placeholder="34"
+            min="0"
+            max="59"
+            onChange={() => (window as any).calculatePower()}
+            className="flex-1 px-4 py-2 border-2 border-gray-200 rounded-lg focus:border-bikotic-blue focus:outline-none" 
+           />
+           <span className="text-gray-600 font-semibold whitespace-nowrap">sec</span>
+          </div>
          </div>
         </div>
 
