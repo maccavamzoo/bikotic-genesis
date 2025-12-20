@@ -221,7 +221,7 @@ export default function KOMPowerCalculator() {
      <div className="space-y-6">
       
       {/* Main Result */}
-      <div id="results" className="bg-white border-2 border-gray-200 rounded-lg p-6 shadow-sm hidden">
+      <div id="results" className="bg-white border-2 border-gray-200 rounded-lg p-6 shadow-sm opacity-40">
        <h2 className="text-2xl font-bold text-gray-900 mb-5 pb-3 border-b-2 border-bikotic-blue">
         Required Power
        </h2>
@@ -267,7 +267,7 @@ export default function KOMPowerCalculator() {
       </div>
 
       {/* Power Breakdown */}
-      <div id="breakdown" className="bg-white border-2 border-gray-200 rounded-lg p-6 shadow-sm hidden">
+      <div id="breakdown" className="bg-white border-2 border-gray-200 rounded-lg p-6 shadow-sm opacity-40">
        <h2 className="text-xl font-bold text-gray-900 mb-4">
         Power Breakdown
        </h2>
@@ -291,35 +291,37 @@ export default function KOMPowerCalculator() {
        </div>
       </div>
 
-      {/* Reverse Calculator */}
-      <div id="reverse-calc" className="bg-white border-2 border-gray-200 rounded-lg p-6 shadow-sm hidden">
-       <h2 className="text-xl font-bold text-gray-900 mb-4">
-        What If Calculator
-       </h2>
-       <div className="mb-4">
-        <label htmlFor="whatif-power" className="block mb-2 text-gray-700 font-semibold text-sm">
-         If I can hold (watts):
-        </label>
-        <input 
-         type="number" 
-         id="whatif-power" 
-         placeholder="300"
-         min="50" 
-         max="600"
-         onChange={() => (window as any).calculateTime()}
-         className="w-full px-4 py-2 border-2 border-gray-200 rounded-lg focus:border-bikotic-blue focus:outline-none"
-        />
-       </div>
-       <div className="bg-bikotic-blue bg-opacity-10 rounded-lg p-4 text-center">
-        <div className="text-sm text-gray-600 mb-1">Your Time</div>
-        <div className="text-3xl font-bold text-bikotic-blue" id="whatif-time">
-         --:--
-        </div>
-       </div>
-      </div>
-
      </div>
 
+    </div>
+
+    {/* What If Calculator - Full Width */}
+    <div id="reverse-calc" className="bg-white border-2 border-gray-200 rounded-lg p-6 mt-6 shadow-sm opacity-40">
+     <h2 className="text-xl font-bold text-gray-900 mb-4">
+      What If Calculator
+     </h2>
+     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div>
+       <label htmlFor="whatif-power" className="block mb-2 text-gray-700 font-semibold text-sm">
+        If I can hold (watts):
+       </label>
+       <input 
+        type="number" 
+        id="whatif-power" 
+        placeholder="300"
+        min="50" 
+        max="600"
+        onChange={() => (window as any).calculateTime()}
+        className="w-full px-4 py-2 border-2 border-gray-200 rounded-lg focus:border-bikotic-blue focus:outline-none"
+       />
+      </div>
+      <div className="bg-bikotic-blue bg-opacity-10 rounded-lg p-4 text-center flex flex-col justify-center">
+       <div className="text-sm text-gray-600 mb-1">Your Time</div>
+       <div className="text-3xl font-bold text-bikotic-blue" id="whatif-time">
+        --:--
+       </div>
+      </div>
+     </div>
     </div>
 
     {/* Reference Table */}
@@ -412,9 +414,12 @@ export default function KOMPowerCalculator() {
 
      // Validate
      if (!distance || !elevation || (!timeMin && !timeSec) || !riderWeight) {
-      document.getElementById('results').classList.add('hidden');
-      document.getElementById('breakdown').classList.add('hidden');
-      document.getElementById('reverse-calc').classList.add('hidden');
+      document.getElementById('results').classList.add('opacity-40');
+      document.getElementById('breakdown').classList.add('opacity-40');
+      document.getElementById('reverse-calc').classList.add('opacity-40');
+      document.getElementById('results').classList.remove('opacity-100');
+      document.getElementById('breakdown').classList.remove('opacity-100');
+      document.getElementById('reverse-calc').classList.remove('opacity-100');
       return;
      }
 
@@ -485,9 +490,12 @@ export default function KOMPowerCalculator() {
      }
 
      // Show results
-     document.getElementById('results').classList.remove('hidden');
-     document.getElementById('breakdown').classList.remove('hidden');
-     document.getElementById('reverse-calc').classList.remove('hidden');
+     document.getElementById('results').classList.remove('opacity-40');
+     document.getElementById('breakdown').classList.remove('opacity-40');
+     document.getElementById('reverse-calc').classList.remove('opacity-40');
+     document.getElementById('results').classList.add('opacity-100');
+     document.getElementById('breakdown').classList.add('opacity-100');
+     document.getElementById('reverse-calc').classList.add('opacity-100');
 
      // Store values for reverse calc
      window.segmentData = {
