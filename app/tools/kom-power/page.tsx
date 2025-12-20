@@ -38,7 +38,7 @@ export default function KOMPowerCalculator() {
          <label htmlFor="distance" className="block mb-2 text-gray-700 font-semibold">
           Distance
          </label>
-         <div className="flex gap-2">
+         <div className="flex flex-col sm:flex-row gap-2">
           <input 
            type="number" 
            id="distance" 
@@ -48,16 +48,16 @@ export default function KOMPowerCalculator() {
            onChange={() => (window as any).calculatePower()}
            className="flex-1 px-4 py-2 border-2 border-gray-200 rounded-lg focus:border-bikotic-blue focus:outline-none" 
           />
-          <div className="flex border-2 border-bikotic-blue rounded-lg overflow-hidden">
+          <div className="flex border-2 border-bikotic-blue rounded-lg overflow-hidden w-full sm:w-auto">
            <button 
-            className="px-4 py-2 bg-bikotic-blue text-white font-semibold transition-colors hover:bg-bikotic-blue-dark"
+            className="flex-1 px-4 py-2 bg-bikotic-blue text-white font-semibold transition-colors hover:bg-bikotic-blue-dark"
             onClick={(e) => (window as any).toggleUnits('distance', 'km', e)}
             id="btn-distance-km"
            >
             km
            </button>
            <button 
-            className="px-4 py-2 bg-white text-bikotic-blue font-semibold transition-colors hover:bg-gray-50"
+            className="flex-1 px-4 py-2 bg-white text-bikotic-blue font-semibold transition-colors hover:bg-gray-50"
             onClick={(e) => (window as any).toggleUnits('distance', 'mi', e)}
             id="btn-distance-mi"
            >
@@ -72,7 +72,7 @@ export default function KOMPowerCalculator() {
          <label htmlFor="elevation" className="block mb-2 text-gray-700 font-semibold">
           Elevation Gain
          </label>
-         <div className="flex gap-2">
+         <div className="flex flex-col sm:flex-row gap-2">
           <input 
            type="number" 
            id="elevation" 
@@ -82,16 +82,16 @@ export default function KOMPowerCalculator() {
            onChange={() => (window as any).calculatePower()}
            className="flex-1 px-4 py-2 border-2 border-gray-200 rounded-lg focus:border-bikotic-blue focus:outline-none" 
           />
-          <div className="flex border-2 border-bikotic-blue rounded-lg overflow-hidden">
+          <div className="flex border-2 border-bikotic-blue rounded-lg overflow-hidden w-full sm:w-auto">
            <button 
-            className="px-4 py-2 bg-bikotic-blue text-white font-semibold transition-colors hover:bg-bikotic-blue-dark"
+            className="flex-1 px-4 py-2 bg-bikotic-blue text-white font-semibold transition-colors hover:bg-bikotic-blue-dark"
             onClick={(e) => (window as any).toggleUnits('elevation', 'm', e)}
             id="btn-elevation-m"
            >
             m
            </button>
            <button 
-            className="px-4 py-2 bg-white text-bikotic-blue font-semibold transition-colors hover:bg-gray-50"
+            className="flex-1 px-4 py-2 bg-white text-bikotic-blue font-semibold transition-colors hover:bg-gray-50"
             onClick={(e) => (window as any).toggleUnits('elevation', 'ft', e)}
             id="btn-elevation-ft"
            >
