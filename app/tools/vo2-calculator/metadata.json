@@ -1,0 +1,12 @@
+{
+  "title": "VO₂ Max Calculator",
+  "description": "Estimate your VO₂ max using simple heart rate measurements. No lab testing required - just your resting heart rate and either your maximum heart rate or age.",
+  "icon": "💓",
+  "features": [
+    "Heart rate-based estimation",
+    "Age or max HR methods",
+    "Fitness category rating",
+    "Reference ranges included"
+  ],
+  "date": "2024-12-20"
+}
