@@ -161,10 +161,10 @@ export default function KOMPowerCalculator() {
          />
         </div>
 
-        {/* Bike Weight */}
+        {/* Bike & Gear Weight */}
         <div>
          <label htmlFor="bikeWeight" className="block mb-2 text-gray-700 font-semibold">
-          Bike Weight (kg)
+          Bike & Gear Weight (kg)
          </label>
          <input 
           type="number" 
@@ -177,7 +177,7 @@ export default function KOMPowerCalculator() {
           onChange={() => (window as any).calculatePower()}
           className="w-full px-4 py-2 border-2 border-gray-200 rounded-lg focus:border-bikotic-blue focus:outline-none" 
          />
-         <p className="text-sm text-gray-500 mt-2">Default is 8kg (typical road bike)</p>
+         <p className="text-sm text-gray-500 mt-2">Bike plus bottles, tools, kit - default 8kg</p>
         </div>
 
         {/* FTP (Optional) */}
