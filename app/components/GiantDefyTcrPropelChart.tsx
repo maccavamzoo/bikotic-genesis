@@ -152,7 +152,7 @@ export default function GiantDefyTcrPropelChart({ className = '' }: GiantDefyTcr
   const toggleBike = (bikeId: string) => {
     setSelectedBikes(prev => ({
       ...prev,
-      [bikeId]: !prev[bikeId]
+      [bikeId]: !prev[bikeId as keyof typeof prev]
     }))
   }
 
