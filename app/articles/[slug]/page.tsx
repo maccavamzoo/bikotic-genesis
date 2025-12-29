@@ -2,6 +2,8 @@ import fs from 'fs'
 import path from 'path'
 import { compileMDX } from 'next-mdx-remote/rsc'
 import remarkGfm from 'remark-gfm'
+import GiantDefyTcrPropelChart from '@/app/components/GiantDefyTcrPropelChart'
+import GiantDefyTcrPropelQuiz from '@/app/components/GiantDefyTcrPropelQuiz'
 
 const components = {
   img: (props: any) => (
@@ -26,6 +28,8 @@ const components = {
   tr: (props: any) => (
     <tr className="hover:bg-gray-50" {...props} />
   ),
+  GiantDefyTcrPropelChart,
+  GiantDefyTcrPropelQuiz,
 }
 
 export async function generateStaticParams() {
