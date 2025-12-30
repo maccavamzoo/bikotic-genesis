@@ -18,13 +18,13 @@ export default function GiantDefyTcrPropelChart({ className = '' }: GiantDefyTcr
   // Detailed specs for tooltip
   const detailedSpecs: Record<string, Record<string, string>> = {
     Weight: {
-      defy: 'Complete: Approx. 7.5-8kg | Frame: Approx. 950-1050g (Giant don\'t list actual figures)',
-      tcr: 'Complete: Approx. 7-7.3kg | Frame: Approx. 800-900g (Giant don\'t list actual figures)',
-      propel: 'Complete: Approx. 7.3-7.6kg | Frame: Approx. 900-1000g (Giant don\'t list actual figures)'
+      defy: 'Approx. 7.5-8kg (Giant don\'t list actual figures)',
+      tcr: 'Approx. 7-7.3kg (Giant don\'t list actual figures)',
+      propel: 'Approx. 7.3-7.6kg (Giant don\'t list actual figures)'
     },
     Aerodynamics: {
-      defy: 'Standard endurance tubes',
-      tcr: 'Optimized tube shaping',
+      defy: 'Endurance bias',
+      tcr: 'Lightweight bias',
       propel: 'AeroSystem Shaping + truncated ellipse tubes'
     },
     Comfort: {
@@ -38,14 +38,14 @@ export default function GiantDefyTcrPropelChart({ className = '' }: GiantDefyTcr
       propel: 'PowerCore BB + aero race layup'
     },
     Climbing: {
-      defy: 'Compact 50/34 gearing, heavier frame',
-      tcr: 'Semi-compact 50/36, lightest frame',
-      propel: 'Standard 52/36, aero frame'
+      defy: 'Compact 50/34 gearing',
+      tcr: 'Semi-compact 50/36',
+      propel: 'Standard 52/36'
     },
     Versatility: {
-      defy: '40mm max tire, fender mounts, relaxed geo',
-      tcr: '33mm max tire, aggressive race geo',
-      propel: '32mm max tire, aero-focused race geo'
+      defy: '40mm max tire, fender mounts',
+      tcr: '33mm max tire',
+      propel: '32mm max tire'
     },
     Value: {
       defy: '£5,499 - endurance features',
@@ -58,14 +58,14 @@ export default function GiantDefyTcrPropelChart({ className = '' }: GiantDefyTcr
   const data = [
     {
       attribute: 'Weight',
-      defy: 7.0,
-      tcr: 9.5,
-      propel: 8.5,
+      defy: 7.8,
+      tcr: 9.0,
+      propel: 8.0,
       fullMark: 10
     },
     {
       attribute: 'Aerodynamics',
-      defy: 6.0,
+      defy: 7.0,
       tcr: 7.5,
       propel: 9.5,
       fullMark: 10
@@ -73,8 +73,8 @@ export default function GiantDefyTcrPropelChart({ className = '' }: GiantDefyTcr
     {
       attribute: 'Comfort',
       defy: 9.5,
-      tcr: 6.0,
-      propel: 6.5,
+      tcr: 8.0,
+      propel: 7.5,
       fullMark: 10
     },
     {
@@ -86,16 +86,16 @@ export default function GiantDefyTcrPropelChart({ className = '' }: GiantDefyTcr
     },
     {
       attribute: 'Climbing',
-      defy: 7.0,
+      defy: 8.0,
       tcr: 9.5,
-      propel: 8.5,
+      propel: 8.0,
       fullMark: 10
     },
     {
       attribute: 'Versatility',
       defy: 9.5,
-      tcr: 7.0,
-      propel: 6.5,
+      tcr: 8.5,
+      propel: 7.0,
       fullMark: 10
     },
     {
