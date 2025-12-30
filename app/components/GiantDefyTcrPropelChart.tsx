@@ -279,7 +279,7 @@ export default function GiantDefyTcrPropelChart({ className = '' }: GiantDefyTcr
         <p className="text-sm text-gray-700">
           All three bikes feature Shimano Ultegra Di2 groupsets, Giant Power Pro power meters, and SLR carbon wheels. 
           The Defy prioritizes comfort and versatility with endurance geometry and 40mm tire clearance. The TCR is the 
-          pure climbing machine with the lightest weight and most aggressive position. The Propel trades a bit of weight 
+          pure climbing machine with the lightest weight. The Propel trades a bit of weight 
           for maximum aerodynamic efficiency.
         </p>
       </div>
