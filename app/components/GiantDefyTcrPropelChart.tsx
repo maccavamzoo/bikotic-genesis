@@ -115,10 +115,7 @@ export default function GiantDefyTcrPropelChart({ className = '' }: GiantDefyTcr
       price: '£5,499',
       category: 'Endurance',
       specs: [
-        'Weight: Endurance geometry adds comfort',
-        'Tire clearance: 40mm',
-        'Gearing: 50/34 with 11-34',
-        'D-Fuse compliance technology'
+        
       ]
     },
     {
@@ -128,10 +125,7 @@ export default function GiantDefyTcrPropelChart({ className = '' }: GiantDefyTcr
       price: '£5,499',
       category: 'Lightweight Race',
       specs: [
-        'Weight: Lightest of the three',
-        'Tire clearance: 33mm',
-        'Gearing: 50/36 with 11-34',
-        'Most aggressive race geometry'
+        
       ]
     },
     {
@@ -141,10 +135,7 @@ export default function GiantDefyTcrPropelChart({ className = '' }: GiantDefyTcr
       price: '£5,299',
       category: 'Aero Race',
       specs: [
-        'Weight: Lighter than previous gen',
-        'Tire clearance: 32mm',
-        'Gearing: 52/36 with 11-30',
-        'Optimized for aerodynamics'
+        
       ]
     }
   ]
