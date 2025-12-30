@@ -182,7 +182,7 @@ export default function GiantDefyTcrPropelChart({ className = '' }: GiantDefyTcr
     <div className={`w-full bg-white rounded-xl shadow-lg p-8 my-8 ${className}`}>
       <div className="mb-6">
         <h3 className="text-2xl font-bold text-gray-800 mb-2">Interactive Comparison</h3>
-        <p className="text-gray-600">Click bikes to toggle visibility. Hover over chart points for detailed specs.</p>
+        <p className="text-gray-600">Click bikes to toggle visibility. Hover over chart points for detailed specs. *note: Giant dont list bike weights on their website</p>
       </div>
       
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
