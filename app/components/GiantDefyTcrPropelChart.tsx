@@ -17,10 +17,10 @@ export default function GiantDefyTcrPropelChart({ className = '' }: GiantDefyTcr
 
   // Detailed specs for tooltip
   const detailedSpecs: Record<string, Record<string, string>> = {
-    Weight (Giant don\'t list actual figures): {
+    Weight: {
       defy: 'Approx. 7.5-8kg-ish',
-      tcr: 'Approx. 7-7.3kg (Giant don\'t list actual figures)',
-      propel: 'Approx. 7.3-7.6kg (Giant don\'t list actual figures)'
+      tcr: 'Approx. 7-7.3kg-ish',
+      propel: 'Approx. 7.3-7.6kg-ish'
     },
     Aerodynamics: {
       defy: 'Endurance bias',
@@ -57,7 +57,7 @@ export default function GiantDefyTcrPropelChart({ className = '' }: GiantDefyTcr
   // Comparison data normalized on 0-10 scale
   const data = [
     {
-      attribute: 'Weight',
+      attribute: 'Weight (Giant don\'t list actual figures)',
       defy: 7.8,
       tcr: 9.0,
       propel: 8.0,
