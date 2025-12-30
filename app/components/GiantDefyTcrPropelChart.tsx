@@ -57,7 +57,7 @@ export default function GiantDefyTcrPropelChart({ className = '' }: GiantDefyTcr
   // Comparison data normalized on 0-10 scale
   const data = [
     {
-      attribute: 'Weight (Giant don\'t list actual figures)',
+      attribute: 'Weight Giant dont list actual figures',
       defy: 7.8,
       tcr: 9.0,
       propel: 8.0,
