@@ -4,6 +4,8 @@ import { compileMDX } from 'next-mdx-remote/rsc'
 import remarkGfm from 'remark-gfm'
 import GiantDefyTcrPropelChart from '@/app/components/GiantDefyTcrPropelChart'
 import GiantDefyTcrPropelQuiz from '@/app/components/GiantDefyTcrPropelQuiz'
+import TarmacMadoneChart from '@/app/components/TarmacMadoneChart'
+import TarmacMadoneQuiz from '@/app/components/TarmacMadoneQuiz'
 
 const components = {
   img: (props: any) => (
@@ -30,6 +32,8 @@ const components = {
   ),
   GiantDefyTcrPropelChart,
   GiantDefyTcrPropelQuiz,
+  TarmacMadoneChart,
+  TarmacMadoneQuiz,
 }
 
 export async function generateStaticParams() {
