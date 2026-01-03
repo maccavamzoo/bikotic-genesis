@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, ResponsiveContainer, Tooltip } from 'recharts'
 import { Check, X } from 'lucide-react'
 
@@ -14,13 +14,6 @@ export default function GiantDefyTcrPropelChart({ className = '' }: GiantDefyTcr
     tcr: true,
     propel: true
   })
-  const [, setRender] = useState(0)
-
-  // Force re-render after mount to fix ResponsiveContainer
-  useEffect(() => {
-    const timer = setTimeout(() => setRender(1), 100)
-    return () => clearTimeout(timer)
-  }, [])
 
   // Detailed specs for tooltip
   const detailedSpecs: Record<string, Record<string, string>> = {
