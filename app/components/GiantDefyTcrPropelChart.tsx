@@ -224,10 +224,9 @@ export default function GiantDefyTcrPropelChart({ className = '' }: GiantDefyTcr
         ))}
       </div>
 
-      <div className="bg-gray-50 rounded-xl p-6" suppressHydrationWarning>
-        <div className="h-[400px] md:h-[600px]" suppressHydrationWarning>
-          <ResponsiveContainer width="100%" height="100%">
-            <RadarChart data={data}>
+      <div className="bg-gray-50 rounded-xl p-6">
+        <ResponsiveContainer width="100%" height={500}>
+          <RadarChart data={data}>
               <PolarGrid stroke="#cbd5e1" />
               <PolarAngleAxis 
                 dataKey="attribute" 
@@ -274,7 +273,6 @@ export default function GiantDefyTcrPropelChart({ className = '' }: GiantDefyTcr
               )}
             </RadarChart>
           </ResponsiveContainer>
-        </div>
       </div>
 
       <div className="mt-6 p-4 bg-blue-50 rounded-lg border border-blue-200">
