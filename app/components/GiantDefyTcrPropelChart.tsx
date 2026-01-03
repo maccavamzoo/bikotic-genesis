@@ -231,56 +231,62 @@ export default function GiantDefyTcrPropelChart({ className = '' }: GiantDefyTcr
       </div>
 
       <div className="bg-gray-50 rounded-xl p-6">
-        {mounted && (
-          <ResponsiveContainer width="100%" height={600}>
-            <RadarChart data={data}>
-              <PolarGrid stroke="#cbd5e1" />
-              <PolarAngleAxis 
-                dataKey="attribute" 
-                tick={{ fill: '#475569', fontSize: 14, fontWeight: 600 }}
-              />
-              <PolarRadiusAxis 
-                angle={90} 
-                domain={[0, 10]} 
-                tick={{ fill: '#94a3b8', fontSize: 12 }}
-              />
-              <Tooltip content={<CustomTooltip />} />
-              
-              {selectedBikes.defy && (
-                <Radar
-                  name="Defy"
-                  dataKey="defy"
-                  stroke="#3B82F6"
-                  fill="#3B82F6"
-                  fillOpacity={0.25}
-                  strokeWidth={3}
+        <div className="h-[400px] md:h-[600px]">
+          {mounted ? (
+            <ResponsiveContainer width="100%" height="100%">
+              <RadarChart data={data}>
+                <PolarGrid stroke="#cbd5e1" />
+                <PolarAngleAxis 
+                  dataKey="attribute" 
+                  tick={{ fill: '#475569', fontSize: 14, fontWeight: 600 }}
                 />
-              )}
-              
-              {selectedBikes.tcr && (
-                <Radar
-                  name="TCR"
-                  dataKey="tcr"
-                  stroke="#EF4444"
-                  fill="#EF4444"
-                  fillOpacity={0.25}
-                  strokeWidth={3}
+                <PolarRadiusAxis 
+                  angle={90} 
+                  domain={[0, 10]} 
+                  tick={{ fill: '#94a3b8', fontSize: 12 }}
                 />
-              )}
-              
-              {selectedBikes.propel && (
-                <Radar
-                  name="Propel"
-                  dataKey="propel"
-                  stroke="#10B981"
-                  fill="#10B981"
-                  fillOpacity={0.25}
-                  strokeWidth={3}
-                />
-              )}
-            </RadarChart>
-          </ResponsiveContainer>
-        )}
+                <Tooltip content={<CustomTooltip />} />
+                
+                {selectedBikes.defy && (
+                  <Radar
+                    name="Defy"
+                    dataKey="defy"
+                    stroke="#3B82F6"
+                    fill="#3B82F6"
+                    fillOpacity={0.25}
+                    strokeWidth={3}
+                  />
+                )}
+                
+                {selectedBikes.tcr && (
+                  <Radar
+                    name="TCR"
+                    dataKey="tcr"
+                    stroke="#EF4444"
+                    fill="#EF4444"
+                    fillOpacity={0.25}
+                    strokeWidth={3}
+                  />
+                )}
+                
+                {selectedBikes.propel && (
+                  <Radar
+                    name="Propel"
+                    dataKey="propel"
+                    stroke="#10B981"
+                    fill="#10B981"
+                    fillOpacity={0.25}
+                    strokeWidth={3}
+                  />
+                )}
+              </RadarChart>
+            </ResponsiveContainer>
+          ) : (
+            <div className="flex items-center justify-center h-full">
+              <div className="text-gray-400">Loading chart...</div>
+            </div>
+          )}
+        </div>
       </div>
 
       <div className="mt-6 p-4 bg-blue-50 rounded-lg border border-blue-200">
