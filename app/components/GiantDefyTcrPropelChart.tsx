@@ -225,7 +225,59 @@ export default function GiantDefyTcrPropelChart({ className = '' }: GiantDefyTcr
       </div>
 
       <div className="bg-gray-50 rounded-xl p-6 flex justify-center">
-        <RadarChart width={500} height={500} data={data}>
+        {/* Mobile chart */}
+        <div className="block md:hidden">
+          <RadarChart width={350} height={350} data={data}>
+            <PolarGrid stroke="#cbd5e1" />
+            <PolarAngleAxis 
+              dataKey="attribute" 
+              tick={{ fill: '#475569', fontSize: 12, fontWeight: 600 }}
+            />
+            <PolarRadiusAxis 
+              angle={90} 
+              domain={[0, 10]} 
+              tick={{ fill: '#94a3b8', fontSize: 10 }}
+            />
+            <Tooltip content={<CustomTooltip />} />
+            
+            {selectedBikes.defy && (
+              <Radar
+                name="Defy"
+                dataKey="defy"
+                stroke="#3B82F6"
+                fill="#3B82F6"
+                fillOpacity={0.25}
+                strokeWidth={3}
+              />
+            )}
+            
+            {selectedBikes.tcr && (
+              <Radar
+                name="TCR"
+                dataKey="tcr"
+                stroke="#EF4444"
+                fill="#EF4444"
+                fillOpacity={0.25}
+                strokeWidth={3}
+              />
+            )}
+            
+            {selectedBikes.propel && (
+              <Radar
+                name="Propel"
+                dataKey="propel"
+                stroke="#10B981"
+                fill="#10B981"
+                fillOpacity={0.25}
+                strokeWidth={3}
+              />
+            )}
+          </RadarChart>
+        </div>
+
+        {/* Desktop chart */}
+        <div className="hidden md:block">
+          <RadarChart width={600} height={600} data={data}>
               <PolarGrid stroke="#cbd5e1" />
               <PolarAngleAxis 
                 dataKey="attribute" 
@@ -271,6 +323,7 @@ export default function GiantDefyTcrPropelChart({ className = '' }: GiantDefyTcr
                 />
               )}
             </RadarChart>
+        </div>
       </div>
 
       <div className="mt-6 p-4 bg-blue-50 rounded-lg border border-blue-200">
