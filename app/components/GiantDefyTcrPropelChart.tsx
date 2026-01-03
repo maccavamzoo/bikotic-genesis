@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, ResponsiveContainer, Tooltip } from 'recharts'
 import { Check, X } from 'lucide-react'
 
@@ -14,6 +14,12 @@ export default function GiantDefyTcrPropelChart({ className = '' }: GiantDefyTcr
     tcr: true,
     propel: true
   })
+  const [mounted, setMounted] = useState(false)
+
+  // Fix for ResponsiveContainer hydration issue
+  useEffect(() => {
+    setMounted(true)
+  }, [])
 
   // Detailed specs for tooltip
   const detailedSpecs: Record<string, Record<string, string>> = {
@@ -225,60 +231,62 @@ export default function GiantDefyTcrPropelChart({ className = '' }: GiantDefyTcr
       </div>
 
       <div className="bg-gray-50 rounded-xl p-6">
-        <ResponsiveContainer width="100%" height={600}>
-          <RadarChart data={data}>
-            <PolarGrid stroke="#cbd5e1" />
-            <PolarAngleAxis 
-              dataKey="attribute" 
-              tick={{ fill: '#475569', fontSize: 14, fontWeight: 600 }}
-            />
-            <PolarRadiusAxis 
-              angle={90} 
-              domain={[0, 10]} 
-              tick={{ fill: '#94a3b8', fontSize: 12 }}
-            />
-            <Tooltip content={<CustomTooltip />} />
-            
-            {selectedBikes.defy && (
-              <Radar
-                name="Defy"
-                dataKey="defy"
-                stroke="#3B82F6"
-                fill="#3B82F6"
-                fillOpacity={0.25}
-                strokeWidth={3}
+        {mounted && (
+          <ResponsiveContainer width="100%" height={600}>
+            <RadarChart data={data}>
+              <PolarGrid stroke="#cbd5e1" />
+              <PolarAngleAxis 
+                dataKey="attribute" 
+                tick={{ fill: '#475569', fontSize: 14, fontWeight: 600 }}
               />
-            )}
-            
-            {selectedBikes.tcr && (
-              <Radar
-                name="TCR"
-                dataKey="tcr"
-                stroke="#EF4444"
-                fill="#EF4444"
-                fillOpacity={0.25}
-                strokeWidth={3}
+              <PolarRadiusAxis 
+                angle={90} 
+                domain={[0, 10]} 
+                tick={{ fill: '#94a3b8', fontSize: 12 }}
               />
-            )}
-            
-            {selectedBikes.propel && (
-              <Radar
-                name="Propel"
-                dataKey="propel"
-                stroke="#10B981"
-                fill="#10B981"
-                fillOpacity={0.25}
-                strokeWidth={3}
-              />
-            )}
-          </RadarChart>
-        </ResponsiveContainer>
+              <Tooltip content={<CustomTooltip />} />
+              
+              {selectedBikes.defy && (
+                <Radar
+                  name="Defy"
+                  dataKey="defy"
+                  stroke="#3B82F6"
+                  fill="#3B82F6"
+                  fillOpacity={0.25}
+                  strokeWidth={3}
+                />
+              )}
+              
+              {selectedBikes.tcr && (
+                <Radar
+                  name="TCR"
+                  dataKey="tcr"
+                  stroke="#EF4444"
+                  fill="#EF4444"
+                  fillOpacity={0.25}
+                  strokeWidth={3}
+                />
+              )}
+              
+              {selectedBikes.propel && (
+                <Radar
+                  name="Propel"
+                  dataKey="propel"
+                  stroke="#10B981"
+                  fill="#10B981"
+                  fillOpacity={0.25}
+                  strokeWidth={3}
+                />
+              )}
+            </RadarChart>
+          </ResponsiveContainer>
+        )}
       </div>
 
       <div className="mt-6 p-4 bg-blue-50 rounded-lg border border-blue-200">
         <p className="text-sm text-gray-700">
           All three bikes feature Shimano Ultegra Di2 groupsets, Giant Power Pro power meters, and SLR carbon wheels. 
-          The Defy prioritizes comfort and versatility with endurance geometry and 40mm tire clearance. The TCR is the 
+          The Defy prioritises comfort and versatility with endurance geometry and 40mm tire clearance. The TCR is the 
           pure climbing machine with the lightest weight. The Propel trades a bit of weight 
           for maximum aerodynamic efficiency.
         </p>
