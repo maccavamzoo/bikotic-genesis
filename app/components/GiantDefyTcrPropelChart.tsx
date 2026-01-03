@@ -1,7 +1,7 @@
 'use client'
 
-import React, { useState, useEffect } from 'react'
-import { Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, ResponsiveContainer, Tooltip } from 'recharts'
+import React, { useState } from 'react'
+import { Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Tooltip } from 'recharts'
 import { Check, X } from 'lucide-react'
 
 interface GiantDefyTcrPropelChartProps {
@@ -14,11 +14,6 @@ export default function GiantDefyTcrPropelChart({ className = '' }: GiantDefyTcr
     tcr: true,
     propel: true
   })
-  const [mounted, setMounted] = useState(false)
-
-  useEffect(() => {
-    setMounted(true)
-  }, [])
 
   // Detailed specs for tooltip
   const detailedSpecs: Record<string, Record<string, string>> = {
@@ -229,9 +224,8 @@ export default function GiantDefyTcrPropelChart({ className = '' }: GiantDefyTcr
         ))}
       </div>
 
-      <div className="bg-gray-50 rounded-xl p-6">
-        <ResponsiveContainer width="100%" height={500} key={mounted ? 'mounted' : 'initial'}>
-          <RadarChart data={data}>
+      <div className="bg-gray-50 rounded-xl p-6 flex justify-center">
+        <RadarChart width={500} height={500} data={data}>
               <PolarGrid stroke="#cbd5e1" />
               <PolarAngleAxis 
                 dataKey="attribute" 
@@ -277,7 +271,6 @@ export default function GiantDefyTcrPropelChart({ className = '' }: GiantDefyTcr
                 />
               )}
             </RadarChart>
-          </ResponsiveContainer>
       </div>
 
       <div className="mt-6 p-4 bg-blue-50 rounded-lg border border-blue-200">
