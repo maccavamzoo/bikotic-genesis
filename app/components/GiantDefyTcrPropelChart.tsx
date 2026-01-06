@@ -18,7 +18,10 @@ export default function GiantDefyTcrPropelChart({ className = '' }: GiantDefyTcr
 
   useEffect(() => {
     setMounted(true)
+    console.log('Chart mounted')
   }, [])
+
+  console.log('Render state:', mounted)
 
   if (!mounted) {
     return <div className="w-full h-[600px] bg-gray-100 rounded-xl animate-pulse" />
