@@ -19,6 +19,13 @@ export default function GiantDefyTcrPropelChart({ className = '' }: GiantDefyTcr
   useEffect(() => {
     setMounted(true)
     console.log('Chart mounted')
+    
+    // Force re-render for Recharts
+    const timer = setTimeout(() => {
+      window.dispatchEvent(new Event('resize'))
+    }, 100)
+    
+    return () => clearTimeout(timer)
   }, [])
 
   console.log('Render state:', mounted)
