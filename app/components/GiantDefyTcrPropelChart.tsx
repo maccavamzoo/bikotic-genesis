@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Tooltip } from 'recharts'
 import { Check, X } from 'lucide-react'
 
@@ -9,11 +9,20 @@ interface GiantDefyTcrPropelChartProps {
 }
 
 export default function GiantDefyTcrPropelChart({ className = '' }: GiantDefyTcrPropelChartProps) {
+  const [mounted, setMounted] = useState(false)
   const [selectedBikes, setSelectedBikes] = useState({
     defy: true,
     tcr: true,
     propel: true
   })
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+
+  if (!mounted) {
+    return <div className="w-full h-[600px] bg-gray-100 rounded-xl animate-pulse" />
+  }
 
   // Detailed specs for tooltip
   const detailedSpecs: Record<string, Record<string, string>> = {
