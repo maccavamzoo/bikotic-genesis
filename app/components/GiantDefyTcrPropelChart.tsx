@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState, useEffect } from 'react'
-import { Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Tooltip } from 'recharts'
+import { Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, ResponsiveContainer, Tooltip } from 'recharts'
 import { Check, X } from 'lucide-react'
 
 interface GiantDefyTcrPropelChartProps {
@@ -18,17 +18,7 @@ export default function GiantDefyTcrPropelChart({ className = '' }: GiantDefyTcr
 
   useEffect(() => {
     setMounted(true)
-    console.log('Chart mounted')
-    
-    // Force re-render for Recharts
-    const timer = setTimeout(() => {
-      window.dispatchEvent(new Event('resize'))
-    }, 100)
-    
-    return () => clearTimeout(timer)
   }, [])
-
-  console.log('Render state:', mounted)
 
   if (!mounted) {
     return <div className="w-full h-[600px] bg-gray-100 rounded-xl animate-pulse" />
@@ -198,7 +188,7 @@ export default function GiantDefyTcrPropelChart({ className = '' }: GiantDefyTcr
   }
 
   return (
-    <div key={mounted ? 'chart-mounted' : 'chart-loading'} className={`w-full bg-white rounded-xl shadow-lg p-8 my-8 ${className}`}>
+    <div className={`w-full bg-white rounded-xl shadow-lg p-8 my-8 ${className}`}>
       <div className="mb-6">
         <h3 className="text-2xl font-bold text-gray-800 mb-2">Interactive Comparison</h3>
         <p className="text-gray-600">Click bikes to toggle visibility. Hover over chart points for detailed specs. *note: Giant dont list bike weights on their website</p>
@@ -243,19 +233,18 @@ export default function GiantDefyTcrPropelChart({ className = '' }: GiantDefyTcr
         ))}
       </div>
 
-      <div className="bg-gray-50 rounded-xl p-6 flex justify-center">
-        {/* Mobile chart */}
-        <div className="block md:hidden">
-          <RadarChart width={350} height={350} data={data}>
+      <div className="bg-gray-50 rounded-xl p-6">
+        <ResponsiveContainer width="100%" aspect={1}>
+          <RadarChart data={data}>
             <PolarGrid stroke="#cbd5e1" />
             <PolarAngleAxis 
               dataKey="attribute" 
-              tick={{ fill: '#475569', fontSize: 12, fontWeight: 600 }}
+              tick={{ fill: '#475569', fontSize: 14, fontWeight: 600 }}
             />
             <PolarRadiusAxis 
               angle={90} 
               domain={[0, 10]} 
-              tick={{ fill: '#94a3b8', fontSize: 10 }}
+              tick={{ fill: '#94a3b8', fontSize: 12 }}
             />
             <Tooltip content={<CustomTooltip />} />
             
@@ -292,57 +281,7 @@ export default function GiantDefyTcrPropelChart({ className = '' }: GiantDefyTcr
               />
             )}
           </RadarChart>
-        </div>
-
-        {/* Desktop chart */}
-        <div className="hidden md:block">
-          <RadarChart width={600} height={600} data={data}>
-              <PolarGrid stroke="#cbd5e1" />
-              <PolarAngleAxis 
-                dataKey="attribute" 
-                tick={{ fill: '#475569', fontSize: 14, fontWeight: 600 }}
-              />
-              <PolarRadiusAxis 
-                angle={90} 
-                domain={[0, 10]} 
-                tick={{ fill: '#94a3b8', fontSize: 12 }}
-              />
-              <Tooltip content={<CustomTooltip />} />
-              
-              {selectedBikes.defy && (
-                <Radar
-                  name="Defy"
-                  dataKey="defy"
-                  stroke="#3B82F6"
-                  fill="#3B82F6"
-                  fillOpacity={0.25}
-                  strokeWidth={3}
-                />
-              )}
-              
-              {selectedBikes.tcr && (
-                <Radar
-                  name="TCR"
-                  dataKey="tcr"
-                  stroke="#EF4444"
-                  fill="#EF4444"
-                  fillOpacity={0.25}
-                  strokeWidth={3}
-                />
-              )}
-              
-              {selectedBikes.propel && (
-                <Radar
-                  name="Propel"
-                  dataKey="propel"
-                  stroke="#10B981"
-                  fill="#10B981"
-                  fillOpacity={0.25}
-                  strokeWidth={3}
-                />
-              )}
-            </RadarChart>
-        </div>
+        </ResponsiveContainer>
       </div>
 
       <div className="mt-6 p-4 bg-blue-50 rounded-lg border border-blue-200">
