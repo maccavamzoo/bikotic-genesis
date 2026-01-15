@@ -1,6 +1,163 @@
 'use client'
 
+import { useState, useEffect } from 'react'
+
 export default function TrackCyclingCalculator() {
+  const [speedUnit, setSpeedUnit] = useState<'kph' | 'mph'>('kph')
+  const [event, setEvent] = useState('pursuit4k')
+  const [distance, setDistance] = useState(4000)
+  const [trackLength, setTrackLength] = useState(250)
+  const [trackLengthPreset, setTrackLengthPreset] = useState('250')
+  const [skillLevel, setSkillLevel] = useState('intermediate')
+  const [chainring, setChainring] = useState(52)
+  const [cog, setCog] = useState(15)
+  const [wheelSize, setWheelSize] = useState(2100)
+  const [targetTime, setTargetTime] = useState(280)
+  const [lapTimes, setLapTimes] = useState<number[]>([])
+  const [lapLocks, setLapLocks] = useState<boolean[]>([])
+
+  // Event preset data: [distance, beginner_time, intermediate_time, expert_time, typical_chainring, typical_cog]
+  const eventPresets: Record<string, [number, number, number, number, number, number]> = {
+    flying200: [200, 15.0, 12.5, 10.5, 54, 14],
+    '500tt': [500, 48.0, 40.0, 34.0, 53, 14],
+    '1000tt': [1000, 85.0, 72.0, 63.0, 52, 15],
+    pursuit3k: [3000, 270.0, 235.0, 215.0, 52, 15],
+    pursuit4k: [4000, 330.0, 285.0, 260.0, 52, 15],
+    teampursuit: [4000, 285.0, 250.0, 235.0, 50, 15],
+    custom: [5000, 360.0, 300.0, 270.0, 52, 15]
+  }
+
+  // Calculate gear metrics
+  const gearRatio = chainring / cog
+  const wheelCircumference = (wheelSize * Math.PI) / 1000 // in metres
+  const development = gearRatio * wheelCircumference
+  const gearInches = gearRatio * (wheelSize / 25.4)
+
+  // Calculate average speed needed
+  const avgSpeedMps = distance / targetTime
+  const avgSpeedKph = avgSpeedMps * 3.6
+  const avgSpeedMph = avgSpeedKph * 0.621371
+
+  // Calculate average cadence
+  const avgCadence = Math.round((avgSpeedMps / development) * 60)
+
+  // Calculate total laps
+  const totalLaps = Math.ceil(distance / trackLength)
+
+  // Calculate average lap time
+  const avgLapTime = targetTime / totalLaps
+
+  // Handle event change
+  const handleEventChange = (newEvent: string) => {
+    setEvent(newEvent)
+    const preset = eventPresets[newEvent]
+    if (preset) {
+      setDistance(preset[0])
+      
+      let timeIndex = 2 // intermediate default
+      if (skillLevel === 'beginner') timeIndex = 1
+      if (skillLevel === 'expert') timeIndex = 3
+      
+      setTargetTime(preset[timeIndex])
+      setChainring(preset[4])
+      setCog(preset[5])
+    }
+  }
+
+  // Handle skill level change
+  const handleSkillLevelChange = (newLevel: string) => {
+    setSkillLevel(newLevel)
+    const preset = eventPresets[event]
+    if (preset) {
+      let timeIndex = 2
+      if (newLevel === 'beginner') timeIndex = 1
+      if (newLevel === 'expert') timeIndex = 3
+      setTargetTime(preset[timeIndex])
+    }
+  }
+
+  // Handle track length preset change
+  const handleTrackLengthChange = (preset: string) => {
+    setTrackLengthPreset(preset)
+    if (preset !== 'custom') {
+      setTrackLength(parseFloat(preset))
+    }
+  }
+
+  // Generate lap times
+  useEffect(() => {
+    const standingStartPenalty = totalLaps > 4 ? 0.20 : 0.15
+    const firstLapTime = avgLapTime * (1 + standingStartPenalty)
+    const remainingTime = targetTime - firstLapTime
+    const remainingLaps = totalLaps - 1
+    const otherLapTime = remainingLaps > 0 ? remainingTime / remainingLaps : 0
+
+    const newLapTimes = [firstLapTime]
+    for (let i = 1; i < totalLaps; i++) {
+      newLapTimes.push(otherLapTime)
+    }
+
+    // Only update if lap count changed
+    if (lapTimes.length !== totalLaps) {
+      setLapTimes(newLapTimes)
+      setLapLocks(new Array(totalLaps).fill(false))
+    }
+  }, [totalLaps, targetTime, avgLapTime])
+
+  // Update lap time
+  const updateLapTime = (index: number, newTime: number) => {
+    const newLapTimes = [...lapTimes]
+    newLapTimes[index] = newTime
+    setLapTimes(newLapTimes)
+    
+    const newTotal = newLapTimes.reduce((sum, t) => sum + t, 0)
+    setTargetTime(newTotal)
+  }
+
+  // Toggle lap lock
+  const toggleLapLock = (index: number) => {
+    const newLocks = [...lapLocks]
+    newLocks[index] = !newLocks[index]
+    setLapLocks(newLocks)
+  }
+
+  // Reset laps
+  const resetLaps = () => {
+    setLapLocks(new Array(totalLaps).fill(false))
+    
+    const standingStartPenalty = totalLaps > 4 ? 0.20 : 0.15
+    const firstLapTime = avgLapTime * (1 + standingStartPenalty)
+    const remainingTime = targetTime - firstLapTime
+    const remainingLaps = totalLaps - 1
+    const otherLapTime = remainingLaps > 0 ? remainingTime / remainingLaps : 0
+
+    const newLapTimes = [firstLapTime]
+    for (let i = 1; i < totalLaps; i++) {
+      newLapTimes.push(otherLapTime)
+    }
+    setLapTimes(newLapTimes)
+  }
+
+  // Format time as MM:SS.S
+  const formatTime = (seconds: number) => {
+    const mins = Math.floor(seconds / 60)
+    const secs = (seconds % 60).toFixed(1)
+    return mins > 0 ? `${mins}:${parseFloat(secs) < 10 ? '0' : ''}${secs}` : `${secs}s`
+  }
+
+  // Calculate lap metrics
+  const calculateLapMetrics = (lapTime: number) => {
+    const lapSpeedMps = trackLength / lapTime
+    const lapSpeedKph = lapSpeedMps * 3.6
+    const lapSpeedMph = lapSpeedKph * 0.621371
+    const lapCadence = Math.round((lapSpeedMps / development) * 60)
+    
+    return {
+      speed: speedUnit === 'kph' ? `${lapSpeedKph.toFixed(1)} kph` : `${lapSpeedMph.toFixed(1)} mph`,
+      cadence: `${lapCadence} rpm`
+    }
+  }
+
   return (
     <main className="min-h-screen p-4 md:p-8 font-sans bg-[#fafafa]">
       <div className="max-w-7xl mx-auto">
@@ -38,14 +195,15 @@ export default function TrackCyclingCalculator() {
                 </label>
                 <select 
                   id="eventPreset"
-                  onChange={() => (window as any).handleEventChange()}
+                  value={event}
+                  onChange={(e) => handleEventChange(e.target.value)}
                   className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-bikotic-blue focus:outline-none"
                 >
                   <option value="flying200">Flying 200m</option>
                   <option value="500tt">500m Time Trial</option>
                   <option value="1000tt">1km Time Trial</option>
                   <option value="pursuit3k">Individual Pursuit - 3km</option>
-                  <option value="pursuit4k" selected>Individual Pursuit - 4km</option>
+                  <option value="pursuit4k">Individual Pursuit - 4km</option>
                   <option value="teampursuit">Team Pursuit - 4km</option>
                   <option value="custom">Custom Distance</option>
                 </select>
@@ -59,11 +217,16 @@ export default function TrackCyclingCalculator() {
                 <input 
                   type="number" 
                   id="distance" 
-                  defaultValue="4000"
+                  value={distance}
+                  onChange={(e) => {
+                    setDistance(parseFloat(e.target.value) || 0)
+                    if (eventPresets[event] && parseFloat(e.target.value) !== eventPresets[event][0]) {
+                      setEvent('custom')
+                    }
+                  }}
                   min="200"
                   max="10000"
                   step="100"
-                  onChange={() => (window as any).handleDistanceChange()}
                   className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-bikotic-blue focus:outline-none"
                 />
               </div>
@@ -74,8 +237,9 @@ export default function TrackCyclingCalculator() {
                   Track Length
                 </label>
                 <select 
-                  id="trackLength"
-                  onChange={() => (window as any).recalculate()}
+                  id="trackLengthSelect"
+                  value={trackLengthPreset}
+                  onChange={(e) => handleTrackLengthChange(e.target.value)}
                   className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-bikotic-blue focus:outline-none"
                 >
                   <option value="250">250m (Standard Indoor)</option>
@@ -83,16 +247,18 @@ export default function TrackCyclingCalculator() {
                   <option value="400">400m</option>
                   <option value="custom">Custom</option>
                 </select>
-                <input 
-                  type="number" 
-                  id="trackLengthCustom"
-                  placeholder="Custom track length"
-                  min="100"
-                  max="1000"
-                  step="0.01"
-                  onChange={() => (window as any).recalculate()}
-                  className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-bikotic-blue focus:outline-none mt-2 hidden"
-                />
+                {trackLengthPreset === 'custom' && (
+                  <input 
+                    type="number" 
+                    value={trackLength}
+                    onChange={(e) => setTrackLength(parseFloat(e.target.value) || 250)}
+                    placeholder="Custom track length"
+                    min="100"
+                    max="1000"
+                    step="0.01"
+                    className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-bikotic-blue focus:outline-none mt-2"
+                  />
+                )}
               </div>
 
               {/* Skill Level */}
@@ -102,11 +268,12 @@ export default function TrackCyclingCalculator() {
                 </label>
                 <select 
                   id="skillLevel"
-                  onChange={() => (window as any).handleSkillLevelChange()}
+                  value={skillLevel}
+                  onChange={(e) => handleSkillLevelChange(e.target.value)}
                   className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-bikotic-blue focus:outline-none"
                 >
                   <option value="beginner">Beginner</option>
-                  <option value="intermediate" selected>Intermediate</option>
+                  <option value="intermediate">Intermediate</option>
                   <option value="expert">Expert</option>
                 </select>
                 <p className="text-sm text-gray-500 mt-2">
@@ -127,10 +294,10 @@ export default function TrackCyclingCalculator() {
                 <input 
                   type="number" 
                   id="chainring" 
-                  defaultValue="52"
+                  value={chainring}
+                  onChange={(e) => setChainring(parseFloat(e.target.value) || 52)}
                   min="38"
                   max="60"
-                  onChange={() => (window as any).recalculate()}
                   className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-bikotic-blue focus:outline-none"
                 />
               </div>
@@ -143,10 +310,10 @@ export default function TrackCyclingCalculator() {
                 <input 
                   type="number" 
                   id="cog" 
-                  defaultValue="15"
+                  value={cog}
+                  onChange={(e) => setCog(parseFloat(e.target.value) || 15)}
                   min="11"
                   max="20"
-                  onChange={() => (window as any).recalculate()}
                   className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-bikotic-blue focus:outline-none"
                 />
               </div>
@@ -159,11 +326,11 @@ export default function TrackCyclingCalculator() {
                 <input 
                   type="number" 
                   id="wheelSize" 
-                  defaultValue="2100"
+                  value={wheelSize}
+                  onChange={(e) => setWheelSize(parseFloat(e.target.value) || 2100)}
                   min="2000"
                   max="2200"
                   step="10"
-                  onChange={() => (window as any).recalculate()}
                   className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-bikotic-blue focus:outline-none"
                 />
                 <p className="text-sm text-gray-500 mt-2">
@@ -179,15 +346,15 @@ export default function TrackCyclingCalculator() {
                 <input 
                   type="number" 
                   id="targetTime" 
-                  defaultValue="280"
+                  value={targetTime}
+                  onChange={(e) => setTargetTime(parseFloat(e.target.value) || 0)}
                   min="10"
                   max="600"
                   step="0.1"
-                  onChange={() => (window as any).handleTargetTimeChange()}
                   className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-bikotic-blue focus:outline-none"
                 />
                 <p className="text-sm text-gray-500 mt-2">
-                  <span id="targetTimeFormatted">4:40.0</span>
+                  {formatTime(targetTime)}
                 </p>
               </div>
 
@@ -205,42 +372,44 @@ export default function TrackCyclingCalculator() {
             
             <div className="bg-gray-50 p-4 rounded-lg">
               <div className="text-sm text-gray-600 mb-1">Gear Ratio</div>
-              <div id="gearRatio" className="text-2xl font-bold text-bikotic-blue">3.47</div>
+              <div className="text-2xl font-bold text-bikotic-blue">{gearRatio.toFixed(2)}</div>
             </div>
 
             <div className="bg-gray-50 p-4 rounded-lg">
               <div className="text-sm text-gray-600 mb-1">Gear Inches</div>
-              <div id="gearInches" className="text-2xl font-bold text-bikotic-blue">90.5"</div>
+              <div className="text-2xl font-bold text-bikotic-blue">{gearInches.toFixed(1)}&quot;</div>
             </div>
 
             <div className="bg-gray-50 p-4 rounded-lg">
               <div className="text-sm text-gray-600 mb-1">Development</div>
-              <div id="development" className="text-2xl font-bold text-bikotic-blue">7.28m</div>
+              <div className="text-2xl font-bold text-bikotic-blue">{development.toFixed(2)}m</div>
             </div>
 
             <div className="bg-gray-50 p-4 rounded-lg">
               <div className="text-sm text-gray-600 mb-1">Total Laps</div>
-              <div id="totalLaps" className="text-2xl font-bold text-bikotic-blue">16</div>
+              <div className="text-2xl font-bold text-bikotic-blue">{totalLaps}</div>
             </div>
 
             <div className="bg-gray-50 p-4 rounded-lg">
               <div className="text-sm text-gray-600 mb-1">Avg Speed</div>
-              <div id="avgSpeed" className="text-2xl font-bold text-bikotic-blue">51.4 kph</div>
+              <div className="text-2xl font-bold text-bikotic-blue">
+                {speedUnit === 'kph' ? avgSpeedKph.toFixed(1) : avgSpeedMph.toFixed(1)} {speedUnit}
+              </div>
             </div>
 
             <div className="bg-gray-50 p-4 rounded-lg">
               <div className="text-sm text-gray-600 mb-1">Avg Cadence</div>
-              <div id="avgCadence" className="text-2xl font-bold text-bikotic-blue">118 rpm</div>
+              <div className="text-2xl font-bold text-bikotic-blue">{avgCadence} rpm</div>
             </div>
 
             <div className="bg-gray-50 p-4 rounded-lg">
               <div className="text-sm text-gray-600 mb-1">Avg Lap Time</div>
-              <div id="avgLapTime" className="text-2xl font-bold text-bikotic-blue">17.50s</div>
+              <div className="text-2xl font-bold text-bikotic-blue">{avgLapTime.toFixed(2)}s</div>
             </div>
 
             <div className="bg-gray-50 p-4 rounded-lg">
               <div className="text-sm text-gray-600 mb-1">Total Time</div>
-              <div id="totalTime" className="text-2xl font-bold text-bikotic-blue">4:40.0</div>
+              <div className="text-2xl font-bold text-bikotic-blue">{formatTime(targetTime)}</div>
             </div>
 
           </div>
@@ -249,16 +418,22 @@ export default function TrackCyclingCalculator() {
           <div className="mt-5 flex justify-end">
             <div className="flex border-2 border-bikotic-blue rounded-lg overflow-hidden">
               <button 
-                id="speedUnitKph"
-                className="px-4 py-2 bg-bikotic-blue text-white font-semibold transition-colors hover:bg-bikotic-blue-dark"
-                onClick={() => (window as any).toggleSpeedUnit('kph')}
+                className={`px-4 py-2 font-semibold transition-colors ${
+                  speedUnit === 'kph'
+                    ? 'bg-bikotic-blue text-white hover:bg-bikotic-blue-dark'
+                    : 'bg-white text-bikotic-blue hover:bg-gray-50'
+                }`}
+                onClick={() => setSpeedUnit('kph')}
               >
                 KPH
               </button>
               <button 
-                id="speedUnitMph"
-                className="px-4 py-2 bg-white text-bikotic-blue font-semibold transition-colors hover:bg-gray-50"
-                onClick={() => (window as any).toggleSpeedUnit('mph')}
+                className={`px-4 py-2 font-semibold transition-colors ${
+                  speedUnit === 'mph'
+                    ? 'bg-bikotic-blue text-white hover:bg-bikotic-blue-dark'
+                    : 'bg-white text-bikotic-blue hover:bg-gray-50'
+                }`}
+                onClick={() => setSpeedUnit('mph')}
               >
                 MPH
               </button>
@@ -273,7 +448,7 @@ export default function TrackCyclingCalculator() {
               Lap-by-Lap Strategy
             </h2>
             <button
-              onClick={() => (window as any).resetLaps()}
+              onClick={resetLaps}
               className="px-4 py-2 border-2 border-bikotic-blue text-bikotic-blue rounded-lg font-semibold transition-colors hover:bg-gray-50"
             >
               Reset to Even Split
@@ -284,8 +459,57 @@ export default function TrackCyclingCalculator() {
             Edit individual lap times to plan your pacing strategy. Lock specific laps to preserve them while adjusting others. The first lap accounts for standing start.
           </p>
 
-          <div id="lapTable" className="space-y-2">
-            {/* Lap table will be generated here */}
+          <div className="overflow-x-auto">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="bg-bikotic-blue text-white">
+                  <th className="p-2 text-left">Lap</th>
+                  <th className="p-2 text-center">Lap Time (s)</th>
+                  <th className="p-2 text-center">Speed</th>
+                  <th className="p-2 text-center">Cadence</th>
+                  <th className="p-2 text-center">Cumulative</th>
+                  <th className="p-2 text-center">Lock</th>
+                </tr>
+              </thead>
+              <tbody>
+                {lapTimes.map((lapTime, i) => {
+                  const metrics = calculateLapMetrics(lapTime)
+                  const cumulativeTime = lapTimes.slice(0, i + 1).reduce((sum, t) => sum + t, 0)
+                  const rowClass = i % 2 === 0 ? 'bg-white' : 'bg-gray-50'
+                  
+                  return (
+                    <tr key={i} className={`${rowClass} border-b border-gray-200`}>
+                      <td className="p-2 font-semibold">
+                        {i + 1}{i === 0 ? ' (start)' : ''}
+                      </td>
+                      <td className="p-2 text-center">
+                        <input
+                          type="number"
+                          className="w-20 px-2 py-1 border border-gray-300 rounded text-center"
+                          value={lapTime.toFixed(2)}
+                          onChange={(e) => updateLapTime(i, parseFloat(e.target.value) || 0)}
+                          step="0.1"
+                          min="5"
+                        />
+                      </td>
+                      <td className="p-2 text-center">{metrics.speed}</td>
+                      <td className="p-2 text-center">{metrics.cadence}</td>
+                      <td className="p-2 text-center">{formatTime(cumulativeTime)}</td>
+                      <td className="p-2 text-center">
+                        <button
+                          onClick={() => toggleLapLock(i)}
+                          className={`text-xl hover:scale-110 transition-transform ${
+                            lapLocks[i] ? 'text-bikotic-blue' : 'text-gray-400'
+                          }`}
+                        >
+                          {lapLocks[i] ? '🔒' : '🔓'}
+                        </button>
+                      </td>
+                    </tr>
+                  )
+                })}
+              </tbody>
+            </table>
           </div>
 
           <div className="mt-5 p-4 bg-blue-50 border-l-4 border-bikotic-blue rounded">
@@ -300,309 +524,6 @@ export default function TrackCyclingCalculator() {
         </div>
 
       </div>
-
-      {/* JavaScript for calculations */}
-      <script dangerouslySetInnerHTML={{__html: `
-        let speedUnit = 'kph';
-        let lapLocks = [];
-        
-        // Event preset data: [distance, beginner_time, intermediate_time, expert_time, typical_chainring, typical_cog]
-        const eventPresets = {
-          flying200: [200, 15.0, 12.5, 10.5, 54, 14],
-          500tt: [500, 48.0, 40.0, 34.0, 53, 14],
-          '1000tt': [1000, 85.0, 72.0, 63.0, 52, 15],
-          pursuit3k: [3000, 270.0, 235.0, 215.0, 52, 15],
-          pursuit4k: [4000, 330.0, 285.0, 260.0, 52, 15],
-          teampursuit: [4000, 285.0, 250.0, 235.0, 50, 15],
-          custom: [5000, 360.0, 300.0, 270.0, 52, 15]
-        };
-        
-        window.handleEventChange = function() {
-          const event = document.getElementById('eventPreset').value;
-          const preset = eventPresets[event];
-          
-          if (preset) {
-            document.getElementById('distance').value = preset[0];
-            
-            // Update target time based on current skill level
-            const skillLevel = document.getElementById('skillLevel').value;
-            let timeIndex = 2; // intermediate default
-            if (skillLevel === 'beginner') timeIndex = 1;
-            if (skillLevel === 'expert') timeIndex = 3;
-            
-            document.getElementById('targetTime').value = preset[timeIndex];
-            document.getElementById('chainring').value = preset[4];
-            document.getElementById('cog').value = preset[5];
-          }
-          
-          recalculate();
-        };
-        
-        window.handleSkillLevelChange = function() {
-          const event = document.getElementById('eventPreset').value;
-          const preset = eventPresets[event];
-          const skillLevel = document.getElementById('skillLevel').value;
-          
-          if (preset) {
-            let timeIndex = 2; // intermediate default
-            if (skillLevel === 'beginner') timeIndex = 1;
-            if (skillLevel === 'expert') timeIndex = 3;
-            
-            document.getElementById('targetTime').value = preset[timeIndex];
-          }
-          
-          recalculate();
-        };
-        
-        window.handleDistanceChange = function() {
-          // Mark as custom if distance changed
-          const eventSelect = document.getElementById('eventPreset');
-          const currentEvent = eventSelect.value;
-          const distance = parseFloat(document.getElementById('distance').value);
-          const preset = eventPresets[currentEvent];
-          
-          if (preset && distance !== preset[0]) {
-            eventSelect.value = 'custom';
-          }
-          
-          recalculate();
-        };
-        
-        window.handleTargetTimeChange = function() {
-          recalculate();
-        };
-        
-        window.toggleSpeedUnit = function(unit) {
-          speedUnit = unit;
-          
-          // Update button styles
-          const kphBtn = document.getElementById('speedUnitKph');
-          const mphBtn = document.getElementById('speedUnitMph');
-          
-          if (unit === 'kph') {
-            kphBtn.className = 'px-4 py-2 bg-bikotic-blue text-white font-semibold transition-colors hover:bg-bikotic-blue-dark';
-            mphBtn.className = 'px-4 py-2 bg-white text-bikotic-blue font-semibold transition-colors hover:bg-gray-50';
-          } else {
-            mphBtn.className = 'px-4 py-2 bg-bikotic-blue text-white font-semibold transition-colors hover:bg-bikotic-blue-dark';
-            kphBtn.className = 'px-4 py-2 bg-white text-bikotic-blue font-semibold transition-colors hover:bg-gray-50';
-          }
-          
-          recalculate();
-        };
-        
-        window.recalculate = function() {
-          console.log('Recalculating...');
-          
-          // Get track length
-          const trackLengthSelect = document.getElementById('trackLength');
-          let trackLength;
-          
-          if (trackLengthSelect.value === 'custom') {
-            document.getElementById('trackLengthCustom').classList.remove('hidden');
-            trackLength = parseFloat(document.getElementById('trackLengthCustom').value) || 250;
-          } else {
-            document.getElementById('trackLengthCustom').classList.add('hidden');
-            trackLength = parseFloat(trackLengthSelect.value);
-          }
-          
-          // Get values
-          const distance = parseFloat(document.getElementById('distance').value);
-          const chainring = parseFloat(document.getElementById('chainring').value);
-          const cog = parseFloat(document.getElementById('cog').value);
-          const wheelSize = parseFloat(document.getElementById('wheelSize').value);
-          const targetTime = parseFloat(document.getElementById('targetTime').value);
-          
-          // Calculate gear metrics
-          const gearRatio = chainring / cog;
-          const wheelCircumference = wheelSize * Math.PI / 1000; // in metres
-          const development = gearRatio * wheelCircumference;
-          const gearInches = gearRatio * (wheelSize / 25.4);
-          
-          // Calculate average speed needed
-          const avgSpeedMps = distance / targetTime; // metres per second
-          const avgSpeedKph = avgSpeedMps * 3.6;
-          const avgSpeedMph = avgSpeedKph * 0.621371;
-          
-          // Calculate average cadence needed
-          const avgCadence = (avgSpeedMps / development) * 60; // RPM
-          
-          // Calculate total laps
-          const totalLaps = Math.ceil(distance / trackLength);
-          
-          // Calculate average lap time
-          const avgLapTime = targetTime / totalLaps;
-          
-          // Update display
-          document.getElementById('gearRatio').textContent = gearRatio.toFixed(2);
-          document.getElementById('gearInches').textContent = gearInches.toFixed(1) + '"';
-          document.getElementById('development').textContent = development.toFixed(2) + 'm';
-          document.getElementById('totalLaps').textContent = totalLaps;
-          document.getElementById('avgSpeed').textContent = speedUnit === 'kph' 
-            ? avgSpeedKph.toFixed(1) + ' kph' 
-            : avgSpeedMph.toFixed(1) + ' mph';
-          document.getElementById('avgCadence').textContent = Math.round(avgCadence) + ' rpm';
-          document.getElementById('avgLapTime').textContent = avgLapTime.toFixed(2) + 's';
-          document.getElementById('totalTime').textContent = formatTime(targetTime);
-          document.getElementById('targetTimeFormatted').textContent = formatTime(targetTime);
-          
-          // Generate lap table
-          generateLapTable(totalLaps, targetTime, trackLength, development, avgSpeedKph, avgSpeedMph);
-        };
-        
-        function formatTime(seconds) {
-          const mins = Math.floor(seconds / 60);
-          const secs = (seconds % 60).toFixed(1);
-          return mins > 0 ? mins + ':' + (secs < 10 ? '0' : '') + secs : secs + 's';
-        }
-        
-        function generateLapTable(totalLaps, targetTime, trackLength, development, avgSpeedKph, avgSpeedMph) {
-          const lapTableElement = document.getElementById('lapTable');
-          if (!lapTableElement) {
-            console.error('Lap table element not found');
-            return;
-          }
-          
-          let laps = [];
-          
-          // Check if we have existing lap times
-          const existingInputs = lapTableElement.querySelectorAll('.lap-time-input');
-          
-          if (existingInputs.length === totalLaps) {
-            // Use existing lap times
-            existingInputs.forEach((input, i) => {
-              laps.push({
-                lapTime: parseFloat(input.value),
-                locked: lapLocks[i] || false
-              });
-            });
-            
-            // Adjust unlocked laps to match target time
-            const lockedTime = laps.reduce((sum, lap, i) => lap.locked ? sum + lap.lapTime : sum, 0);
-            const unlockedCount = laps.filter(lap => !lap.locked).length;
-            const remainingTime = targetTime - lockedTime;
-            const unlockedLapTime = unlockedCount > 0 ? remainingTime / unlockedCount : 0;
-            
-            laps = laps.map(lap => lap.locked ? lap : { lapTime: unlockedLapTime, locked: false });
-          } else {
-            // Generate new lap times
-            lapLocks = [];
-            const avgLapTime = targetTime / totalLaps;
-            
-            // First lap is slower (standing start) - 20% slower for pursuits, 15% for sprints
-            const standingStartPenalty = totalLaps > 4 ? 0.20 : 0.15;
-            const firstLapTime = avgLapTime * (1 + standingStartPenalty);
-            
-            // Remaining time distributed evenly
-            const remainingTime = targetTime - firstLapTime;
-            const remainingLaps = totalLaps - 1;
-            const otherLapTime = remainingLaps > 0 ? remainingTime / remainingLaps : 0;
-            
-            laps = [{lapTime: firstLapTime, locked: false}];
-            for (let i = 1; i < totalLaps; i++) {
-              laps.push({lapTime: otherLapTime, locked: false});
-            }
-          }
-          
-          // Generate HTML
-          let html = '<div class="overflow-x-auto"><table class="w-full text-sm"><thead><tr class="bg-bikotic-blue text-white"><th class="p-2 text-left">Lap</th><th class="p-2 text-center">Lap Time (s)</th><th class="p-2 text-center">Speed</th><th class="p-2 text-center">Cadence</th><th class="p-2 text-center">Cumulative</th><th class="p-2 text-center">Lock</th></tr></thead><tbody>';
-          
-          let cumulativeTime = 0;
-          
-          laps.forEach((lap, i) => {
-            cumulativeTime += lap.lapTime;
-            
-            // Calculate speed for this lap
-            const lapSpeedMps = trackLength / lap.lapTime;
-            const lapSpeedKph = lapSpeedMps * 3.6;
-            const lapSpeedMph = lapSpeedKph * 0.621371;
-            const lapSpeed = speedUnit === 'kph' ? lapSpeedKph.toFixed(1) + ' kph' : lapSpeedMph.toFixed(1) + ' mph';
-            
-            // Calculate cadence for this lap
-            const lapCadence = Math.round((lapSpeedMps / development) * 60);
-            
-            const rowClass = i % 2 === 0 ? 'bg-white' : 'bg-gray-50';
-            const lockIcon = lap.locked ? '🔒' : '🔓';
-            const lockClass = lap.locked ? 'text-bikotic-blue' : 'text-gray-400';
-            
-            html += '<tr class="' + rowClass + ' border-b border-gray-200">';
-            html += '<td class="p-2 font-semibold">' + (i + 1) + (i === 0 ? ' (start)' : '') + '</td>';
-            html += '<td class="p-2 text-center"><input type="number" class="lap-time-input w-20 px-2 py-1 border border-gray-300 rounded text-center" value="' + lap.lapTime.toFixed(2) + '" step="0.1" min="5" onchange="window.updateLapTime(' + i + ', this.value)" /></td>';
-            html += '<td class="p-2 text-center">' + lapSpeed + '</td>';
-            html += '<td class="p-2 text-center">' + lapCadence + ' rpm</td>';
-            html += '<td class="p-2 text-center">' + formatTime(cumulativeTime) + '</td>';
-            html += '<td class="p-2 text-center"><button onclick="window.toggleLapLock(' + i + ')" class="' + lockClass + ' text-xl hover:scale-110 transition-transform">' + lockIcon + '</button></td>';
-            html += '</tr>';
-          });
-          
-          html += '</tbody></table></div>';
-          
-          const lapTableElement = document.getElementById('lapTable');
-          if (lapTableElement) {
-            lapTableElement.innerHTML = html;
-          }
-        }
-        
-        window.updateLapTime = function(lapIndex, newTime) {
-          const lapInputs = document.querySelectorAll('.lap-time-input');
-          const totalLaps = lapInputs.length;
-          
-          // Calculate new total time
-          let newTotalTime = 0;
-          lapInputs.forEach((input, i) => {
-            if (i === lapIndex) {
-              newTotalTime += parseFloat(newTime);
-            } else {
-              newTotalTime += parseFloat(input.value);
-            }
-          });
-          
-          // Update target time
-          document.getElementById('targetTime').value = newTotalTime.toFixed(1);
-          
-          // Recalculate
-          recalculate();
-        };
-        
-        window.toggleLapLock = function(lapIndex) {
-          if (!lapLocks[lapIndex]) {
-            lapLocks[lapIndex] = true;
-          } else {
-            lapLocks[lapIndex] = false;
-          }
-          recalculate();
-        };
-        
-        window.resetLaps = function() {
-          lapLocks = [];
-          recalculate();
-        };
-        
-        // Handle track length dropdown
-        document.getElementById('trackLength').addEventListener('change', function() {
-          if (this.value === 'custom') {
-            document.getElementById('trackLengthCustom').classList.remove('hidden');
-          } else {
-            document.getElementById('trackLengthCustom').classList.add('hidden');
-          }
-          recalculate();
-        });
-        
-        // Initialize on load
-        if (typeof window !== 'undefined') {
-          window.addEventListener('DOMContentLoaded', function() {
-            setTimeout(function() {
-              window.handleEventChange();
-            }, 50);
-          });
-          
-          // Fallback initialization
-          setTimeout(function() {
-            if (document.getElementById('lapTable').innerHTML === '') {
-              window.handleEventChange();
-            }
-          }, 500);
-        }
-      `}} />
     </main>
   )
 }
