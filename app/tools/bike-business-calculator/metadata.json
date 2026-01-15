@@ -1,7 +1,7 @@
 {
   "title": "Bespoke Bicycle Business Profitability Calculator",
   "description": "Model profitability for a bespoke bicycle framebuilding business. Calculate revenue, costs, and employee workload across multiple bike configurations.",
-  "icon": "🚲",
+  "icon": "💰",
   "features": [
     "Multiple bike products",
     "Employee workload tracking",
