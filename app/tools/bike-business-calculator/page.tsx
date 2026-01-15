@@ -2,6 +2,33 @@
 
 import { useState } from 'react'
 
+interface Employee {
+  id: number
+  name: string
+  salary: number
+}
+
+interface BikeProduct {
+  id: number
+  name: string
+  collapsed: boolean
+  bikesPerYear: number
+  tubingMaterials: number
+  hoursPerFrame: number
+  builderEmployeeId: number | null
+  componentMarkup: number
+  paintTradePrice: number
+  groupsetTradePrice: number
+  wheelsTradePrice: number
+  otherPartsTradePrice: number
+  targetProfit: number
+  consumablesPerBike: number
+  shippingPerBike: number
+  contractorPerBike: number
+  bikeBuildHours: number
+  bikeBuildEmployeeId: number | null
+}
+
 export default function BikeBusinessCalculator() {
   // Fixed annual costs
   const [workshopRent, setWorkshopRent] = useState(12000);
@@ -16,10 +43,10 @@ export default function BikeBusinessCalculator() {
   const [loanRepayments, setLoanRepayments] = useState(0);
   
   // Employees
-  const [employees, setEmployees] = useState([]);
+  const [employees, setEmployees] = useState<Employee[]>([]);
   
   // Bike Products
-  const [bikeProducts, setBikeProducts] = useState([
+  const [bikeProducts, setBikeProducts] = useState<BikeProduct[]>([
     {
       id: Date.now(),
       name: 'Standard Build',
@@ -46,11 +73,11 @@ export default function BikeBusinessCalculator() {
     setEmployees([...employees, { id: Date.now(), name: '', salary: 30000 }]);
   };
   
-  const removeEmployee = (id) => {
+  const removeEmployee = (id: number) => {
     setEmployees(employees.filter(emp => emp.id !== id));
   };
   
-  const updateEmployee = (id, field, value) => {
+  const updateEmployee = (id: number, field: keyof Employee, value: string | number) => {
     setEmployees(employees.map(emp => 
       emp.id === id ? { ...emp, [field]: value } : emp
     ));
@@ -79,24 +106,24 @@ export default function BikeBusinessCalculator() {
     }]);
   };
   
-  const removeBikeProduct = (id) => {
+  const removeBikeProduct = (id: number) => {
     setBikeProducts(bikeProducts.filter(bike => bike.id !== id));
   };
   
-  const updateBikeProduct = (id, field, value) => {
+  const updateBikeProduct = (id: number, field: keyof BikeProduct, value: string | number | boolean | null) => {
     setBikeProducts(bikeProducts.map(bike => 
       bike.id === id ? { ...bike, [field]: value } : bike
     ));
   };
   
-  const toggleBikeCollapse = (id) => {
+  const toggleBikeCollapse = (id: number) => {
     setBikeProducts(bikeProducts.map(bike => 
       bike.id === id ? { ...bike, collapsed: !bike.collapsed } : bike
     ));
   };
   
   // Calculations for each bike product
-  const calculateBikeRevenue = (bike) => {
+  const calculateBikeRevenue = (bike: BikeProduct) => {
     const builder = employees.find(emp => emp.id === bike.builderEmployeeId);
     const builderHourlyRate = builder ? builder.salary / 1976 : 0;
     const frameBuildPrice = bike.hoursPerFrame * builderHourlyRate * 3;
@@ -130,7 +157,7 @@ export default function BikeBusinessCalculator() {
     };
   };
   
-  const calculateBikeCosts = (bike) => {
+  const calculateBikeCosts = (bike: BikeProduct) => {
     const costsPerBike = bike.tubingMaterials + bike.paintTradePrice + 
                          bike.groupsetTradePrice + bike.wheelsTradePrice + bike.otherPartsTradePrice + 
                          bike.consumablesPerBike + bike.shippingPerBike + bike.contractorPerBike;
@@ -154,10 +181,10 @@ export default function BikeBusinessCalculator() {
   const profitPerBike = totalBikes > 0 ? netProfit / totalBikes : 0;
   
   // Calculate employee workload
-  const employeeWorkload = employees.map(emp => {
+  const employeeWorkload = employees.map((emp: Employee) => {
     let totalHours = 0;
     
-    bikeProducts.forEach(bike => {
+    bikeProducts.forEach((bike: BikeProduct) => {
       if (bike.builderEmployeeId === emp.id) {
         totalHours += bike.hoursPerFrame * bike.bikesPerYear;
       }
