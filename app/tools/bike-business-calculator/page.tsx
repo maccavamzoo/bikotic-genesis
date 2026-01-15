@@ -30,6 +30,11 @@ interface BikeProduct {
 }
 
 export default function BikeBusinessCalculator() {
+  // Currency formatter helper
+  const formatCurrency = (value: number) => {
+    return value.toLocaleString('en-GB', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  };
+  
   // Fixed annual costs
   const [workshopRent, setWorkshopRent] = useState(12000);
   const [utilities, setUtilities] = useState(3000);
@@ -271,7 +276,7 @@ export default function BikeBusinessCalculator() {
               </div>
               <div className="mt-4 pt-4 border-t border-gray-200 flex justify-between items-center">
                 <p className="text-sm text-[#525252]">Total Annual Employee Costs</p>
-                <p className="text-2xl font-bold text-[#0a0a0a]">£{totalEmployeeCosts.toLocaleString()}</p>
+                <p className="text-2xl font-bold text-[#0a0a0a]">£{formatCurrency(totalEmployeeCosts)}</p>
               </div>
             </>
           )}
@@ -328,7 +333,7 @@ export default function BikeBusinessCalculator() {
                         className="w-20 px-2 py-1 border border-gray-300 rounded text-sm focus:ring-2 focus:ring-bikotic-blue focus:border-transparent"
                       />
                       <span className="text-sm text-[#525252] ml-auto">
-                        £{revenue.revenuePerBike.toLocaleString()}/bike
+                        £{formatCurrency(revenue.revenuePerBike)}/bike
                       </span>
                     </div>
                   </div>
@@ -492,7 +497,7 @@ export default function BikeBusinessCalculator() {
                       
                       {/* Added Profit */}
                       <div className="mt-4 p-4 bg-amber-50 border-2 border-amber-400 rounded-lg">
-                        <label className="block text-sm font-medium text-[#0a0a0a] mb-1">Added profit per bike ⭐</label>
+                        <label className="block text-sm font-medium text-[#0a0a0a] mb-1">Added profit per bike 💰</label>
                         <div className="relative">
                           <span className="absolute left-3 top-2.5 text-gray-500">£</span>
                           <input
@@ -593,11 +598,11 @@ export default function BikeBusinessCalculator() {
                         <div className="grid grid-cols-2 gap-3 mb-3">
                           <div>
                             <p className="text-xs text-gray-400">Selling Price</p>
-                            <p className="text-lg font-bold text-white">£{revenue.revenuePerBike.toLocaleString()}</p>
+                            <p className="text-lg font-bold text-white">£{formatCurrency(revenue.revenuePerBike)}</p>
                           </div>
                           <div>
                             <p className="text-xs text-gray-400">Cost per Bike</p>
-                            <p className="text-lg font-bold text-red-300">£{(calculateBikeCosts(bike) / bike.bikesPerYear).toLocaleString()}</p>
+                            <p className="text-lg font-bold text-red-300">£{formatCurrency(calculateBikeCosts(bike) / bike.bikesPerYear)}</p>
                           </div>
                         </div>
                         
@@ -607,7 +612,7 @@ export default function BikeBusinessCalculator() {
                             <span className={`text-xl font-bold ${
                               (revenue.revenuePerBike - (calculateBikeCosts(bike) / bike.bikesPerYear)) >= 0 ? 'text-green-400' : 'text-red-400'
                             }`}>
-                              £{(revenue.revenuePerBike - (calculateBikeCosts(bike) / bike.bikesPerYear)).toLocaleString()}
+                              £{formatCurrency(revenue.revenuePerBike - (calculateBikeCosts(bike) / bike.bikesPerYear))}
                             </span>
                           </div>
                           <div className="flex justify-between items-center">
@@ -628,14 +633,14 @@ export default function BikeBusinessCalculator() {
                         
                         {(revenue.revenuePerBike - (calculateBikeCosts(bike) / bike.bikesPerYear)) >= 0 && (
                           <div className="mt-3 text-xs text-gray-400">
-                            Annual profit: £{((revenue.revenuePerBike - (calculateBikeCosts(bike) / bike.bikesPerYear)) * bike.bikesPerYear).toLocaleString()}
+                            Annual profit: £{formatCurrency((revenue.revenuePerBike - (calculateBikeCosts(bike) / bike.bikesPerYear)) * bike.bikesPerYear)}
                           </div>
                         )}
                       </div>
                       
                       <div className="mt-4 p-4 bg-bikotic-blue/10 rounded-lg">
                         <p className="text-sm text-[#525252]">Selling Price per Bike</p>
-                        <p className="text-2xl font-bold text-bikotic-blue">£{revenue.revenuePerBike.toLocaleString()}</p>
+                        <p className="text-2xl font-bold text-bikotic-blue">£{formatCurrency(revenue.revenuePerBike)}</p>
                       </div>
                     </div>
                   )}
@@ -646,7 +651,7 @@ export default function BikeBusinessCalculator() {
           
           {/* Middle Column - Fixed Costs */}
           <div className="bg-white border-2 border-gray-200 rounded-lg shadow-sm p-6 h-fit">
-            <h2 className="text-xl font-bold text-[#0a0a0a] mb-4 pb-2 border-b-2 border-purple-500">Fixed Annual Costs</h2>
+            <h2 className="text-xl font-bold text-[#0a0a0a] mb-4 pb-2 border-b-2 border-bikotic-blue">Fixed Annual Costs</h2>
             
             <div className="space-y-3">
               <div>
@@ -789,28 +794,28 @@ export default function BikeBusinessCalculator() {
               <div className="space-y-3">
                 <div className="flex justify-between items-center">
                   <span className="text-gray-300">Total Revenue</span>
-                  <span className="text-xl font-semibold">£{totalRevenue.toLocaleString()}</span>
+                  <span className="text-xl font-semibold">£{formatCurrency(totalRevenue)}</span>
                 </div>
                 
                 <div className="flex justify-between items-center">
                   <span className="text-gray-300">Variable Costs</span>
-                  <span className="text-xl font-semibold text-red-300">£{totalVariableCosts.toLocaleString()}</span>
+                  <span className="text-xl font-semibold text-red-300">£{formatCurrency(totalVariableCosts)}</span>
                 </div>
                 
                 <div className="flex justify-between items-center">
                   <span className="text-gray-300">Fixed Costs</span>
-                  <span className="text-xl font-semibold text-red-300">£{totalFixedCosts.toLocaleString()}</span>
+                  <span className="text-xl font-semibold text-red-300">£{formatCurrency(totalFixedCosts)}</span>
                 </div>
                 
                 <div className="flex justify-between items-center">
                   <span className="text-gray-300">Employee Costs</span>
-                  <span className="text-xl font-semibold text-red-300">£{totalEmployeeCosts.toLocaleString()}</span>
+                  <span className="text-xl font-semibold text-red-300">£{formatCurrency(totalEmployeeCosts)}</span>
                 </div>
                 
                 <div className="pt-3 mt-3 border-t-2 border-gray-600">
                   <div className="flex justify-between items-center">
                     <span className="text-gray-300">Total Costs</span>
-                    <span className="text-xl font-semibold text-red-300">£{totalCosts.toLocaleString()}</span>
+                    <span className="text-xl font-semibold text-red-300">£{formatCurrency(totalCosts)}</span>
                   </div>
                 </div>
                 
@@ -818,7 +823,7 @@ export default function BikeBusinessCalculator() {
                   <div className="flex justify-between items-center mb-2">
                     <span className="text-lg font-bold">Net Profit/Loss</span>
                     <span className={`text-3xl font-bold ${netProfit >= 0 ? 'text-green-400' : 'text-red-400'}`}>
-                      £{netProfit.toLocaleString()}
+                      £{formatCurrency(netProfit)}
                     </span>
                   </div>
                   
@@ -832,7 +837,7 @@ export default function BikeBusinessCalculator() {
                   <div className="flex justify-between items-center text-sm mt-1">
                     <span className="text-gray-300">Profit per Bike</span>
                     <span className={`font-semibold ${profitPerBike >= 0 ? 'text-green-400' : 'text-red-400'}`}>
-                      £{profitPerBike.toLocaleString()}
+                      £{formatCurrency(profitPerBike)}
                     </span>
                   </div>
                   
@@ -941,14 +946,14 @@ export default function BikeBusinessCalculator() {
           <div className="flex justify-between items-center">
             <div>
               <p className="text-gray-300 text-sm">Annual Net Profit/Loss</p>
-              <p className="text-gray-400 text-xs">{totalBikes} bikes • £{totalRevenue.toLocaleString()} revenue</p>
+              <p className="text-gray-400 text-xs">{totalBikes} bikes • £{formatCurrency(totalRevenue)} revenue</p>
             </div>
             <div className="text-right">
               <p className={`text-4xl font-bold ${netProfit >= 0 ? 'text-green-400' : 'text-red-400'}`}>
-                {netProfit >= 0 ? '+' : ''}£{netProfit.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}
+                {netProfit >= 0 ? '+' : ''}£{formatCurrency(netProfit)}
               </p>
               <p className={`text-sm font-semibold ${netProfit >= 0 ? 'text-green-400' : 'text-red-400'}`}>
-                {profitMargin.toFixed(1)}% margin • £{profitPerBike.toLocaleString()}/bike
+                {profitMargin.toFixed(1)}% margin • £{formatCurrency(profitPerBike)}/bike
               </p>
             </div>
           </div>
