@@ -54,7 +54,7 @@ export default function BikeBusinessCalculator() {
   const [bikeProducts, setBikeProducts] = useState<BikeProduct[]>([
     {
       id: Date.now(),
-      name: 'Standard Build',
+      name: 'Bike 1',
       collapsed: false,
       bikesPerYear: 12,
       tubingMaterials: 400,
@@ -210,7 +210,7 @@ export default function BikeBusinessCalculator() {
   });
   
   return (
-    <main className="min-h-screen p-4 md:p-8 font-sans bg-[#fafafa] pb-32">
+    <main className="min-h-screen p-4 md:p-8 font-sans bg-[#fafafa] pb-48">
       <div className="max-w-7xl mx-auto">
         
         {/* Page Header */}
