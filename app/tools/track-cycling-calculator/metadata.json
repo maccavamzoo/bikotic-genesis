@@ -1,0 +1,12 @@
+{
+  "title": "Track Cycling Calculator",
+  "description": "Calculate lap times, gear ratios, speeds, and cadence for velodrome events. Plan your race strategy with lap-by-lap pacing for pursuits, time trials, and sprint events.",
+  "icon": "🏁",
+  "features": [
+    "Multiple event presets",
+    "Skill level recommendations",
+    "Lap-by-lap strategy planner",
+    "Real-time calculations"
+  ],
+  "date": "2026-01-15"
+}
