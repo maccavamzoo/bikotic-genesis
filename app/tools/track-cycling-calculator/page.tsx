@@ -137,14 +137,37 @@ export default function TrackCyclingCalculator() {
   }
 
   // Update lap time (when user manually edits)
+  // CRITICAL: Target time stays fixed, unlocked laps redistribute
   const updateLapTime = (index: number, newTime: number) => {
     const newLapTimes = [...lapTimes]
     newLapTimes[index] = newTime
-    setLapTimes(newLapTimes)
     
-    const newTotal = newLapTimes.reduce((sum, t) => sum + t, 0)
-    setTargetTime(newTotal)
-    // Don't trigger regeneration when user is manually editing
+    // Calculate locked time (including the lap we just edited)
+    let lockedTime = newTime // Start with the edited lap
+    let unlockedIndices: number[] = []
+    
+    lapTimes.forEach((time, i) => {
+      if (i !== index) {
+        if (lapLocks[i]) {
+          lockedTime += time
+        } else {
+          unlockedIndices.push(i)
+        }
+      }
+    })
+    
+    // Redistribute remaining time across unlocked laps
+    const remainingTime = targetTime - lockedTime
+    const unlockedCount = unlockedIndices.length
+    
+    if (unlockedCount > 0 && remainingTime > 0) {
+      const timePerUnlockedLap = remainingTime / unlockedCount
+      unlockedIndices.forEach(i => {
+        newLapTimes[i] = timePerUnlockedLap
+      })
+    }
+    
+    setLapTimes(newLapTimes)
     setShouldRegenerateLaps(false)
   }
 
@@ -306,8 +329,34 @@ export default function TrackCyclingCalculator() {
 
             </div>
 
-            {/* Right Column - Gear & Target */}
+            {/* Right Column - Target Time (Prominent) + Gear */}
             <div className="space-y-5">
+              
+              {/* TARGET TOTAL TIME - HIGHLIGHTED */}
+              <div className="bg-blue-50 border-2 border-bikotic-blue rounded-lg p-5">
+                <label htmlFor="targetTime" className="block mb-2 text-gray-900 font-bold text-lg">
+                  🎯 Target Total Time
+                </label>
+                <input 
+                  type="number" 
+                  id="targetTime" 
+                  value={targetTime}
+                  onChange={(e) => {
+                    setTargetTime(parseFloat(e.target.value) || 0)
+                    setShouldRegenerateLaps(true)
+                  }}
+                  min="10"
+                  max="600"
+                  step="0.1"
+                  className="w-full px-4 py-3 border-2 border-bikotic-blue rounded-lg focus:border-bikotic-blue focus:outline-none text-lg font-semibold"
+                />
+                <p className="text-2xl font-bold text-bikotic-blue mt-3 text-center">
+                  {formatTime(targetTime)}
+                </p>
+                <p className="text-xs text-gray-600 mt-2 text-center">
+                  This is your goal time - everything else adapts to this
+                </p>
+              </div>
               
               {/* Chainring */}
               <div>
@@ -358,26 +407,6 @@ export default function TrackCyclingCalculator() {
                 />
                 <p className="text-sm text-gray-500 mt-2">
                   622mm rim (700c) + 23mm tire both sides ≈ 2100mm
-                </p>
-              </div>
-
-              {/* Target Total Time */}
-              <div>
-                <label htmlFor="targetTime" className="block mb-2 text-gray-700 font-semibold">
-                  Target Total Time (seconds)
-                </label>
-                <input 
-                  type="number" 
-                  id="targetTime" 
-                  value={targetTime}
-                  onChange={(e) => setTargetTime(parseFloat(e.target.value) || 0)}
-                  min="10"
-                  max="600"
-                  step="0.1"
-                  className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-bikotic-blue focus:outline-none"
-                />
-                <p className="text-sm text-gray-500 mt-2">
-                  {formatTime(targetTime)}
                 </p>
               </div>
 
@@ -466,20 +495,26 @@ export default function TrackCyclingCalculator() {
 
         {/* Lap by Lap Strategy */}
         <div className="bg-white border-2 border-gray-200 rounded-lg p-6 shadow-sm">
-          <div className="flex justify-between items-center mb-5 pb-3 border-b-2 border-bikotic-blue">
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-5 pb-3 border-b-2 border-bikotic-blue gap-3">
             <h2 className="text-2xl font-bold text-gray-900">
               Lap-by-Lap Strategy
             </h2>
-            <button
-              onClick={resetLaps}
-              className="px-4 py-2 border-2 border-bikotic-blue text-bikotic-blue rounded-lg font-semibold transition-colors hover:bg-gray-50"
-            >
-              Reset to Even Split
-            </button>
+            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 w-full md:w-auto">
+              <div className="bg-blue-50 border border-bikotic-blue rounded-lg px-4 py-2 w-full sm:w-auto">
+                <div className="text-xs text-gray-600 mb-1">Target Total Time</div>
+                <div className="text-xl font-bold text-bikotic-blue text-center">{formatTime(targetTime)}</div>
+              </div>
+              <button
+                onClick={resetLaps}
+                className="px-4 py-2 border-2 border-bikotic-blue text-bikotic-blue rounded-lg font-semibold transition-colors hover:bg-gray-50 w-full sm:w-auto whitespace-nowrap"
+              >
+                Reset to Even Split
+              </button>
+            </div>
           </div>
 
           <p className="text-sm text-gray-600 mb-5">
-            Edit individual lap times to plan your pacing strategy. Lock specific laps to preserve them while adjusting others. The first lap accounts for standing start.
+            Edit individual lap times to plan your pacing strategy. The <strong>target total time stays fixed</strong> - unlocked laps automatically adjust to maintain your goal time. Lock specific laps to preserve them. First lap accounts for standing start.
           </p>
 
           <div className="overflow-x-auto">
@@ -538,10 +573,10 @@ export default function TrackCyclingCalculator() {
           <div className="mt-5 p-4 bg-blue-50 border-l-4 border-bikotic-blue rounded">
             <div className="font-semibold text-gray-800 mb-1">Strategy Notes:</div>
             <ul className="text-sm text-gray-700 space-y-1 list-disc list-inside">
+              <li>Target total time is fixed - everything else adapts to it</li>
+              <li>Edit any lap time - unlocked laps automatically redistribute to maintain target</li>
+              <li>Lock specific laps to preserve them in your pacing plan</li>
               <li>First lap is typically 15-25% slower due to standing start</li>
-              <li>Lock specific laps to preserve your pacing plan</li>
-              <li>Edit any lap time directly - total time updates automatically</li>
-              <li>Unlocked laps adjust proportionally when total time changes</li>
             </ul>
           </div>
         </div>
