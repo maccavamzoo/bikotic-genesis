@@ -500,15 +500,15 @@ export default function TrackCyclingCalculator() {
               Lap-by-Lap Strategy
             </h2>
             <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 w-full md:w-auto">
-              <div className="bg-blue-50 border border-bikotic-blue rounded-lg px-4 py-2 w-full sm:w-auto">
-                <div className="text-xs text-gray-600 mb-1">Target Total Time</div>
-                <div className="text-xl font-bold text-bikotic-blue text-center">{formatTime(targetTime)}</div>
+              <div className="bg-blue-50 border border-bikotic-blue rounded-lg px-4 py-2 w-full sm:w-auto flex items-center gap-3">
+                <div className="text-xs text-gray-600 whitespace-nowrap">Target Time:</div>
+                <div className="text-xl font-bold text-bikotic-blue">{formatTime(targetTime)}</div>
               </div>
               <button
                 onClick={resetLaps}
                 className="px-4 py-2 border-2 border-bikotic-blue text-bikotic-blue rounded-lg font-semibold transition-colors hover:bg-gray-50 w-full sm:w-auto whitespace-nowrap"
               >
-                Reset to Even Split
+                Reset
               </button>
             </div>
           </div>
