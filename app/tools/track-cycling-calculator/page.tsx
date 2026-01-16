@@ -16,15 +16,44 @@ export default function TrackCyclingCalculator() {
   const [lapTimes, setLapTimes] = useState<number[]>([])
   const [lapLocks, setLapLocks] = useState<boolean[]>([])
 
-  // Event preset data: [distance, beginner_time, intermediate_time, expert_time, typical_chainring, typical_cog]
-  const eventPresets: Record<string, [number, number, number, number, number, number]> = {
-    flying200: [200, 15.0, 12.5, 10.5, 54, 14],
-    '500tt': [500, 48.0, 40.0, 34.0, 53, 14],
-    '1000tt': [1000, 85.0, 72.0, 63.0, 52, 15],
-    pursuit3k: [3000, 270.0, 235.0, 215.0, 52, 15],
-    pursuit4k: [4000, 330.0, 285.0, 260.0, 52, 15],
-    teampursuit: [4000, 285.0, 250.0, 235.0, 50, 15],
-    custom: [5000, 360.0, 300.0, 270.0, 52, 15]
+  // Event preset data by skill level
+  // Structure: { event: { skillLevel: [distance, time, chainring, cog] } }
+  const eventPresets: Record<string, Record<string, [number, number, number, number]>> = {
+    flying200: {
+      beginner: [200, 15.0, 52, 14],
+      intermediate: [200, 12.5, 54, 14],
+      expert: [200, 10.5, 56, 14]
+    },
+    '500tt': {
+      beginner: [500, 48.0, 51, 15],
+      intermediate: [500, 40.0, 53, 14],
+      expert: [500, 34.0, 54, 13]
+    },
+    '1000tt': {
+      beginner: [1000, 85.0, 50, 15],
+      intermediate: [1000, 72.0, 52, 15],
+      expert: [1000, 63.0, 52, 14]
+    },
+    pursuit3k: {
+      beginner: [3000, 270.0, 50, 15],
+      intermediate: [3000, 235.0, 52, 15],
+      expert: [3000, 215.0, 52, 14]
+    },
+    pursuit4k: {
+      beginner: [4000, 330.0, 50, 15],
+      intermediate: [4000, 285.0, 52, 15],
+      expert: [4000, 260.0, 52, 14]
+    },
+    teampursuit: {
+      beginner: [4000, 285.0, 49, 15],
+      intermediate: [4000, 250.0, 50, 15],
+      expert: [4000, 235.0, 51, 14]
+    },
+    custom: {
+      beginner: [5000, 360.0, 50, 15],
+      intermediate: [5000, 300.0, 52, 15],
+      expert: [5000, 270.0, 52, 14]
+    }
   }
 
   // Calculate gear metrics
@@ -51,29 +80,23 @@ export default function TrackCyclingCalculator() {
   // Handle event change
   const handleEventChange = (newEvent: string) => {
     setEvent(newEvent)
-    const preset = eventPresets[newEvent]
+    const preset = eventPresets[newEvent]?.[skillLevel]
     if (preset) {
       setDistance(preset[0])
-      
-      let timeIndex = 2 // intermediate default
-      if (skillLevel === 'beginner') timeIndex = 1
-      if (skillLevel === 'expert') timeIndex = 3
-      
-      setTargetTime(preset[timeIndex])
-      setChainring(preset[4])
-      setCog(preset[5])
+      setTargetTime(preset[1])
+      setChainring(preset[2])
+      setCog(preset[3])
     }
   }
 
   // Handle skill level change
   const handleSkillLevelChange = (newLevel: string) => {
     setSkillLevel(newLevel)
-    const preset = eventPresets[event]
+    const preset = eventPresets[event]?.[newLevel]
     if (preset) {
-      let timeIndex = 2
-      if (newLevel === 'beginner') timeIndex = 1
-      if (newLevel === 'expert') timeIndex = 3
-      setTargetTime(preset[timeIndex])
+      setTargetTime(preset[1])
+      setChainring(preset[2])
+      setCog(preset[3])
     }
   }
 
@@ -221,7 +244,8 @@ export default function TrackCyclingCalculator() {
                   value={distance}
                   onChange={(e) => {
                     setDistance(parseFloat(e.target.value) || 0)
-                    if (eventPresets[event] && parseFloat(e.target.value) !== eventPresets[event][0]) {
+                    const preset = eventPresets[event]?.[skillLevel]
+                    if (preset && parseFloat(e.target.value) !== preset[0]) {
                       setEvent('custom')
                     }
                   }}
