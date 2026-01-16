@@ -15,6 +15,7 @@ export default function TrackCyclingCalculator() {
   const [targetTime, setTargetTime] = useState(280)
   const [lapTimes, setLapTimes] = useState<number[]>([])
   const [lapLocks, setLapLocks] = useState<boolean[]>([])
+  const [shouldRegenerateLaps, setShouldRegenerateLaps] = useState(true)
 
   // Event preset data by skill level
   // Structure: { event: { skillLevel: [distance, time, chainring, cog] } }
@@ -77,6 +78,31 @@ export default function TrackCyclingCalculator() {
   // Calculate average lap time
   const avgLapTime = targetTime / totalLaps
 
+  // Generate lap times based on current settings
+  const regenerateLapTimes = () => {
+    const standingStartPenalty = totalLaps > 4 ? 0.20 : 0.15
+    const firstLapTime = avgLapTime * (1 + standingStartPenalty)
+    const remainingTime = targetTime - firstLapTime
+    const remainingLaps = totalLaps - 1
+    const otherLapTime = remainingLaps > 0 ? remainingTime / remainingLaps : 0
+
+    const newLapTimes = [firstLapTime]
+    for (let i = 1; i < totalLaps; i++) {
+      newLapTimes.push(otherLapTime)
+    }
+    
+    setLapTimes(newLapTimes)
+    setLapLocks(new Array(totalLaps).fill(false))
+    setShouldRegenerateLaps(false)
+  }
+
+  // Generate lap times when needed
+  useEffect(() => {
+    if (shouldRegenerateLaps || lapTimes.length !== totalLaps) {
+      regenerateLapTimes()
+    }
+  }, [totalLaps, targetTime, shouldRegenerateLaps])
+
   // Handle event change
   const handleEventChange = (newEvent: string) => {
     setEvent(newEvent)
@@ -86,6 +112,7 @@ export default function TrackCyclingCalculator() {
       setTargetTime(preset[1])
       setChainring(preset[2])
       setCog(preset[3])
+      setShouldRegenerateLaps(true)
     }
   }
 
@@ -97,6 +124,7 @@ export default function TrackCyclingCalculator() {
       setTargetTime(preset[1])
       setChainring(preset[2])
       setCog(preset[3])
+      setShouldRegenerateLaps(true)
     }
   }
 
@@ -108,27 +136,7 @@ export default function TrackCyclingCalculator() {
     }
   }
 
-  // Generate lap times
-  useEffect(() => {
-    const standingStartPenalty = totalLaps > 4 ? 0.20 : 0.15
-    const firstLapTime = avgLapTime * (1 + standingStartPenalty)
-    const remainingTime = targetTime - firstLapTime
-    const remainingLaps = totalLaps - 1
-    const otherLapTime = remainingLaps > 0 ? remainingTime / remainingLaps : 0
-
-    const newLapTimes = [firstLapTime]
-    for (let i = 1; i < totalLaps; i++) {
-      newLapTimes.push(otherLapTime)
-    }
-
-    // Only update if lap count changed
-    if (lapTimes.length !== totalLaps) {
-      setLapTimes(newLapTimes)
-      setLapLocks(new Array(totalLaps).fill(false))
-    }
-  }, [totalLaps, targetTime, avgLapTime])
-
-  // Update lap time
+  // Update lap time (when user manually edits)
   const updateLapTime = (index: number, newTime: number) => {
     const newLapTimes = [...lapTimes]
     newLapTimes[index] = newTime
@@ -136,6 +144,8 @@ export default function TrackCyclingCalculator() {
     
     const newTotal = newLapTimes.reduce((sum, t) => sum + t, 0)
     setTargetTime(newTotal)
+    // Don't trigger regeneration when user is manually editing
+    setShouldRegenerateLaps(false)
   }
 
   // Toggle lap lock
@@ -145,21 +155,9 @@ export default function TrackCyclingCalculator() {
     setLapLocks(newLocks)
   }
 
-  // Reset laps
+  // Reset laps to even split
   const resetLaps = () => {
-    setLapLocks(new Array(totalLaps).fill(false))
-    
-    const standingStartPenalty = totalLaps > 4 ? 0.20 : 0.15
-    const firstLapTime = avgLapTime * (1 + standingStartPenalty)
-    const remainingTime = targetTime - firstLapTime
-    const remainingLaps = totalLaps - 1
-    const otherLapTime = remainingLaps > 0 ? remainingTime / remainingLaps : 0
-
-    const newLapTimes = [firstLapTime]
-    for (let i = 1; i < totalLaps; i++) {
-      newLapTimes.push(otherLapTime)
-    }
-    setLapTimes(newLapTimes)
+    setShouldRegenerateLaps(true)
   }
 
   // Format time as MM:SS.S
