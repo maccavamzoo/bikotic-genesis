@@ -29,9 +29,10 @@ export default function TrackCyclingCalculator() {
 
   // Calculate gear metrics
   const gearRatio = chainring / cog
-  const wheelCircumference = (wheelSize * Math.PI) / 1000 // in metres
+  const wheelCircumference = wheelSize / 1000 // wheelSize is already circumference in mm, convert to metres
   const development = gearRatio * wheelCircumference
-  const gearInches = gearRatio * (wheelSize / 25.4)
+  const wheelDiameter = wheelSize / Math.PI // calculate diameter from circumference for gear inches
+  const gearInches = gearRatio * (wheelDiameter / 25.4)
 
   // Calculate average speed needed
   const avgSpeedMps = distance / targetTime
@@ -321,7 +322,7 @@ export default function TrackCyclingCalculator() {
               {/* Wheel Size */}
               <div>
                 <label htmlFor="wheelSize" className="block mb-2 text-gray-700 font-semibold">
-                  Wheel Size (mm)
+                  Wheel Circumference (mm)
                 </label>
                 <input 
                   type="number" 
@@ -334,7 +335,7 @@ export default function TrackCyclingCalculator() {
                   className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-bikotic-blue focus:outline-none"
                 />
                 <p className="text-sm text-gray-500 mt-2">
-                  700c with 23mm tire ≈ 2100mm
+                  622mm rim (700c) + 23mm tire both sides ≈ 2100mm
                 </p>
               </div>
 
