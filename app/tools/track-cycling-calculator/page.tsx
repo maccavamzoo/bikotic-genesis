@@ -334,22 +334,69 @@ export default function TrackCyclingCalculator() {
               
               {/* TARGET TOTAL TIME - HIGHLIGHTED */}
               <div className="bg-blue-50 border-2 border-bikotic-blue rounded-lg p-5">
-                <label htmlFor="targetTime" className="block mb-2 text-gray-900 font-bold text-lg">
+                <label className="block mb-2 text-gray-900 font-bold text-lg">
                   🎯 Target Total Time
                 </label>
-                <input 
-                  type="number" 
-                  id="targetTime" 
-                  value={targetTime}
-                  onChange={(e) => {
-                    setTargetTime(parseFloat(e.target.value) || 0)
-                    setShouldRegenerateLaps(true)
-                  }}
-                  min="10"
-                  max="600"
-                  step="0.001"
-                  className="w-full px-4 py-3 border-2 border-bikotic-blue rounded-lg focus:border-bikotic-blue focus:outline-none text-lg font-semibold"
-                />
+                
+                {/* Formatted Time Input (MM:SS.SSS) */}
+                <div className="mb-3">
+                  <label htmlFor="targetTimeFormatted" className="block mb-1 text-xs text-gray-600">
+                    Time (MM:SS.SSS)
+                  </label>
+                  <input 
+                    type="text" 
+                    id="targetTimeFormatted"
+                    placeholder="4:40.000"
+                    onBlur={(e) => {
+                      const formatted = e.target.value
+                      // Parse MM:SS.SSS or M:SS.SSS or SS.SSS
+                      const parts = formatted.split(':')
+                      let seconds = 0
+                      
+                      if (parts.length === 2) {
+                        // MM:SS.SSS format
+                        const mins = parseInt(parts[0]) || 0
+                        const secs = parseFloat(parts[1]) || 0
+                        seconds = mins * 60 + secs
+                      } else if (parts.length === 1) {
+                        // Just seconds
+                        seconds = parseFloat(parts[0]) || 0
+                      }
+                      
+                      if (seconds > 0) {
+                        setTargetTime(seconds)
+                        setShouldRegenerateLaps(true)
+                      }
+                    }}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter') {
+                        e.currentTarget.blur()
+                      }
+                    }}
+                    className="w-full px-4 py-3 border-2 border-bikotic-blue rounded-lg focus:border-bikotic-blue focus:outline-none text-lg font-semibold text-center"
+                  />
+                </div>
+                
+                {/* Seconds Input (for precision) */}
+                <div>
+                  <label htmlFor="targetTime" className="block mb-1 text-xs text-gray-600">
+                    Or seconds (for precision)
+                  </label>
+                  <input 
+                    type="number" 
+                    id="targetTime" 
+                    value={targetTime.toFixed(3)}
+                    onChange={(e) => {
+                      setTargetTime(parseFloat(e.target.value) || 0)
+                      setShouldRegenerateLaps(true)
+                    }}
+                    min="10"
+                    max="600"
+                    step="0.001"
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:border-bikotic-blue focus:outline-none text-sm"
+                  />
+                </div>
+                
                 <p className="text-2xl font-bold text-bikotic-blue mt-3 text-center">
                   {formatTime(targetTime)}
                 </p>
