@@ -183,10 +183,10 @@ export default function TrackCyclingCalculator() {
     setShouldRegenerateLaps(true)
   }
 
-  // Format time as MM:SS.S
+  // Format time as MM:SS.SSS (3 decimal places for track timing)
   const formatTime = (seconds: number) => {
     const mins = Math.floor(seconds / 60)
-    const secs = (seconds % 60).toFixed(1)
+    const secs = (seconds % 60).toFixed(3)
     return mins > 0 ? `${mins}:${parseFloat(secs) < 10 ? '0' : ''}${secs}` : `${secs}s`
   }
 
@@ -347,7 +347,7 @@ export default function TrackCyclingCalculator() {
                   }}
                   min="10"
                   max="600"
-                  step="0.1"
+                  step="0.001"
                   className="w-full px-4 py-3 border-2 border-bikotic-blue rounded-lg focus:border-bikotic-blue focus:outline-none text-lg font-semibold"
                 />
                 <p className="text-2xl font-bold text-bikotic-blue mt-3 text-center">
@@ -456,7 +456,7 @@ export default function TrackCyclingCalculator() {
 
             <div className="bg-gray-50 p-4 rounded-lg">
               <div className="text-sm text-gray-600 mb-1">Avg Lap Time</div>
-              <div className="text-2xl font-bold text-bikotic-blue">{avgLapTime.toFixed(2)}s</div>
+              <div className="text-2xl font-bold text-bikotic-blue">{avgLapTime.toFixed(3)}s</div>
             </div>
 
             <div className="bg-gray-50 p-4 rounded-lg">
@@ -543,10 +543,10 @@ export default function TrackCyclingCalculator() {
                       <td className="p-2 text-center">
                         <input
                           type="number"
-                          className="w-20 px-2 py-1 border border-gray-300 rounded text-center"
-                          value={lapTime.toFixed(2)}
+                          className="w-24 px-2 py-1 border border-gray-300 rounded text-center"
+                          value={lapTime.toFixed(3)}
                           onChange={(e) => updateLapTime(i, parseFloat(e.target.value) || 0)}
-                          step="0.1"
+                          step="0.001"
                           min="5"
                         />
                       </td>
