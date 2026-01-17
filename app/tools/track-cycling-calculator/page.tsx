@@ -16,6 +16,12 @@ export default function TrackCyclingCalculator() {
   const [lapTimes, setLapTimes] = useState<number[]>([])
   const [lapLocks, setLapLocks] = useState<boolean[]>([])
   const [shouldRegenerateLaps, setShouldRegenerateLaps] = useState(true)
+  const [formattedTimeInput, setFormattedTimeInput] = useState('')
+
+  // Update formatted time input when targetTime changes externally
+  useEffect(() => {
+    setFormattedTimeInput(formatTime(targetTime))
+  }, [targetTime])
 
   // Event preset data by skill level
   // Structure: { event: { skillLevel: [distance, time, chainring, cog] } }
@@ -334,19 +340,20 @@ export default function TrackCyclingCalculator() {
               
               {/* TARGET TOTAL TIME - HIGHLIGHTED */}
               <div className="bg-blue-50 border-2 border-bikotic-blue rounded-lg p-5">
-                <label className="block mb-2 text-gray-900 font-bold text-lg">
+                <label className="block mb-3 text-gray-900 font-bold text-lg text-center">
                   🎯 Target Total Time
                 </label>
                 
                 {/* Formatted Time Input (MM:SS.SSS) */}
                 <div className="mb-3">
-                  <label htmlFor="targetTimeFormatted" className="block mb-1 text-xs text-gray-600">
+                  <label htmlFor="targetTimeFormatted" className="block mb-1 text-xs text-gray-600 text-center">
                     Time (MM:SS.SSS)
                   </label>
                   <input 
                     type="text" 
                     id="targetTimeFormatted"
-                    placeholder="4:40.000"
+                    value={formattedTimeInput}
+                    onChange={(e) => setFormattedTimeInput(e.target.value)}
                     onBlur={(e) => {
                       const formatted = e.target.value
                       // Parse MM:SS.SSS or M:SS.SSS or SS.SSS
@@ -366,6 +373,9 @@ export default function TrackCyclingCalculator() {
                       if (seconds > 0) {
                         setTargetTime(seconds)
                         setShouldRegenerateLaps(true)
+                      } else {
+                        // Reset to current target time if invalid
+                        setFormattedTimeInput(formatTime(targetTime))
                       }
                     }}
                     onKeyDown={(e) => {
@@ -373,14 +383,14 @@ export default function TrackCyclingCalculator() {
                         e.currentTarget.blur()
                       }
                     }}
-                    className="w-full px-4 py-3 border-2 border-bikotic-blue rounded-lg focus:border-bikotic-blue focus:outline-none text-lg font-semibold text-center"
+                    className="w-full px-4 py-3 border-2 border-bikotic-blue rounded-lg focus:border-bikotic-blue focus:outline-none text-xl font-bold text-bikotic-blue text-center"
                   />
                 </div>
                 
-                {/* Seconds Input (for precision) */}
+                {/* Seconds Input */}
                 <div>
-                  <label htmlFor="targetTime" className="block mb-1 text-xs text-gray-600">
-                    Or seconds (for precision)
+                  <label htmlFor="targetTime" className="block mb-1 text-xs text-gray-600 text-center">
+                    Or seconds
                   </label>
                   <input 
                     type="number" 
@@ -393,14 +403,11 @@ export default function TrackCyclingCalculator() {
                     min="10"
                     max="600"
                     step="0.001"
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:border-bikotic-blue focus:outline-none text-sm"
+                    className="w-full px-4 py-3 border-2 border-bikotic-blue rounded-lg focus:border-bikotic-blue focus:outline-none text-xl font-bold text-bikotic-blue text-center"
                   />
                 </div>
                 
-                <p className="text-2xl font-bold text-bikotic-blue mt-3 text-center">
-                  {formatTime(targetTime)}
-                </p>
-                <p className="text-xs text-gray-600 mt-2 text-center">
+                <p className="text-xs text-gray-600 mt-3 text-center">
                   This is your goal time - everything else adapts to this
                 </p>
               </div>
