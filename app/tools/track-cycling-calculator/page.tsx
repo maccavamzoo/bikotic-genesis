@@ -12,7 +12,7 @@ export default function TrackCyclingCalculator() {
   const [chainring, setChainring] = useState(52)
   const [cog, setCog] = useState(15)
   const [wheelSize, setWheelSize] = useState(2100)
-  const [targetTime, setTargetTime] = useState(280)
+  const [targetTime, setTargetTime] = useState(285) // pursuit4k intermediate = 4:45.000
   const [lapTimes, setLapTimes] = useState<number[]>([])
   const [lapLocks, setLapLocks] = useState<boolean[]>([])
   const [shouldRegenerateLaps, setShouldRegenerateLaps] = useState(true)
@@ -27,9 +27,9 @@ export default function TrackCyclingCalculator() {
   // Structure: { event: { skillLevel: [distance, time, chainring, cog] } }
   const eventPresets: Record<string, Record<string, [number, number, number, number]>> = {
     flying200: {
-      beginner: [200, 15.0, 52, 14],
-      intermediate: [200, 12.5, 54, 14],
-      expert: [200, 10.5, 56, 14]
+      beginner: [200, 11.0, 52, 14],
+      intermediate: [200, 10.0, 54, 14],
+      expert: [200, 9.2, 56, 13]
     },
     '500tt': {
       beginner: [500, 48.0, 51, 15],
@@ -86,7 +86,9 @@ export default function TrackCyclingCalculator() {
 
   // Generate lap times based on current settings
   const regenerateLapTimes = () => {
-    const standingStartPenalty = totalLaps > 4 ? 0.20 : 0.15
+    // Standing start penalty: Elite riders ~35%, intermediate ~30%, beginners ~25%
+    // This results in roughly 5-6 second penalty regardless of skill level
+    const standingStartPenalty = totalLaps > 4 ? 0.32 : 0.25
     const firstLapTime = avgLapTime * (1 + standingStartPenalty)
     const remainingTime = targetTime - firstLapTime
     const remainingLaps = totalLaps - 1
@@ -568,7 +570,7 @@ export default function TrackCyclingCalculator() {
           </div>
 
           <p className="text-sm text-gray-600 mb-5">
-            Edit individual lap times to plan your pacing strategy. The <strong>target total time stays fixed</strong> - unlocked laps automatically adjust to maintain your goal time. Lock specific laps to preserve them. First lap accounts for standing start.
+            Edit individual lap times to plan your pacing strategy. The <strong>target total time stays fixed</strong> - unlocked laps automatically adjust to maintain your goal time. Lock specific laps to preserve them. First lap accounts for standing start (typically ~30% slower, or 5-6 seconds).
           </p>
 
           <div className="overflow-x-auto">
@@ -630,7 +632,7 @@ export default function TrackCyclingCalculator() {
               <li>Target total time is fixed - everything else adapts to it</li>
               <li>Edit any lap time - unlocked laps automatically redistribute to maintain target</li>
               <li>Lock specific laps to preserve them in your pacing plan</li>
-              <li>First lap is typically 15-25% slower due to standing start</li>
+              <li>First lap is typically 25-35% slower due to standing start (~5-6 seconds penalty)</li>
             </ul>
           </div>
         </div>
