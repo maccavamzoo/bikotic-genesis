@@ -27,8 +27,8 @@ export default function TrackCyclingCalculator() {
   // Structure: { event: { skillLevel: [distance, time, chainring, cog] } }
   const eventPresets: Record<string, Record<string, [number, number, number, number]>> = {
     flying200: {
-      beginner: [200, 11.0, 52, 14],
-      intermediate: [200, 10.0, 54, 14],
+      beginner: [200, 11.0, 54, 13],
+      intermediate: [200, 10.0, 56, 13],
       expert: [200, 9.2, 56, 13]
     },
     '500tt': {
@@ -52,9 +52,9 @@ export default function TrackCyclingCalculator() {
       expert: [4000, 260.0, 52, 14]
     },
     teampursuit: {
-      beginner: [4000, 285.0, 49, 15],
-      intermediate: [4000, 250.0, 50, 15],
-      expert: [4000, 235.0, 51, 14]
+      beginner: [4000, 285.0, 52, 15],
+      intermediate: [4000, 250.0, 53, 14],
+      expert: [4000, 235.0, 52, 14]
     },
     custom: {
       beginner: [5000, 360.0, 50, 15],
