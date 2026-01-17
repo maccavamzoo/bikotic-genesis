@@ -13,7 +13,7 @@ export default function ToolsPage() {
             Cycling Calculators & Tools
           </h1>
           <p className="text-lg md:text-xl text-[#525252] max-w-3xl">
-            Sometimes I build tools to explain concepts in videos, free to use if you find them useful.
+            Sometimes I build tools to explain concepts in videos, free to use if you find them useful. <em>*note: all my tools are prototypes, if you find a bug please let me know!</em>
           </p>
         </section>
 
