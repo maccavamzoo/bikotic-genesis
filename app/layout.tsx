@@ -35,7 +35,7 @@ export default function RootLayout({
         {/* Footer */}
         <footer className="bg-white border-t-2 border-gray-200 mt-16">
           <div className="max-w-7xl mx-auto px-4 md:px-8 py-8">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-6">
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-6">
               {/* Column 1 */}
               <div>
                 <h3 className="text-lg font-bold text-gray-900 mb-3">BIKOTIC</h3>
@@ -71,7 +71,24 @@ export default function RootLayout({
                 </ul>
               </div>
 
-              {/* Column 3 */}
+              {/* Column 3 - Legal */}
+              <div>
+                <h3 className="text-lg font-bold text-gray-900 mb-3">Legal</h3>
+                <ul className="space-y-2">
+                  <li>
+                    <Link href="/privacy" className="text-gray-600 hover:text-bikotic-blue text-sm">
+                      Privacy Policy
+                    </Link>
+                  </li>
+                  <li>
+                    <Link href="/terms" className="text-gray-600 hover:text-bikotic-blue text-sm">
+                      Terms & Conditions
+                    </Link>
+                  </li>
+                </ul>
+              </div>
+
+              {/* Column 4 - Connect */}
               <div>
                 <h3 className="text-lg font-bold text-gray-900 mb-3">Connect</h3>
                 <ul className="space-y-2">
@@ -91,6 +108,7 @@ export default function RootLayout({
                     <a 
                       href="https://youtube.com/@bikotic" 
                       target="_blank"
+                      rel="noopener noreferrer"
                       className="text-gray-600 hover:text-bikotic-blue text-sm flex items-center gap-2"
                     >
                       <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
