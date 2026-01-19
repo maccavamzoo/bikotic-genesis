@@ -30,9 +30,9 @@ export default function Home() {
               <p className="text-lg md:text-xl mb-6 md:mb-8 text-[#525252]">
                 Compare any two Road, MTB, or Gravel bikes from 1,500+ models, overlaid to scale. Fade between images to spot geometry and frame design differences.
               </p>
-              <button className="bg-bikotic-blue text-white border-none px-8 py-4 text-lg font-bold rounded-lg cursor-pointer hover:bg-bikotic-blue-dark transition-colors shadow-md">
+              <a href="https://bikotic.com/BIKOTIC-CODEBASE-V3/BIKOTIC-COMPARE-BIKES-APP-V3.0.html" target="_blank" rel="noopener noreferrer" className="bg-bikotic-blue text-white border-none px-8 py-4 text-lg font-bold rounded-lg cursor-pointer hover:bg-bikotic-blue-dark transition-colors shadow-md">
                 Launch Visual Bike Comparison Tool
-              </button>
+              </a>
             </div>
           </div>
         </section>
