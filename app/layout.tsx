@@ -49,9 +49,9 @@ export default function RootLayout({
                 <h3 className="text-lg font-bold text-gray-900 mb-3">Quick Links</h3>
                 <ul className="space-y-2">
                   <li>
-                    <Link href="/app" className="text-gray-600 hover:text-bikotic-blue text-sm">
+                    <a href="https://bikotic.com/BIKOTIC-CODEBASE-V3/BIKOTIC-COMPARE-BIKES-APP-V3.0.html" target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-bikotic-blue text-sm">
                       Visual Bike Comparison Tool
-                    </Link>
+                    </a>
                   </li>
                   <li>
                     <Link href="/articles" className="text-gray-600 hover:text-bikotic-blue text-sm">
