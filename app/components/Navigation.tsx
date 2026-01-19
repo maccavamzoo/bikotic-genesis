@@ -34,12 +34,14 @@ export default function Navigation() {
         >
           Video Reviews
         </Link>
-        <Link 
-          href="/app" 
+        <a 
+          href="https://bikotic.com/BIKOTIC-CODEBASE-V3/BIKOTIC-COMPARE-BIKES-APP-V3.0.html" 
+          target="_blank"
+          rel="noopener noreferrer"
           className="bg-bikotic-blue text-white px-4 py-2 rounded-lg font-bold hover:bg-bikotic-blue-dark transition-colors"
         >
           Compare Bikes
-        </Link>
+        </a>
       </nav>
 
       {/* Mobile Menu Button */}
@@ -91,13 +93,15 @@ export default function Navigation() {
             >
               Video Reviews
             </Link>
-            <Link 
-              href="/app" 
+            <a 
+              href="https://bikotic.com/BIKOTIC-CODEBASE-V3/BIKOTIC-COMPARE-BIKES-APP-V3.0.html" 
+              target="_blank"
+              rel="noopener noreferrer"
               className="mx-4 mt-2 bg-bikotic-blue text-white px-4 py-3 rounded-lg font-bold hover:bg-bikotic-blue-dark transition-colors text-center"
               onClick={() => setMobileMenuOpen(false)}
             >
               Compare Bikes
-            </Link>
+            </a>
           </nav>
         </div>
       )}
