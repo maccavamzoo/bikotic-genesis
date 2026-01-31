@@ -425,7 +425,7 @@ export default function TrackCyclingCalculator() {
                   value={chainring}
                   onChange={(e) => setChainring(parseFloat(e.target.value) || 52)}
                   min="38"
-                  max="60"
+                  max="80"
                   className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-bikotic-blue focus:outline-none"
                 />
               </div>
