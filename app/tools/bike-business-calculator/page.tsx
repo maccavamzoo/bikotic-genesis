@@ -47,6 +47,10 @@ export default function BikeBusinessCalculator() {
   const [professionalFees, setProfessionalFees] = useState(1000);
   const [loanRepayments, setLoanRepayments] = useState(0);
   
+  // VAT
+  const [vatRegistered, setVatRegistered] = useState(true);
+  const [showVatExplainer, setShowVatExplainer] = useState(false);
+  
   // Employees
   const [employees, setEmployees] = useState<Employee[]>([]);
   
@@ -163,9 +167,11 @@ export default function BikeBusinessCalculator() {
   };
   
   const calculateBikeCosts = (bike: BikeProduct) => {
-    const costsPerBike = bike.tubingMaterials + bike.paintTradePrice + 
-                         bike.groupsetTradePrice + bike.wheelsTradePrice + bike.otherPartsTradePrice + 
-                         bike.consumablesPerBike + bike.shippingPerBike + bike.contractorPerBike;
+    const vatMultiplier = vatRegistered ? 1 : 1.2;
+    const materialCosts = (bike.tubingMaterials + bike.paintTradePrice + 
+                          bike.groupsetTradePrice + bike.wheelsTradePrice + bike.otherPartsTradePrice + 
+                          bike.consumablesPerBike + bike.shippingPerBike) * vatMultiplier;
+    const costsPerBike = materialCosts + bike.contractorPerBike;
     return costsPerBike * bike.bikesPerYear;
   };
   
@@ -222,6 +228,30 @@ export default function BikeBusinessCalculator() {
             Adjust the inputs below to model different scenarios for your framebuilding business
           </p>
         </section>
+
+        {/* VAT Registration Toggle */}
+        <div className="bg-white border-2 border-gray-200 rounded-lg shadow-sm p-4 mb-6">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+            <div className="flex items-center gap-3">
+              <button
+                onClick={() => setVatRegistered(!vatRegistered)}
+                className={`relative w-14 h-7 rounded-full transition-colors flex-shrink-0 ${vatRegistered ? 'bg-bikotic-blue' : 'bg-gray-300'}`}
+              >
+                <span className={`absolute top-0.5 left-0.5 w-6 h-6 bg-white rounded-full shadow transition-transform ${vatRegistered ? 'translate-x-7' : 'translate-x-0'}`} />
+              </button>
+              <span className="font-semibold text-[#0a0a0a]">VAT Registered</span>
+              <button
+                onClick={() => setShowVatExplainer(true)}
+                className="w-5 h-5 rounded-full bg-bikotic-blue text-white text-xs flex items-center justify-center hover:bg-bikotic-blue-dark transition-colors flex-shrink-0"
+              >
+                ?
+              </button>
+            </div>
+            <span className={`text-sm font-semibold px-3 py-1 rounded-full ${vatRegistered ? 'bg-green-100 text-green-700' : 'bg-amber-100 text-amber-700'}`}>
+              {vatRegistered ? 'Customers pay +20% VAT on top' : 'Costs include unreclaimed VAT'}
+            </span>
+          </div>
+        </div>
         
         {/* Employees Section */}
         <div className="bg-white border-2 border-gray-200 rounded-lg shadow-sm p-6 mb-6">
@@ -605,6 +635,13 @@ export default function BikeBusinessCalculator() {
                             <p className="text-lg font-bold text-red-300">£{formatCurrency(calculateBikeCosts(bike) / bike.bikesPerYear)}</p>
                           </div>
                         </div>
+
+                        {vatRegistered && (
+                          <div className="flex justify-between items-center mb-3 px-3 py-2 bg-gray-800 rounded">
+                            <p className="text-xs text-gray-400">Customer Pays (inc. VAT)</p>
+                            <p className="text-lg font-bold text-green-400">£{formatCurrency(revenue.revenuePerBike * 1.2)}</p>
+                          </div>
+                        )}
                         
                         <div className="pt-3 border-t border-gray-700">
                           <div className="flex justify-between items-center mb-1">
@@ -641,6 +678,11 @@ export default function BikeBusinessCalculator() {
                       <div className="mt-4 p-4 bg-bikotic-blue/10 rounded-lg">
                         <p className="text-sm text-[#525252]">Selling Price per Bike</p>
                         <p className="text-2xl font-bold text-bikotic-blue">£{formatCurrency(revenue.revenuePerBike)}</p>
+                        {vatRegistered && (
+                          <p className="text-sm text-[#525252] mt-1.5">
+                            Customer pays <span className="font-bold text-bikotic-blue">£{formatCurrency(revenue.revenuePerBike * 1.2)}</span> inc. VAT
+                          </p>
+                        )}
                       </div>
                     </div>
                   )}
@@ -796,11 +838,24 @@ export default function BikeBusinessCalculator() {
                   <span className="text-gray-300">Total Revenue</span>
                   <span className="text-xl font-semibold">£{formatCurrency(totalRevenue)}</span>
                 </div>
+
+                {vatRegistered && (
+                  <div className="flex justify-between items-center pl-3">
+                    <span className="text-gray-500 text-xs">↳ Customers pay inc. VAT</span>
+                    <span className="text-xs font-semibold text-gray-400">£{formatCurrency(totalRevenue * 1.2)}</span>
+                  </div>
+                )}
                 
                 <div className="flex justify-between items-center">
                   <span className="text-gray-300">Variable Costs</span>
                   <span className="text-xl font-semibold text-red-300">£{formatCurrency(totalVariableCosts)}</span>
                 </div>
+
+                {!vatRegistered && (
+                  <div className="flex justify-between items-center pl-3">
+                    <span className="text-amber-400 text-xs">↳ Includes unreclaimed VAT</span>
+                  </div>
+                )}
                 
                 <div className="flex justify-between items-center">
                   <span className="text-gray-300">Fixed Costs</span>
@@ -959,6 +1014,61 @@ export default function BikeBusinessCalculator() {
           </div>
         </div>
       </div>
+
+      {/* VAT Explainer Modal */}
+      {showVatExplainer && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-lg shadow-xl max-w-lg w-full p-6 max-h-[90vh] overflow-y-auto">
+            <div className="flex justify-between items-start mb-5">
+              <h3 className="text-xl font-bold text-[#0a0a0a]">VAT & Your Business</h3>
+              <button onClick={() => setShowVatExplainer(false)} className="text-gray-400 hover:text-gray-600 text-2xl leading-none">✕</button>
+            </div>
+
+            <div className="mb-4 p-3 bg-gray-50 rounded-lg border border-gray-200">
+              <p className="text-sm text-[#525252]">
+                <strong>What is VAT?</strong> A 20% tax on goods and services. Businesses collect it from customers and hand it over to HMRC. It&apos;s not your income — it just passes straight through you.
+              </p>
+            </div>
+
+            <div className="mb-4">
+              <div className="flex items-center gap-2 mb-2">
+                <span className="w-6 h-6 rounded-full bg-amber-100 text-amber-700 flex items-center justify-center text-xs font-bold">✕</span>
+                <h4 className="font-bold text-[#0a0a0a]">Not Registered</h4>
+              </div>
+              <div className="text-sm text-[#525252] space-y-2 ml-8">
+                <p>Your prices are VAT-free — customers pay exactly what you charge. Simple.</p>
+                <p>The catch: you <strong>can&apos;t claim back</strong> the VAT you pay on materials. A £3,000 groupset actually costs you £3,600. That eats into your margin on every bike.</p>
+                <p>You <strong>must register</strong> once your turnover hits £90,000 in any rolling 12 months — at which point your prices suddenly jump 20%.</p>
+              </div>
+            </div>
+
+            <div className="mb-4">
+              <div className="flex items-center gap-2 mb-2">
+                <span className="w-6 h-6 rounded-full bg-green-100 text-green-700 flex items-center justify-center text-xs font-bold">✓</span>
+                <h4 className="font-bold text-[#0a0a0a]">Registered</h4>
+              </div>
+              <div className="text-sm text-[#525252] space-y-2 ml-8">
+                <p>You add 20% VAT on top of your prices. Customers pay more, but that extra 20% isn&apos;t yours — it goes to HMRC.</p>
+                <p>The benefit: you <strong>claim back</strong> all VAT on your purchases. That £3,600 groupset invoice? You only actually pay £3,000. The VAT is just paperwork.</p>
+                <p>Your profit margin stays the same. VAT is just a layer on top that passes through.</p>
+              </div>
+            </div>
+
+            <div className="p-3 bg-bikotic-blue/10 rounded-lg border border-bikotic-blue">
+              <p className="text-sm text-[#525252]">
+                <strong>💡 For a bespoke bike business?</strong> Registering early usually makes sense. At these prices you&apos;ll hit £90,000 fast — and voluntary registration means your customers expect VAT from day one. No sudden price shock later.
+              </p>
+            </div>
+
+            <button
+              onClick={() => setShowVatExplainer(false)}
+              className="mt-5 w-full px-4 py-2 bg-bikotic-blue text-white rounded-lg font-semibold hover:bg-bikotic-blue-dark transition-colors"
+            >
+              Got it
+            </button>
+          </div>
+        </div>
+      )}
     </main>
   )
 }
