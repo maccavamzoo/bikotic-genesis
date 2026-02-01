@@ -17,6 +17,8 @@ export default function TrackCyclingCalculator() {
   const [lapLocks, setLapLocks] = useState<boolean[]>([])
   const [shouldRegenerateLaps, setShouldRegenerateLaps] = useState(true)
   const [formattedTimeInput, setFormattedTimeInput] = useState('')
+  const [showAvgLapModal, setShowAvgLapModal] = useState(false)
+  const [avgLapTimeInput, setAvgLapTimeInput] = useState('')
 
   // Update formatted time input when targetTime changes externally
   useEffect(() => {
@@ -189,6 +191,31 @@ export default function TrackCyclingCalculator() {
   // Reset laps to even split
   const resetLaps = () => {
     setShouldRegenerateLaps(true)
+  }
+
+  // Apply average lap time to all laps
+  const applyAvgLapTime = () => {
+    const avgTime = parseFloat(avgLapTimeInput)
+    if (isNaN(avgTime) || avgTime <= 0) {
+      alert('Please enter a valid lap time')
+      return
+    }
+
+    // Fill all laps with the average time
+    const newLapTimes = new Array(totalLaps).fill(avgTime)
+    setLapTimes(newLapTimes)
+    
+    // Calculate new total time
+    const newTotalTime = avgTime * totalLaps
+    setTargetTime(newTotalTime)
+    
+    // Clear all locks
+    setLapLocks(new Array(totalLaps).fill(false))
+    
+    // Close modal and reset input
+    setShowAvgLapModal(false)
+    setAvgLapTimeInput('')
+    setShouldRegenerateLaps(false)
   }
 
   // Format time as MM:SS.SSS (3 decimal places for track timing)
@@ -561,6 +588,12 @@ export default function TrackCyclingCalculator() {
                 <div className="text-xl font-bold text-bikotic-blue">{formatTime(targetTime)}</div>
               </div>
               <button
+                onClick={() => setShowAvgLapModal(true)}
+                className="px-4 py-2 bg-bikotic-blue text-white rounded-lg font-semibold transition-colors hover:bg-bikotic-blue-dark w-full sm:w-auto whitespace-nowrap"
+              >
+                Set Avg Lap Time
+              </button>
+              <button
                 onClick={resetLaps}
                 className="px-4 py-2 border-2 border-bikotic-blue text-bikotic-blue rounded-lg font-semibold transition-colors hover:bg-gray-50 w-full sm:w-auto whitespace-nowrap"
               >
@@ -638,6 +671,57 @@ export default function TrackCyclingCalculator() {
         </div>
 
       </div>
+
+      {/* Average Lap Time Modal */}
+      {showAvgLapModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-lg shadow-xl max-w-md w-full p-6">
+            <h3 className="text-xl font-bold text-gray-900 mb-4">Set Average Lap Time</h3>
+            
+            <div className="mb-4">
+              <label htmlFor="avgLapTime" className="block mb-2 text-gray-700 font-semibold">
+                Average Lap Time (seconds)
+              </label>
+              <input
+                type="number"
+                id="avgLapTime"
+                value={avgLapTimeInput}
+                onChange={(e) => setAvgLapTimeInput(e.target.value)}
+                placeholder="e.g., 17.500"
+                step="0.001"
+                min="5"
+                className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-bikotic-blue focus:outline-none text-center text-xl"
+                autoFocus
+              />
+            </div>
+
+            <div className="mb-5 p-3 bg-yellow-50 border border-yellow-200 rounded-lg">
+              <p className="text-sm text-gray-700">
+                <strong>Note:</strong> This will set all {totalLaps} laps to the same time and recalculate your total time. 
+                Adjust the first lap time afterward if you need to account for a standing start.
+              </p>
+            </div>
+
+            <div className="flex gap-3">
+              <button
+                onClick={applyAvgLapTime}
+                className="flex-1 px-4 py-3 bg-bikotic-blue text-white rounded-lg font-semibold transition-colors hover:bg-bikotic-blue-dark"
+              >
+                Apply
+              </button>
+              <button
+                onClick={() => {
+                  setShowAvgLapModal(false)
+                  setAvgLapTimeInput('')
+                }}
+                className="flex-1 px-4 py-3 border-2 border-gray-300 text-gray-700 rounded-lg font-semibold transition-colors hover:bg-gray-50"
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </main>
   )
 }
