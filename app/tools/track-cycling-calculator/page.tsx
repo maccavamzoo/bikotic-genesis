@@ -19,6 +19,7 @@ export default function TrackCyclingCalculator() {
   const [formattedTimeInput, setFormattedTimeInput] = useState('')
   const [showAvgLapModal, setShowAvgLapModal] = useState(false)
   const [avgLapTimeInput, setAvgLapTimeInput] = useState('')
+  const [startLapTimeInput, setStartLapTimeInput] = useState('')
 
   // Update formatted time input when targetTime changes externally
   useEffect(() => {
@@ -201,20 +202,26 @@ export default function TrackCyclingCalculator() {
       return
     }
 
-    // Fill all laps with the average time
+    const startTime = startLapTimeInput !== '' ? parseFloat(startLapTimeInput) : null
+    
+    // Fill all laps with the average time, override first lap if start time provided
     const newLapTimes = new Array(totalLaps).fill(avgTime)
+    if (startTime !== null && !isNaN(startTime) && startTime > 0) {
+      newLapTimes[0] = startTime
+    }
     setLapTimes(newLapTimes)
     
-    // Calculate new total time
-    const newTotalTime = avgTime * totalLaps
+    // Calculate new total time from the actual lap times
+    const newTotalTime = newLapTimes.reduce((sum, t) => sum + t, 0)
     setTargetTime(newTotalTime)
     
     // Clear all locks
     setLapLocks(new Array(totalLaps).fill(false))
     
-    // Close modal and reset input
+    // Close modal and reset inputs
     setShowAvgLapModal(false)
     setAvgLapTimeInput('')
+    setStartLapTimeInput('')
     setShouldRegenerateLaps(false)
   }
 
@@ -695,10 +702,26 @@ export default function TrackCyclingCalculator() {
               />
             </div>
 
+            <div className="mb-4">
+              <label htmlFor="startLapTime" className="block mb-2 text-gray-700 font-semibold">
+                Start Lap Time (seconds) <span className="text-gray-400 font-normal">(optional)</span>
+              </label>
+              <input
+                type="number"
+                id="startLapTime"
+                value={startLapTimeInput}
+                onChange={(e) => setStartLapTimeInput(e.target.value)}
+                placeholder="e.g., 22.500"
+                step="0.001"
+                min="5"
+                className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-bikotic-blue focus:outline-none text-center text-xl"
+              />
+            </div>
+
             <div className="mb-5 p-3 bg-yellow-50 border border-yellow-200 rounded-lg">
               <p className="text-sm text-gray-700">
-                <strong>Note:</strong> This will set all {totalLaps} laps to the same time and recalculate your total time. 
-                Adjust the first lap time afterward if you need to account for a standing start.
+                <strong>Note:</strong> This will fill all {totalLaps} laps with the average time and recalculate your total. 
+                If you enter a start lap time, that will be used for lap 1 instead — useful for standing start events, but leave it blank if not needed.
               </p>
             </div>
 
@@ -713,6 +736,7 @@ export default function TrackCyclingCalculator() {
                 onClick={() => {
                   setShowAvgLapModal(false)
                   setAvgLapTimeInput('')
+                  setStartLapTimeInput('')
                 }}
                 className="flex-1 px-4 py-3 border-2 border-gray-300 text-gray-700 rounded-lg font-semibold transition-colors hover:bg-gray-50"
               >
