@@ -202,11 +202,18 @@ export default function LapTimerPage() {
               <div className="text-gray-500 text-xl font-mono tracking-widest mb-2">
                 LAP {laps.length}
               </div>
-              <div
-                className="text-white font-mono font-bold leading-none text-center w-full px-4"
-                style={{ fontSize: 'min(22vw, 20vh)' }}
-              >
-                {formatTime(lastLapTime, decimals)}
+              {(() => {
+                const display = formatTime(lastLapTime, decimals)
+                const vw = Math.floor(135 / display.length)
+                return (
+                  <div
+                    className="text-white font-mono font-bold leading-none text-center w-full"
+                    style={{ fontSize: `min(${vw}vw, 20vh)`, padding: '0 16px' }}
+                  >
+                    {display}
+                  </div>
+                )
+              })()}
               </div>
             </>
           ) : (
