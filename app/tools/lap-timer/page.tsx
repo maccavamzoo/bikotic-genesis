@@ -170,6 +170,10 @@ export default function LapTimerPage() {
     releaseWakeLock()
   }, [releaseWakeLock])
 
+  // Compute display font size based on string length
+  const lapDisplay = lastLapTime !== null ? formatTime(lastLapTime, decimals) : ''
+  const lapFontVw = lapDisplay.length > 0 ? Math.floor(135 / lapDisplay.length) : 19
+
   // ─── RUNNING STATE (fullscreen optimised) ───
   if (state === 'running') {
     return (
@@ -202,18 +206,11 @@ export default function LapTimerPage() {
               <div className="text-gray-500 text-xl font-mono tracking-widest mb-2">
                 LAP {laps.length}
               </div>
-              {(() => {
-                const display = formatTime(lastLapTime, decimals)
-                const vw = Math.floor(135 / display.length)
-                return (
-                  <div
-                    className="text-white font-mono font-bold leading-none text-center w-full"
-                    style={{ fontSize: `min(${vw}vw, 20vh)`, padding: '0 16px' }}
-                  >
-                    {display}
-                  </div>
-                )
-              })()}
+              <div
+                className="text-white font-mono font-bold leading-none text-center w-full"
+                style={{ fontSize: `min(${lapFontVw}vw, 20vh)`, padding: '0 16px' }}
+              >
+                {lapDisplay}
               </div>
             </>
           ) : (
