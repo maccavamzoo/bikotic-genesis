@@ -1,0 +1,12 @@
+{
+  "title": "Track Lap Timer",
+  "description": "A fullscreen lap timer designed for trackside coaching. Big buttons, massive lap times, zero fuss. Press lap, shout the time.",
+  "icon": "⏱️",
+  "features": [
+    "Fullscreen mode for trackside use",
+    "Massive last-lap display",
+    "Auto-rounded to hundredths",
+    "Screenshot-ready session summary"
+  ],
+  "date": "2026-02-06"
+}
