@@ -259,22 +259,11 @@ export default function LapTimerPage() {
     return (
       <div className="max-w-2xl mx-auto p-4 md:p-8">
         <h1 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">Session Complete</h1>
-        <p className="text-xl md:text-2xl font-bold text-gray-700 mb-6">
-          {activeLaps.length} laps · Total time: {formatTime(totalTime, 3)}
-        </p>
 
-        {/* Exclude last lap toggle */}
-        {laps.length > 1 && (
-          <label className="flex items-center gap-3 mb-6 cursor-pointer">
-            <input
-              type="checkbox"
-              checked={excludeLastLap}
-              onChange={(e) => setExcludeLastLap(e.target.checked)}
-              className="w-5 h-5 rounded border-gray-300 text-bikotic-blue focus:ring-bikotic-blue"
-            />
-            <span className="text-gray-600">Exclude last lap (cool-down)</span>
-          </label>
-        )}
+        {/* Total time centred in blue */}
+        <p className="text-2xl md:text-3xl font-bold text-bikotic-blue text-center mb-6">
+          Total time: {formatTime(totalTime, 3)} <span className="text-lg font-normal text-gray-500">({activeLaps.length} laps)</span>
+        </p>
 
         {/* Stats bar */}
         <div className="grid grid-cols-3 gap-3 mb-6">
@@ -293,7 +282,7 @@ export default function LapTimerPage() {
         </div>
 
         {/* Lap table */}
-        <div className="bg-white border-2 border-gray-200 rounded-lg overflow-hidden mb-6">
+        <div className="bg-white border-2 border-gray-200 rounded-lg overflow-hidden mb-4">
           <table className="w-full">
             <thead>
               <tr className="bg-gray-50 border-b-2 border-gray-200">
@@ -332,6 +321,19 @@ export default function LapTimerPage() {
             </tbody>
           </table>
         </div>
+
+        {/* Exclude last lap toggle */}
+        {laps.length > 1 && (
+          <label className="flex items-center gap-3 mb-6 cursor-pointer">
+            <input
+              type="checkbox"
+              checked={excludeLastLap}
+              onChange={(e) => setExcludeLastLap(e.target.checked)}
+              className="w-5 h-5 rounded border-gray-300 text-bikotic-blue focus:ring-bikotic-blue"
+            />
+            <span className="text-gray-600">Exclude last lap (cool-down)</span>
+          </label>
+        )}
 
         {/* Actions */}
         <div className="flex gap-3">
