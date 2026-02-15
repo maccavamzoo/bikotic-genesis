@@ -235,14 +235,14 @@ export default function LapTimerPage() {
             LAP
           </button>
 
-          {/* Previous lap below button */}
-          {laps.length >= 2 && (
-            <div className="text-center mt-4">
-              <span className="text-gray-600 font-mono text-sm">
-                Lap {laps.length - 1}: {formatTime(laps[laps.length - 2].splitMs, decimals)}
-              </span>
-            </div>
-          )}
+          {/* Previous lap below button — always rendered to prevent layout shift */}
+          <div className="text-center mt-4">
+            <span className="text-gray-600 font-mono text-sm">
+              {laps.length >= 2
+                ? `Lap ${laps.length - 1}: ${formatTime(laps[laps.length - 2].splitMs, decimals)}`
+                : '\u00A0'}
+            </span>
+          </div>
         </div>
       </div>
     )
