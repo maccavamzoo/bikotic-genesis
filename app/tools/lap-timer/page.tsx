@@ -127,19 +127,17 @@ export default function LapTimerPage() {
     const totalMs = now - startTimeRef.current
     lastLapTimeRef.current = now
 
-    const lap: Lap = {
-      number: laps.length + 1,
+    setLaps(prev => [...prev, {
+      number: prev.length + 1,
       timeMs: totalMs,
       splitMs: splitMs,
-    }
-
-    setLaps(prev => [...prev, lap])
+    }])
     setLastLapTime(splitMs)
 
     // Flash effect
     setFlashActive(true)
     setTimeout(() => setFlashActive(false), 200)
-  }, [laps.length])
+  }, [])
 
   const handleStop = useCallback(() => {
     // Record final lap from last lap mark to now
@@ -147,19 +145,17 @@ export default function LapTimerPage() {
     const splitMs = now - lastLapTimeRef.current
     const totalMs = now - startTimeRef.current
 
-    const finalLap: Lap = {
-      number: laps.length + 1,
+    setLaps(prev => [...prev, {
+      number: prev.length + 1,
       timeMs: totalMs,
       splitMs: splitMs,
-    }
-
-    setLaps(prev => [...prev, finalLap])
+    }])
     cancelAnimationFrame(animFrameRef.current)
     setElapsed(totalMs)
     setState('stopped')
     releaseWakeLock()
     exitFullscreen()
-  }, [laps.length, releaseWakeLock, exitFullscreen])
+  }, [releaseWakeLock, exitFullscreen])
 
   const handleReset = useCallback(() => {
     cancelAnimationFrame(animFrameRef.current)
@@ -223,9 +219,8 @@ export default function LapTimerPage() {
           )}
 
           {/* Giant round lap button — as wide as the viewport allows */}
-          <button
-            onClick={handleLap}
-            className="rounded-full text-white font-bold uppercase active:scale-[0.96] transition-transform flex items-center justify-center aspect-square"
+          <div
+            className="rounded-full text-white font-bold uppercase flex items-center justify-center aspect-square pointer-events-none"
             style={{
               width: 'min(75vw, 55vh)',
               fontSize: 'min(10vw, 8vh)',
@@ -235,7 +230,7 @@ export default function LapTimerPage() {
             }}
           >
             LAP
-          </button>
+          </div>
 
           {/* Previous lap below button — always rendered to prevent layout shift */}
           <div className="text-center mt-4">
