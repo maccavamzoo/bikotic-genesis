@@ -195,7 +195,7 @@ export default function LapTimerPage() {
           <button
             onClick={(e) => { e.stopPropagation(); handleStop() }}
             className="rounded-full text-red-400 text-sm font-bold uppercase tracking-widest border border-red-400/30 active:bg-red-400/20 flex items-center justify-center"
-            style={{ width: '56px', height: '56px' }}
+            style={{ width: '72px', height: '72px' }}
           >
             Stop
           </button>
