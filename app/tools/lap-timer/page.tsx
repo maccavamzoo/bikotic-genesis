@@ -199,44 +199,44 @@ export default function LapTimerPage() {
           </button>
         </div>
 
-        {/* Centre: last lap time */}
+        {/* Centre: massive round LAP button */}
         <div className="flex-1 flex flex-col items-center justify-center px-4">
+          {/* Last lap readout above button */}
           {lastLapTime !== null ? (
-            <>
-              <div className="text-gray-500 text-xl font-mono tracking-widest mb-2">
+            <div className="text-center mb-4">
+              <div className="text-gray-500 text-lg font-mono tracking-widest">
                 LAP {laps.length}
               </div>
               <div
-                className="text-white font-mono font-bold leading-none text-center w-full"
-                style={{ fontSize: `min(${lapFontVw}vw, 20vh)`, padding: '0 16px' }}
+                className="text-white font-mono font-bold leading-none"
+                style={{ fontSize: `min(${lapFontVw}vw, 12vh)` }}
               >
                 {lapDisplay}
               </div>
-            </>
+            </div>
           ) : (
-            <div className="text-gray-600 text-2xl font-mono tracking-widest">
-              WAITING FOR FIRST LAP
+            <div className="text-gray-600 text-lg font-mono tracking-widest mb-4">
+              TAP TO RECORD FIRST LAP
             </div>
           )}
-        </div>
 
-        {/* Previous lap (small, for reference) */}
-        {laps.length >= 2 && (
-          <div className="text-center pb-2">
-            <span className="text-gray-600 font-mono text-sm">
-              Lap {laps.length - 1}: {formatTime(laps[laps.length - 2].splitMs, decimals)}
-            </span>
-          </div>
-        )}
-
-        {/* Lap button: massive tap target */}
-        <div className="p-4 pb-8">
+          {/* Giant round lap button — as wide as the viewport allows */}
           <button
             onClick={handleLap}
-            className="w-full py-8 rounded-2xl bg-bikotic-blue text-white text-3xl font-bold uppercase tracking-widest active:bg-bikotic-blue-dark active:scale-[0.98] transition-transform"
+            className="rounded-full bg-bikotic-blue text-white font-bold uppercase tracking-widest active:bg-bikotic-blue-dark active:scale-[0.97] transition-transform flex items-center justify-center aspect-square"
+            style={{ width: 'min(70vw, 70vh)', fontSize: 'min(10vw, 10vh)' }}
           >
-            ⏱ LAP
+            LAP
           </button>
+
+          {/* Previous lap below button */}
+          {laps.length >= 2 && (
+            <div className="text-center mt-4">
+              <span className="text-gray-600 font-mono text-sm">
+                Lap {laps.length - 1}: {formatTime(laps[laps.length - 2].splitMs, decimals)}
+              </span>
+            </div>
+          )}
         </div>
       </div>
     )
