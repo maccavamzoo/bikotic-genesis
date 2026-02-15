@@ -25,7 +25,7 @@ export default function LapTimerPage() {
   const [isFullscreen, setIsFullscreen] = useState(false)
   const [flashActive, setFlashActive] = useState(false)
   const [decimals, setDecimals] = useState<1 | 2 | 3>(1)
-  const [excludeLastLap, setExcludeLastLap] = useState(false)
+  const [excludeLastLap, setExcludeLastLap] = useState(true)
 
   const startTimeRef = useRef<number>(0)
   const lastLapTimeRef = useRef<number>(0)
@@ -202,23 +202,20 @@ export default function LapTimerPage() {
         {/* Centre: massive round LAP button */}
         <div className="flex-1 flex flex-col items-center justify-center px-4">
           {/* Last lap readout above button */}
-          {lastLapTime !== null ? (
-            <div className="text-center mb-4">
-              <div className="text-gray-500 text-lg font-mono tracking-widest">
-                LAP {laps.length}
-              </div>
-              <div
-                className="text-white font-mono font-bold leading-none"
-                style={{ fontSize: `min(${lapFontVw}vw, 12vh)` }}
-              >
-                {lapDisplay}
-              </div>
+          <div className="text-center mb-4">
+            <div className="text-gray-500 text-lg font-mono tracking-widest">
+              {lastLapTime !== null ? `LAP ${laps.length}` : '\u00A0'}
             </div>
-          ) : (
-            <div className="text-gray-600 text-lg font-mono tracking-widest mb-4">
-              TAP TO RECORD FIRST LAP
+            <div
+              className="font-mono font-bold leading-none"
+              style={{
+                fontSize: lastLapTime !== null ? `min(${lapFontVw}vw, 12vh)` : 'min(8vw, 6vh)',
+                color: lastLapTime !== null ? 'white' : 'rgb(75, 85, 99)',
+              }}
+            >
+              {lastLapTime !== null ? lapDisplay : 'TAP TO START'}
             </div>
-          )}
+          </div>
 
           {/* Giant round lap button — as wide as the viewport allows */}
           <div
