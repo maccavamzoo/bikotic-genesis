@@ -231,7 +231,7 @@ export default function LapTimerPage() {
               border: '3px solid rgba(255,255,255,0.1)',
             }}
           >
-            LAP
+            LAP {laps.length + 1}
           </div>
 
           {/* Previous lap below button — always rendered to prevent layout shift */}
