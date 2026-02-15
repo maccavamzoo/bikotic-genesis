@@ -178,8 +178,9 @@ export default function LapTimerPage() {
   if (state === 'running') {
     return (
       <div
-        className="fixed inset-0 bg-black flex flex-col select-none z-[9999]"
+        className="fixed inset-0 bg-black flex flex-col select-none z-[9999] cursor-pointer"
         style={{ touchAction: 'manipulation' }}
+        onClick={handleLap}
       >
         {/* Flash overlay */}
         {flashActive && (
@@ -192,8 +193,9 @@ export default function LapTimerPage() {
             {formatTime(elapsed, 3)}
           </div>
           <button
-            onClick={handleStop}
-            className="text-red-400 text-sm font-bold uppercase tracking-widest px-4 py-2 border border-red-400/30 rounded active:bg-red-400/20"
+            onClick={(e) => { e.stopPropagation(); handleStop() }}
+            className="rounded-full text-red-400 text-sm font-bold uppercase tracking-widest border border-red-400/30 active:bg-red-400/20 flex items-center justify-center"
+            style={{ width: '56px', height: '56px' }}
           >
             Stop
           </button>
