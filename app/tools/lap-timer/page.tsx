@@ -223,8 +223,14 @@ export default function LapTimerPage() {
           {/* Giant round lap button — as wide as the viewport allows */}
           <button
             onClick={handleLap}
-            className="rounded-full bg-bikotic-blue text-white font-bold uppercase tracking-widest active:bg-bikotic-blue-dark active:scale-[0.97] transition-transform flex items-center justify-center aspect-square"
-            style={{ width: 'min(70vw, 70vh)', fontSize: 'min(10vw, 10vh)' }}
+            className="rounded-full text-white font-bold uppercase active:scale-[0.96] transition-transform flex items-center justify-center aspect-square"
+            style={{
+              width: 'min(75vw, 55vh)',
+              fontSize: 'min(10vw, 8vh)',
+              background: 'radial-gradient(circle at 38% 38%, #5b8abf, #3b6fa0 40%, #2a5580 70%, #1e3f5e)',
+              boxShadow: '0 0 40px rgba(59, 111, 160, 0.4), inset 0 2px 4px rgba(255,255,255,0.15), inset 0 -4px 8px rgba(0,0,0,0.3)',
+              border: '3px solid rgba(255,255,255,0.1)',
+            }}
           >
             LAP
           </button>
