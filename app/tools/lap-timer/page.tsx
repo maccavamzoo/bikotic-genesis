@@ -163,7 +163,7 @@ export default function LapTimerPage() {
     setElapsed(0)
     setLaps([])
     setLastLapTime(null)
-    setExcludeLastLap(false)
+    setExcludeLastLap(true)
     setState('idle')
     releaseWakeLock()
   }, [releaseWakeLock])
@@ -228,7 +228,7 @@ export default function LapTimerPage() {
               border: '3px solid rgba(255,255,255,0.1)',
             }}
           >
-            LAP {laps.length + 1}
+            LAP
           </div>
 
           {/* Previous lap below button — always rendered to prevent layout shift */}
@@ -272,7 +272,7 @@ export default function LapTimerPage() {
         </div>
 
         {/* Stats bar */}
-        <div className="grid grid-cols-3 gap-3 mb-6">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-6">
           <div className="bg-green-50 border border-green-200 rounded-lg p-3 text-center">
             <div className="text-xs text-green-600 font-semibold uppercase tracking-wider mb-1">Fastest</div>
             <div className="text-lg font-mono font-bold text-green-800">{formatTime(fastest, 3)}</div>
