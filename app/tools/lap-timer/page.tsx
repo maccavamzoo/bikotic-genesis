@@ -210,7 +210,7 @@ export default function LapTimerPage() {
               className="font-mono font-bold leading-none"
               style={{
                 fontSize: `min(${lapFontVw}vw, 12vh)`,
-                color: lastLapTime !== null ? 'white' : 'rgb(55, 65, 81)',
+                color: lastLapTime !== null ? 'white' : 'black',
               }}
             >
               {lastLapTime !== null ? lapDisplay : formatTime(0, decimals)}
@@ -258,7 +258,7 @@ export default function LapTimerPage() {
 
     return (
       <div className="max-w-2xl mx-auto p-4 md:p-8">
-        <h1 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">Session Complete</h1>
+        <h1 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">Session Complete</h1>
 
         {/* Total time centred in blue */}
         <p className="text-2xl md:text-3xl font-bold text-bikotic-blue text-center mb-6">
