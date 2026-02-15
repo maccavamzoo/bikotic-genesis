@@ -25,6 +25,7 @@ export default function LapTimerPage() {
   const [isFullscreen, setIsFullscreen] = useState(false)
   const [flashActive, setFlashActive] = useState(false)
   const [decimals, setDecimals] = useState<1 | 2 | 3>(1)
+  const [excludeLastLap, setExcludeLastLap] = useState(false)
 
   const startTimeRef = useRef<number>(0)
   const lastLapTimeRef = useRef<number>(0)
@@ -162,6 +163,7 @@ export default function LapTimerPage() {
     setElapsed(0)
     setLaps([])
     setLastLapTime(null)
+    setExcludeLastLap(false)
     setState('idle')
     releaseWakeLock()
   }, [releaseWakeLock])
@@ -247,18 +249,35 @@ export default function LapTimerPage() {
 
   // ─── STOPPED STATE (session summary) ───
   if (state === 'stopped') {
-    // Calculate stats
-    const lapSplits = laps.map(l => l.splitMs)
-    const fastest = Math.min(...lapSplits)
-    const slowest = Math.max(...lapSplits)
-    const average = lapSplits.reduce((a, b) => a + b, 0) / lapSplits.length
+    // Filter laps based on exclusion
+    const activeLaps = excludeLastLap && laps.length > 1 ? laps.slice(0, -1) : laps
+    const activeSplits = activeLaps.map(l => l.splitMs)
+    const fastest = Math.min(...activeSplits)
+    const slowest = Math.max(...activeSplits)
+    const average = activeSplits.reduce((a, b) => a + b, 0) / activeSplits.length
+    const totalTime = excludeLastLap && laps.length > 1
+      ? laps[laps.length - 2].timeMs
+      : elapsed
 
     return (
       <div className="max-w-2xl mx-auto p-4 md:p-8">
         <h1 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">Session Complete</h1>
-        <p className="text-gray-500 mb-6">
-          {laps.length} laps · Total time: {formatTime(elapsed, 3)}
+        <p className="text-xl md:text-2xl font-bold text-gray-700 mb-6">
+          {activeLaps.length} laps · Total time: {formatTime(totalTime, 3)}
         </p>
+
+        {/* Exclude last lap toggle */}
+        {laps.length > 1 && (
+          <label className="flex items-center gap-3 mb-6 cursor-pointer">
+            <input
+              type="checkbox"
+              checked={excludeLastLap}
+              onChange={(e) => setExcludeLastLap(e.target.checked)}
+              className="w-5 h-5 rounded border-gray-300 text-bikotic-blue focus:ring-bikotic-blue"
+            />
+            <span className="text-gray-600">Exclude last lap (cool-down)</span>
+          </label>
+        )}
 
         {/* Stats bar */}
         <div className="grid grid-cols-3 gap-3 mb-6">
@@ -288,22 +307,26 @@ export default function LapTimerPage() {
             </thead>
             <tbody>
               {laps.map((lap, i) => {
-                const isFastest = lap.splitMs === fastest
-                const isSlowest = lap.splitMs === slowest && laps.length > 1
+                const isExcluded = excludeLastLap && i === laps.length - 1
+                const isFastest = !isExcluded && lap.splitMs === fastest
+                const isSlowest = !isExcluded && lap.splitMs === slowest && activeLaps.length > 1
                 return (
                   <tr
                     key={lap.number}
-                    className={`border-b border-gray-100 ${isFastest ? 'bg-green-50' : isSlowest ? 'bg-red-50' : ''}`}
+                    className={`border-b border-gray-100 ${isExcluded ? 'opacity-40' : isFastest ? 'bg-green-50' : isSlowest ? 'bg-red-50' : ''}`}
                   >
                     <td className="px-4 py-3 font-mono text-gray-700">
-                      {lap.number}
+                      <span className={isExcluded ? 'line-through' : ''}>
+                        {lap.number}
+                      </span>
                       {isFastest && <span className="ml-2 text-green-600 text-xs font-bold">FASTEST</span>}
                       {isSlowest && <span className="ml-2 text-red-500 text-xs font-bold">SLOWEST</span>}
+                      {isExcluded && <span className="ml-2 text-gray-400 text-xs font-bold">EXCLUDED</span>}
                     </td>
-                    <td className="px-4 py-3 font-mono font-bold text-right text-gray-900">
+                    <td className={`px-4 py-3 font-mono font-bold text-right ${isExcluded ? 'line-through text-gray-400' : 'text-gray-900'}`}>
                       {formatTime(lap.splitMs, 3)}
                     </td>
-                    <td className="px-4 py-3 font-mono text-right text-gray-500">
+                    <td className={`px-4 py-3 font-mono text-right ${isExcluded ? 'line-through text-gray-300' : 'text-gray-500'}`}>
                       {formatTime(lap.timeMs, 3)}
                     </td>
                   </tr>
