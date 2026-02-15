@@ -209,11 +209,11 @@ export default function LapTimerPage() {
             <div
               className="font-mono font-bold leading-none"
               style={{
-                fontSize: lastLapTime !== null ? `min(${lapFontVw}vw, 12vh)` : 'min(8vw, 6vh)',
-                color: lastLapTime !== null ? 'white' : 'rgb(75, 85, 99)',
+                fontSize: `min(${lapFontVw}vw, 12vh)`,
+                color: lastLapTime !== null ? 'white' : 'rgb(55, 65, 81)',
               }}
             >
-              {lastLapTime !== null ? lapDisplay : 'TAP TO START'}
+              {lastLapTime !== null ? lapDisplay : formatTime(0, decimals)}
             </div>
           </div>
 
