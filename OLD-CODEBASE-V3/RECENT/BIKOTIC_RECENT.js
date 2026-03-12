@@ -1,0 +1,210 @@
+
+var recent_win;
+var recent_cont;
+
+function RECENT_ShowRecent()
+{
+	if(recent_win)
+	{
+		recent_cont.innerHTML = "<br><br>LOADING<br><br><br><br><br>";
+		recent_win.style.display = "block"; 
+	}
+	else
+	{
+		RECENT_MakeWindow();
+		RECENT_MakeCloseButton();
+	} 
+	
+	RECENT_LoadRecent();
+}
+
+
+function RECENT_MakeWindow()
+{
+	recent_win = document.createElement("DIV");
+	recent_win.style.position = "absolute";
+	recent_win.style.display = "block";
+	recent_win.style.zIndex = 98;
+	recent_win.style.width = "100%"; 
+	recent_win.style.backgroundColor = BIKOTIC_SubWinBkgColor;
+	recent_win.style.fontFamily = "Oswald";
+	recent_win.style.color = "#818181";
+	recent_win.style.textAlign = "center";
+	recent_win.style.padding = "0px";
+	recent_win.style.cursor = "default";
+	recent_win.style.paddingTop = "15px";
+	document.body.append(recent_win);
+	
+	var recent_icon = document.createElement("IMG");
+	recent_icon.src = CODEBASE + "IMGz/BIKOTIC_RECENT_ICON.png";
+	recent_win.append(recent_icon);
+	
+	var recent_heading = document.createElement("DIV");
+	recent_heading.style.fontSize = "26px";
+	recent_heading.style.fontWeight = "700";
+	recent_heading.innerHTML = "BIKOTIC RECENTLY ADDED BIKES";
+	recent_win.append(recent_heading);
+
+/*	
+	//Insert banner add..
+	if(BIKOTIC_APP_TYPE == "DESKTOP")
+	{
+		var awinAd = document.createElement("DIV");
+		awinAd.style.paddingTop = "10px";
+		awinAd.innerHTML = `
+		
+
+<!-- START ADVERTISER: Chain Reaction UK from awin.com -->
+
+<a rel="sponsored" href="https://www.awin1.com/cread.php?s=3528038&v=2698&q=387501&r=132956">
+    <img src="https://www.awin1.com/cshow.php?s=3528038&v=2698&q=387501&r=132956" border="0">
+</a>
+
+<!-- END ADVERTISER: Chain Reaction UK from awin.com -->
+
+		
+		`;
+		recent_win.append(awinAd);
+	}
+*/	
+	
+	
+	recent_cont = document.createElement("DIV");
+	recent_cont.style.fontSize = "16px";
+	recent_cont.style.fontWeight = "400";
+	recent_cont.style.textAlign = "center";
+	recent_cont.style.padding = "10px";
+	recent_cont.style.paddingBottom = "126px";
+
+	recent_win.append(recent_cont);
+}
+
+function RECENT_MakeCloseButton()
+{ 
+	cB = document.createElement("DIV");
+	cB.style.zIndex = "1000";
+	cB.style.position = "fixed";
+	cB.style.top = "16px";
+	cB.style.right = "16px";
+	cB.style.padding = "10px";
+	cB.style.paddingTop = "5px";
+	cB.style.paddingBottom = "5px";
+	cB.style.backgroundColor = BIKOTIC_SubWinBkgColor;
+	cB.style.color = "#818181";
+	cB.style.borderRadius = "10px";
+	cB.style.borderStyle = "solid";
+	cB.style.borderWidth= "thin";
+	cB.style.fontSize = "16px";
+	cB.innerHTML = "X CLOSE";
+	cB.style.cursor = "pointer";
+		
+	cB.onclick = function()
+	{
+		recent_win.style.display = "none";
+		
+		BIKOTIC_UpdatePageNameURL("BIKOTIC SUB WIN EXIT", true, "cb");
+	}
+	recent_win.append(cB);
+}
+
+function RECENT_LoadRecent()
+{
+		
+	var url = CODEBASE + "RECENT/BIKOTIC_RECENT.pl";
+	var xhttp = new XMLHttpRequest();
+	xhttp.onreadystatechange = function()
+	{
+		if (this.readyState == 4 && this.status == 200) 
+		{ 	
+			recent_cont.innerHTML = "";
+			var recentBikes = JSON.parse(this.responseText); 				
+			
+			for(var i = 0; i < recentBikes.bikes.length; i++)
+			{
+				var bike = recentBikes.bikes[i];
+				var box = document.createElement("DIV");
+				box.id = bike.id;
+				box.style.position = "relative";
+				box.setAttribute("class", "box");
+				
+				var img = document.createElement("IMG");
+				img.src = "https://bikotic.com/SLRGT/BIKE-IMAGES/THUMBS-WEBP/" + bike.imagename + "-SML.webp";
+				box.append(img);
+				
+				var man = document.createElement("DIV");
+				man.innerHTML = "<strong>" + bike.model_year + " " + bike.manufacturer.toUpperCase() + "</strong>";
+				man.style.fontSize = "14px";
+				man.style.fontWeight = "normal";
+				box.append(man);
+				//man.style.marginTop = "-15px";
+				
+				var model = document.createElement("DIV");
+				model.innerHTML = truncate(bike.model_des.toUpperCase()); 
+				model.style.fontSize = "16px";
+				box.append(model);
+				model.style.marginTop = "-5px";
+				
+				var dateBits = bike.date.split(" ");
+				var date = document.createElement("DIV");
+				date.innerHTML = "Added: " + dateBits[0] + "<br>" + bike.hits + "HTS"; 
+				date.style.fontSize = "11px";
+				date.style.position = "absolute";
+				date.style.textAlign = "left";
+				date.style.left = "5px";
+				date.style.top = "2px";
+				box.append(date);
+				
+				//check if bike is an e bike..
+				if(bike.motor_nm > 0)
+				{
+					//add the ranger exists button..
+					var isAnE_Bike = document.createElement("IMG"); 
+					isAnE_Bike.style.position = "absolute";
+					isAnE_Bike.style.bottom = "6px";
+					isAnE_Bike.style.left = "6px";
+					isAnE_Bike.src = CODEBASE + "IMGz/electric_bike_icon.png";
+					box.append(isAnE_Bike);
+				}
+				
+				RECENT_Onclick(bike, box);
+				
+				recent_cont.append(box);
+				
+			}
+			
+		}
+	};
+	xhttp.open("POST", url, true);
+	xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	xhttp.send();					
+}
+
+function RECENT_Onclick(bike, aBikeDiv)
+{
+	aBikeDiv.onclick = function()
+	{ 
+		if(BIKOTIC_APP_TYPE == "DESKTOP")
+		{
+			openRecentBike1(bike.manufacturer_id, bike.model_id, bike.model_year, bike.id);
+			recent_win.style.display = "none";
+		}
+		if(BIKOTIC_APP_TYPE == "MOBILE")
+		{
+			if(CHT_AlphaValue < 0.5)
+			{
+				MOBILE_getBikeInfo(bike.id, "bike1"); 
+				recent_win.style.display = "none";
+			}
+			else
+			{
+				MOBILE_getBikeInfo(bike.id, "bike2"); 
+				recent_win.style.display = "none";
+			}
+		}
+	}
+}
+
+
+
+
+

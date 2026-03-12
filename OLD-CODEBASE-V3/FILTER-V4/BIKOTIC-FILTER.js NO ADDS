@@ -1,0 +1,1435 @@
+
+var win;
+var boxCont;
+var makeYears;
+var yearsSel;
+var yearsCont;
+var yearsHolder;
+var avgPrice;
+var averagePriceHolder;
+var bGrey = "#818181";
+var averagePrice = 0;
+var bikes;
+var myListONLY = false;
+var crossHairGrey = "rgb(218, 218, 218)";
+var yearsObjs;
+
+var nextBut;
+var totalBikesWithoutLimit;
+var howManyBikeBoxesHaveWeMade;
+var yearsFromServer;
+var clearBikeBoxes = true;
+var limitAmount = 50;
+var limitOffset = 0;
+var bikesWithPriceCombinedPrice; 
+var bikesWithPriceCount; 
+
+//load images..
+var filter_tempArray = []; 
+var temp0 = document.createElement("IMG"); temp0.src = CODEBASE + "IMGz/BIKOTIC_Loading.gif"; filter_tempArray.push(temp0);
+var temp1 = document.createElement("IMG"); temp1.src = CODEBASE + "IMGz/buttonOn.png"; filter_tempArray.push(temp1);
+var temp2 = document.createElement("IMG"); temp2.src = CODEBASE + "IMGz/buttonOff.png"; filter_tempArray.push(temp2);
+var temp5 = document.createElement("IMG"); temp5.src = CODEBASE + "IMGz/filter_bike1.png"; filter_tempArray.push(temp5);
+var temp6 = document.createElement("IMG"); temp6.src = CODEBASE + "IMGz/filter_bike2.png"; filter_tempArray.push(temp6);
+var temp8 = document.createElement("IMG"); temp8.src = CODEBASE + "IMGz/donate.png"; filter_tempArray.push(temp8);
+var temp9 = document.createElement("IMG"); temp9.src = CODEBASE + "IMGz/BIKOTIC_SHARE_ICON.png"; filter_tempArray.push(temp9);
+var temp10 = document.createElement("IMG"); temp10.src = CODEBASE + "IMGz/BIKOTIC_SEARCH_ICON.png"; filter_tempArray.push(temp10);
+var temp11 = document.createElement("IMG"); temp11.src = CODEBASE + "IMGz/BIKOTIC_SB_ICON.png"; filter_tempArray.push(temp11);
+var temp12 = document.createElement("IMG"); temp12.src = CODEBASE + "IMGz/BIKOTIC_MSG_ICON.png"; filter_tempArray.push(temp12);
+var temp13 = document.createElement("IMG"); temp13.src = CODEBASE + "IMGz/BIKOTIC_WINNING_ICON.png"; filter_tempArray.push(temp13);
+var temp14 = document.createElement("IMG"); temp14.src = CODEBASE + "IMGz/BIKOTIC_MANUFACTURERS_ICON.png"; filter_tempArray.push(temp14);
+var temp15 = document.createElement("IMG"); temp15.src = CODEBASE + "IMGz/BIKOTIC_COMMENTS.png"; filter_tempArray.push(temp15);
+var temp16 = document.createElement("IMG"); temp16.src = CODEBASE + "IMGz/BIKOTIC_Similar_butt.png"; filter_tempArray.push(temp16);
+var temp17 = document.createElement("IMG"); temp17.src = CODEBASE + "IMGz/BIKOTIC_NeedsYourHelp.jpg"; filter_tempArray.push(temp17);
+
+var filter_currentBike;
+var filter_Bike1 = null;
+var filter_Bike2 = null;
+
+function FILTER_ShowFilters(show_starred)
+{
+	if(win)
+	{
+		win.style.display = "block"; 
+		overlayWindow = true; 
+	}
+	else
+	{
+		win = FILTER_MakeWindow(); 
+		overlayWindow = true;
+	 
+		//make the my list toggle..
+		FILTER_MyListToggle();
+		
+		var manSearch = FILTER_MakeManSearch();
+		
+		var modelSearch = FILTER_MakeModelSearch();
+		
+		var bikeType = FILTER_MakeSelect(win, "bike_type", "BIKE TYPE", bGrey);
+			FILTER_MakeOption(bikeType, "void", "ANY", bGrey);
+			FILTER_MakeOption(bikeType, "ROAD", "ROAD", bGrey);
+			FILTER_MakeOption(bikeType, "MTB", "MTB", bGrey);
+			FILTER_MakeOption(bikeType, "GRAVEL", "GRAVEL", bGrey);
+			FILTER_MakeOption(bikeType, "CYCLO-CROSS", "CYCLO-CROSS", bGrey);
+			bikeType.style.display = "none";
+		
+		var subType = FILTER_MakeSelect(win, "sub_type", "BIKE TYPE");
+			FILTER_MakeOption(subType, "void", "ANY", bGrey);
+		
+			FILTER_MakeOption(subType, "ALL-ROUND-RACE", "ALL ROUND ROAD RACE", bGrey);
+			FILTER_MakeOption(subType, "AERO", "AERO", bGrey);
+			FILTER_MakeOption(subType, "ENDURANCE", "ENDURANCE", bGrey);
+			FILTER_MakeOption(subType, "RACE", "CYCLO-CROSS", bGrey);
+			FILTER_MakeOption(subType, "TT", "TT / TRI", bGrey);
+			FILTER_MakeOption(subType, "TRACK", "TRACK", bGrey);
+			FILTER_MakeOption(subType, "ADVENTURE", "GRAVEL ADVENTURE", bGrey);
+			FILTER_MakeOption(subType, "HYBRID", "HYBRID", bGrey);
+			FILTER_MakeOption(subType, "FUN.CTIONAL", "FUN.CTIONAL", bGrey);
+			FILTER_MakeOption(subType, "E-ROAD", "E-ROAD", bGrey);
+			FILTER_MakeOption(subType, "void", "------------------", bGrey);
+			FILTER_MakeOption(subType, "DOWNHILL", "DOWNHILL", bGrey);
+			FILTER_MakeOption(subType, "FREERIDE", "ALL MOUNTAIN | FREERIDE", bGrey);
+			FILTER_MakeOption(subType, "ENDURO", "ENDURO", bGrey);
+			FILTER_MakeOption(subType, "TRAIL", "TRAIL", bGrey);
+			FILTER_MakeOption(subType, "DOWN-COUNTRY", "DOWN COUNTRY", bGrey);
+			FILTER_MakeOption(subType, "XC", "XC", bGrey);
+			FILTER_MakeOption(subType, "DIRT-JUMP", "DIRT JUMP", bGrey);
+			FILTER_MakeOption(subType, "E-MTB", "E-MTB", bGrey);
+			FILTER_MakeOption(subType, "void", "------------------", bGrey);
+			FILTER_MakeOption(subType, "BIKOTIC-CUSTOM", "BIKOTIC CUSTOM", bGrey);
+			FILTER_MakeOption(subType, "PRO-BIKE", "PRO BIKE", bGrey);
+		
+		var group = FILTER_MakeSelect(win, "group", "GROUPSET");
+			FILTER_MakeOption(group, "void", "LOADING", bGrey);
+			FILTER_GetGroupOptions();
+		
+		var sortby = FILTER_MakeSelect(win, "sortby", "SORT BY");
+			FILTER_MakeOption(sortby, "1", "MOST EXPENSIVE", bGrey);
+			FILTER_MakeOption(sortby, "2", "CHEAPEST", bGrey);
+			FILTER_MakeOption(sortby, "3", "NEWEST", bGrey);
+			FILTER_MakeOption(sortby, "4", "OLDEST", bGrey);
+			FILTER_MakeOption(sortby, "5", "LIGHTEST", bGrey);
+			FILTER_MakeOption(sortby, "6", "VALUE FORMULA", bGrey);
+			FILTER_MakeOption(sortby, "7", "GEO FORMULA", bGrey);
+			FILTER_MakeOption(sortby, "8", "TYRE CLEARANCE", bGrey);
+			FILTER_MakeOption(sortby, "9", "HAS POWER METER", bGrey);
+			FILTER_MakeOption(sortby, "10", "HITS", bGrey);
+			FILTER_MakeOption(sortby, "11", "BRAKE TYPE", bGrey);
+			FILTER_MakeOption(sortby, "12", "FRAME MATERIAL", bGrey);
+			FILTER_MakeOption(sortby, "14", "EXTRA IMAGES", bGrey);
+			FILTER_MakeOption(sortby, "15", "13SPD, 12SPD, 11SPD....", bGrey);
+			FILTER_MakeOption(sortby, "16", "MOTOR NM", bGrey);
+			FILTER_MakeOption(sortby, "17", "BATTERY WH", bGrey);
+			FILTER_MakeOption(sortby, "18", "DARK BACKGROUND", bGrey);
+					
+		var minPrice = FILTER_MakeSelect(win, "minPrice", "MIN £", bGrey);
+			FILTER_MakeOption(minPrice, "void", "ANY", bGrey);	
+			FILTER_MakeOption(minPrice, "0", "£0", bGrey);	
+			FILTER_MakeOption(minPrice, "0.5", "£0.5k", bGrey);	
+			FILTER_MakeOption(minPrice, "1", "£1k", bGrey);	
+			FILTER_MakeOption(minPrice, "2", "£2k", bGrey);	
+			FILTER_MakeOption(minPrice, "3", "£3k", bGrey);	
+			FILTER_MakeOption(minPrice, "4", "£4k", bGrey);	
+			FILTER_MakeOption(minPrice, "5", "£5k", bGrey);	
+			FILTER_MakeOption(minPrice, "6", "£6k", bGrey);	
+			FILTER_MakeOption(minPrice, "7", "£7k", bGrey);	
+			FILTER_MakeOption(minPrice, "8", "£8k", bGrey);	
+			FILTER_MakeOption(minPrice, "9", "£9k", bGrey);	
+			FILTER_MakeOption(minPrice, "10", "£10k", bGrey);	
+			
+		var maxPrice = FILTER_MakeSelect(win, "maxPrice", "MAX £", bGrey);
+			FILTER_MakeOption(maxPrice, "void", "ANY", bGrey);	
+			FILTER_MakeOption(maxPrice, "0.5", "£0.5k", bGrey);	
+			FILTER_MakeOption(maxPrice, "1", "£1k", bGrey);	
+			FILTER_MakeOption(maxPrice, "2", "£2k", bGrey);	
+			FILTER_MakeOption(maxPrice, "3", "£3k", bGrey);	
+			FILTER_MakeOption(maxPrice, "4", "£4k", bGrey);	
+			FILTER_MakeOption(maxPrice, "5", "£5k", bGrey);	
+			FILTER_MakeOption(maxPrice, "6", "£6k", bGrey);	
+			FILTER_MakeOption(maxPrice, "7", "£7k", bGrey);	
+			FILTER_MakeOption(maxPrice, "8", "£8k", bGrey);	
+			FILTER_MakeOption(maxPrice, "9", "£9k", bGrey);	
+			FILTER_MakeOption(maxPrice, "10", "£10k", bGrey);	
+			FILTER_MakeOption(maxPrice, "1000", "SILLY MONEY!", bGrey);	
+		
+		
+		FILTER_MakeButton(win, "GET THE BIKES", "#aa8694");
+		
+		FILTER_MakeCloseButton();
+		
+		FILTER_MakeBoxCont(); //and years cont..
+		
+		FILTER_MakeNextButton(); //button to load next set of bikes because of limit..
+		
+		FILTER_MakeSlotLoaderDiv();
+		 
+	}
+	
+	//has this been called by the search button or do we have starred bikes and the starred button called it..
+	if(show_starred) FILTER_TurnOnStarred(); 
+	else if(myListONLY) FILTER_TurnOffStarred();
+	
+}
+
+
+function FILTER_MakeTipBox()
+{
+	var filter_tipBox = document.createElement("DIV");
+	filter_tipBox.style.paddingTop = "50px";
+	filter_tipBox.style.paddingBottom = "50px";
+		var filter_tipImg = document.createElement("IMG");  
+		filter_tipImg.src = CODEBASE + "IMGz/filter_tip.png";
+		filter_tipBox.append(filter_tipImg);
+	win.append(filter_tipBox);
+}
+
+function FILTER_TurnOnStarred()
+{ 
+	FILTER_Caption.style.color = "#2bb399";
+	FILTER_MyListImage.src = CODEBASE + "IMGz/buttonOn.png";
+	myListONLY = true;
+	
+	//turn off the filters..
+	FILTER_DisableFilters();
+	
+	makeYears = true;
+	GetTheBikes("all");	
+}
+
+function FILTER_TurnOffStarred()
+{
+	if(yearsSel) yearsSel.remove();
+	if(avgPrice) avgPrice.remove();
+	
+	FILTER_Caption.style.color = "#818181";
+	FILTER_MyListImage.src = CODEBASE + "IMGz/buttonOff.png";
+	myListONLY = false;
+	
+	//turn on the filters..
+	FILTER_EnableFilters();
+	
+	//clear the starred bikes..
+	boxCont.innerHTML = "";
+}
+
+var FILTER_Caption;
+var FILTER_MyListImage;
+function FILTER_MyListToggle()
+{
+	var border = document.createElement("DIV");
+	border.style.paddingTop = "10px";
+	border.style.paddingRight = "20px";
+	border.style.display = "inline-block";
+	
+	FILTER_Caption = document.createElement("DIV");
+	FILTER_Caption.style.display = "inline";
+	FILTER_Caption.style.fontSize = "16px";
+	FILTER_Caption.style.paddingTop = "4px";
+	FILTER_Caption.innerHTML = "STARRED";
+	border.append(FILTER_Caption);
+	
+	FILTER_MyListImage = document.createElement("IMG");
+	FILTER_MyListImage.src = CODEBASE + "IMGz/buttonOff.png";
+	FILTER_MyListImage.style.position = "relative";
+	FILTER_MyListImage.style.top = "9px";
+	FILTER_MyListImage.style.paddingLeft = "0px";
+	FILTER_MyListImage.style.cursor = "pointer";
+	FILTER_MyListImage.onclick = function()
+	{
+		if(FILTER_MyListImage.src == CODEBASE + "IMGz/buttonOff.png")
+		{
+			FILTER_TurnOnStarred();
+		}
+		else
+		{
+			FILTER_TurnOffStarred();
+		}
+	}
+	border.append(FILTER_MyListImage);
+	
+	win.append(border);
+}
+
+function colourThem()
+{
+	var manInpt = document.getElementById("man_search"); 
+	var manLbl = document.getElementById("man_label"); 
+	if(manInpt.value == "") manLbl.style.color = bGrey; 
+	else manLbl.style.color = "#e6428f";
+	
+	var manInpt = document.getElementById("model_search"); 
+	var manLbl = document.getElementById("model_label"); 
+	if(manInpt.value == "") manLbl.style.color = bGrey; 
+	else manLbl.style.color = "#e6428f";
+	
+	var sel = document.getElementById("sub_type"); 
+	if(sel.value == "void") sel.style.color = bGrey;
+	else sel.style.color = "#e6428f";
+	sel.blur();
+	
+	var sel = document.getElementById("group"); 
+	if(sel.value == "void") sel.style.color = bGrey;
+	else sel.style.color = "#e6428f";
+	sel.blur();
+	
+	var sel = document.getElementById("sortby");
+	sel.blur();
+	
+}
+
+var filter_man_cont;
+var filter_man_cap;
+var filter_man_inpt;
+function FILTER_MakeManSearch()
+{
+	filter_man_cont = document.createElement("DIV");
+	filter_man_cont.style.paddingTop = "10px";
+	filter_man_cont.style.paddingRight = "20px";
+	filter_man_cont.style.display = "inline-block";
+	
+	filter_man_cap = document.createElement("DIV");
+	filter_man_cap.id = "man_label";
+	filter_man_cap.style.fontSize = "16px";
+	filter_man_cap.style.display = "inline";
+	filter_man_cap.style.paddingTop = "4px";
+	filter_man_cap.innerHTML = "MANUFACTURER:";
+	filter_man_cont.append(filter_man_cap);
+	
+	filter_man_inpt = document.createElement("INPUT");
+	filter_man_inpt.id = "man_search";
+	filter_man_inpt.onkeyup = colourThem;
+	filter_man_inpt.onfocus = function(){filter_man_inptFocus = true;}
+	filter_man_inpt.onblur = function(){filter_man_inptFocus = false;}
+	filter_man_inpt.style.fontSize = "16px";
+	filter_man_inpt.style.fontWeight = "700";
+	filter_man_inpt.style.marginLeft = "10px";
+	filter_man_inpt.style.filter_man_contRadius = "7px";
+	filter_man_inpt.style.color = "#aa8694";
+	filter_man_inpt.style.filter_man_contStyle = "solid";
+	filter_man_inpt.style.filter_man_contWidth = "thin";
+	filter_man_cont.append(filter_man_inpt);
+	
+	win.append(filter_man_cont);
+	
+}
+
+var filter_model_cont;
+var filter_model_inpt;
+function FILTER_MakeModelSearch()
+{
+	filter_model_cont = document.createElement("DIV");
+	filter_model_cont.style.paddingTop = "10px";
+	filter_model_cont.style.display = "inline-block";
+	
+	var caption = document.createElement("DIV");
+	caption.id = "model_label";
+	caption.style.fontSize = "16px";
+	caption.style.display = "inline";
+	caption.style.paddingTop = "4px";
+	caption.innerHTML = "MODEL:";
+	filter_model_cont.append(caption);
+	
+	filter_model_inpt = document.createElement("INPUT");
+	filter_model_inpt.id = "model_search";
+	filter_model_inpt.onkeyup = colourThem;
+	filter_model_inpt.onfocus = function(){filter_model_inptFocus = true;}
+	filter_model_inpt.onblur = function(){filter_model_inptFocus = false;}
+	filter_model_inpt.style.fontSize = "16px";
+	filter_model_inpt.style.fontWeight = "700";
+	filter_model_inpt.style.marginLeft = "10px";
+	filter_model_inpt.style.filter_model_contRadius = "7px";
+	filter_model_inpt.style.color = "#aa8694";
+	filter_model_inpt.style.filter_model_contStyle = "solid";
+	filter_model_inpt.style.filter_model_contWidth = "thin";
+	filter_model_cont.append(filter_model_inpt);
+	
+	win.append(filter_model_cont);
+	
+	var aSpacer = document.createElement("DIV");
+	win.append(aSpacer);
+}
+
+function GetTheBikes(theYear)
+{ 
+	//clear counters to load a new set of bikes - unless we're loading more..
+	if(clearBikeBoxes) //doesnt happen when NEXT button is clicked.. 
+	{			
+		//empty old results..
+		boxCont.innerHTML = "LOADING";
+		limitOffset = 0;
+		howManyBikeBoxesHaveWeMade = 0;
+		bikesWithPriceCombinedPrice = 0; 
+		bikesWithPriceCount = 0; 
+	}
+	clearBikeBoxes = true; //next button makes this not true, so we need to reset..
+	
+	
+	var url = CODEBASE + "FILTER-V4/BIKOTIC-FILTER.pl"; 
+	
+	var bMan = document.getElementById("man_search").value;
+	var bModel = document.getElementById("model_search").value;
+	var bType = document.getElementById("bike_type").value;
+	var bSub = document.getElementById("sub_type").value;
+	var bGroup = document.getElementById("group").value;
+	var bPM = "NO";
+	var bSort = document.getElementById("sortby").value;
+	
+	var minPrice = document.getElementById("minPrice").value;
+	var maxPrice = document.getElementById("maxPrice").value;
+	
+	var sort = "";
+	if(bSort == "void") sort = "none";
+	if(bSort == 1) sort = "ORDER BY price DESC";
+	if(bSort == 2) sort = "cheapest";
+	if(bSort == 3) sort = "newest";
+	if(bSort == 4) sort = "oldest";
+	if(bSort == 5) sort = "ORDER BY weight ASC";
+	if(bSort == 6) sort = "ORDER BY value_formula ASC";
+	if(bSort == 7) sort = "ORDER BY geo_formula ASC";
+	if(bSort == 8) sort = "ORDER BY clearance DESC";
+	if(bSort == 9){sort = "ORDER BY price DESC"; bPM = "YES";}
+	if(bSort == 10) sort = "hits";
+	if(bSort == 11) sort = "brakes";
+	if(bSort == 12) sort = "material";
+	if(bSort == 14) sort = "extraimages";
+	if(bSort == 15) sort = "speed";
+	if(bSort == 16) sort = "motor";
+	if(bSort == 17) sort = "battery";
+	if(bSort == 18) sort = "bkg";
+	
+	var query = `man_search=${bMan}&`;
+		query+= `model_search=${bModel}&`;
+		query+= `bike_type=${bType}&`;
+		query+= `sub_type=${bSub}&`;
+		query+= `groupset=${bGroup}&`; 
+		query+= `power_meter=${bPM}&`; 
+		query+= `sort=${sort}&`; 
+		query+= `minPrice=${minPrice}&`; 
+		query+= `maxPrice=${maxPrice}`; 
+		
+	//if my_list (starred) only..
+	if(myListONLY == true)
+	{
+		query = `man_search=&`;
+		query+= `model_search=&`;
+		query+= `bike_type=void&`;
+		query+= `sub_type=void&`;
+		query+= `groupset=void&`; 
+		query+= `power_meter=${bPM}&`;  
+		query+= `sort=${sort}&`; 
+		query+= `minPrice=void&`; 
+		query+= `maxPrice=void`; 
+		
+		query+= `&my_list=${BIKOTIC_MyList}`;
+	}
+		
+	
+	//should we display bikes that aren't published?..
+	if(BIKOTIC_ShowNotPublished)
+	{
+		query+= `&published=all`; 
+	}
+	
+	//are we just searching a single year?..
+	if(theYear != "all")
+	{
+		query+= `&singleYear=${theYear}`; 
+	}
+	
+	//send the limit vars..
+	query+= `&limit_offset=${limitOffset}`; 
+	query+= `&limit=${limitAmount}`;	
+		
+	var xhttp = new XMLHttpRequest();
+			xhttp.onreadystatechange = function() 
+			{
+				if (this.readyState == 4 && this.status == 200) 
+				{ 
+				
+					if(boxCont.innerHTML == "LOADING") boxCont.innerHTML = "";
+					
+					//check we have some results..
+					if(this.responseText == "void")
+					{		
+						 
+						if(yearsSel) yearsSel.remove();
+						if(avgPrice) avgPrice.remove();
+						
+						var SearchSet = "Manufacturer: <span style=\"color:#e6428f;\">" + document.getElementById("man_search").value + "</span><br>";
+						SearchSet += "Model: <span style=\"color:#e6428f;\">" + document.getElementById("model_search").value + "</span><br>";
+						
+						var dropdown = document.getElementById("sub_type");
+						var selectedOption = dropdown.options[dropdown.selectedIndex];
+						var selectedOptionText = selectedOption.text;
+						if(selectedOptionText == "BIKE TYPE" || selectedOptionText == "ANY") selectedOptionText = "";
+						SearchSet += "Bike type: <span style=\"color:#e6428f;\">" + selectedOptionText + "</span><br>";
+						
+						var dropdown = document.getElementById("group");
+						var selectedOption = dropdown.options[dropdown.selectedIndex];
+						var selectedOptionText = selectedOption.text;
+						if(selectedOptionText == "GROUPSET" || selectedOptionText == "ANY") selectedOptionText = "";
+						SearchSet += "Groupset: <span style=\"color:#e6428f;\">" + selectedOptionText + "</span><br>";
+						
+						var dropdown = document.getElementById("minPrice");
+						var selectedOption = dropdown.options[dropdown.selectedIndex];
+						var selectedOptionText = selectedOption.text;
+						if(selectedOptionText == "MIN £" || selectedOptionText == "ANY") selectedOptionText = "";
+						SearchSet += "Min price: <span style=\"color:#e6428f;\">" + selectedOptionText + "</span><br>";
+						
+						var dropdown = document.getElementById("maxPrice");
+						var selectedOption = dropdown.options[dropdown.selectedIndex];
+						var selectedOptionText = selectedOption.text;
+						if(selectedOptionText == "MAX £" || selectedOptionText == "ANY") selectedOptionText = "";
+						SearchSet += "Max price: <span style=\"color:#e6428f;\">" + selectedOptionText + "</span><br>";	
+										
+						boxCont.innerHTML = `
+						
+						<br>
+						<strong style="color:#e6428f;">NO RESULTS</strong>
+						<div style="font-size:20px;">${SearchSet}</div>
+						<span style="font-size:14px; color:#818181;"><br>TIP: REMEMBER TO RESET ENTRY BOXES AND DROP DOWNS FROM PREVIOUS SEARCHES</span>
+						<br><br><br>
+						
+						`; 
+						return;
+					}	
+					
+					//split the response text into bikes and years..
+					var jsonBits = this.responseText.split("~");
+					
+					//parse the results..
+					bikes = JSON.parse(jsonBits[0]); 
+					
+					
+					
+					//__________________________________________________MAKE YEARS SELECT IF NEEDED..
+					if(makeYears)
+					{ 
+						//clear out the old years..
+						if(yearsSel) yearsSel.remove();
+						
+						//make a year object..
+						function YearObj(year, amount)
+						{
+							this.year = year;
+							this.amount = amount;
+						}
+						
+						//convert years JSON to a sortable array..
+						yearsFromServer = JSON.parse(jsonBits[1]); 
+						yearsObjs = [];
+						totalBikesWithoutLimit = 0;
+						for (const key in yearsFromServer) 
+						{
+							yearsObjs.push(new YearObj(key, yearsFromServer[key]));
+							totalBikesWithoutLimit+= yearsFromServer[key];
+						}
+						
+						//sort the list..
+						yearsObjs.sort(yrCompare);
+						
+						//sort function..
+						function yrCompare(a,b)
+						{
+							return b.year - a.year;
+						}
+							
+						//make the years select..	
+						yearsSel = document.createElement("SELECT");
+						yearsSel.style.margin = "0px";
+						yearsSel.id = "years";
+						yearsSel.onchange = yearDisplay;
+						yearsSel.setAttribute("class", "filter_select");
+						yearsSel.style.fontSize = "18px";
+						
+						var anOption = document.createElement("OPTION");
+						anOption.innerHTML 	= "ALL YEARS (" + totalBikesWithoutLimit + " bikes)"; 
+						anOption.value = "ALL";
+						anOption.style.color = bGrey;
+						yearsSel.append(anOption);
+						
+						for(var i = 0; i < yearsObjs.length; i++)
+						{
+							var anOption = document.createElement("OPTION");
+							anOption.innerHTML 	= yearsObjs[i].year + " (" + yearsObjs[i].amount + " bikes)";
+							anOption.value = yearsObjs[i].year; 
+							anOption.style.color = bGrey;
+							yearsSel.append(anOption);
+						}
+						yearsHolder.append(yearsSel);
+						
+					}
+					//__________________________________________________MAKE YEARS SELECT IF NEEDED..
+					
+					
+					
+					
+					//__________________________________________________ADD BIKE BOXES..
+					//average the price and display it and collect the years..
+					for(var i = 0; i < bikes.bikes.length; i++)
+					{
+						if(parseFloat(bikes.bikes[i].price) > 0)
+						{
+							bikesWithPriceCount++;
+							bikesWithPriceCombinedPrice+= parseFloat(bikes.bikes[i].price);
+						}	
+					}
+					averagePrice = bikesWithPriceCombinedPrice/bikesWithPriceCount;
+					
+					//display avrg price..
+					if(avgPrice) avgPrice.remove();
+					avgPrice = document.createElement("SPAN");
+					avgPrice.style.fontSize = "18px";
+					avgPrice.innerHTML = '<span style="color:#aa8694; font-size:14px;">(avg. price of loaded £' + numberWithCommas(averagePrice.toFixed(2)) + ') ...[in:' + jsonBits[2] + "ms]</span><br>";
+					avgPrice.onclick = function(){FILTER_MakeIdList(bikes);}
+					averagePriceHolder.append(avgPrice);
+					
+					//make the boxes..
+					for(var i = 0; i < bikes.bikes.length; i++)
+					{
+						FILTER_MakeBikeBox(bikes.bikes[i], boxCont);
+					} 			
+					
+					//__________________________________________________ADD BIKE BOXES..
+					
+					
+					
+					
+					
+					//__________________________________________________DO WE NEED THE NEXT BUTTON?..
+					
+					var nbTotalAmount = totalBikesWithoutLimit;
+					if(yearsSel.value != "ALL")
+					{
+						nbTotalAmount = yearsFromServer[yearsSel.value];
+					}
+					
+					//lets sort out the limit offset..
+					if(howManyBikeBoxesHaveWeMade < nbTotalAmount)
+					{
+						//update next button..
+						nextBut.innerHTML = howManyBikeBoxesHaveWeMade + "/" + nbTotalAmount + " - LOAD MORE";
+						nextBut.style.display = "inline-block";
+						
+						//sort the limit offset..
+						limitOffset = howManyBikeBoxesHaveWeMade;
+					}
+					else
+					{
+						nextBut.style.display = "none";
+					}
+					
+					
+					
+	
+					//__________________________________________________DO WE NEED THE NEXT BUTTON?..
+					
+					
+					
+					
+					
+					
+				}
+			};
+			xhttp.open("POST", url, true);
+			xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+			xhttp.send(query);
+}
+
+function howManyYear(year)
+{
+	var cY = 0;
+	for(var i = 0; i < bikes.bikes.length; i++)
+	{
+		if(bikes.bikes[i].model_year == year) cY++;
+	}
+	return cY;
+}
+
+function yearDisplay()
+{
+	makeYears = false;
+	if(yearsSel.value == "ALL") GetTheBikes("all");
+	else GetTheBikes(yearsSel.value);
+	
+	yearsSel.blur(); 
+}
+
+function FILTER_MakeIdList(bikes)
+{
+	var idList = "";
+	for(var i = 0; i < bikes.bikes.length; i++)
+	{
+		idList+= bikes.bikes[i].id + ",";
+	}
+	idList = idList.slice(0, -1); 
+	
+	log(idList);
+}
+
+function FILTER_DisplayBike(bike)
+{
+	/*
+	var panel = "bike1";
+	if(alpha > 0.5) panel = "bike2";
+	
+	openRecentBike1(bike.manufacturer_id, bike.model_id, bike.model_year, bike.id); 
+	win.style.display = "none";
+	overlayWindow = false;
+	*/
+	
+	
+	if(BIKOTIC_APP_TYPE == "DESKTOP")
+	{
+		var panel = "bike1";
+		if(alpha > 0.5) panel = "bike2";
+		
+		openRecentBike1(bike.manufacturer_id, bike.model_id, bike.model_year, bike.id); 
+		win.style.display = "none";
+		overlayWindow = false;
+	}
+	if(BIKOTIC_APP_TYPE == "MOBILE")
+	{
+		if(CHT_AlphaValue < 0.5)
+		{
+			MOBILE_getBikeInfo(bike.id, "bike1"); 
+			win.style.display = "none";
+			overlayWindow = false;
+		}
+		else
+		{
+			MOBILE_getBikeInfo(bike.id, "bike2"); 
+			win.style.display = "none";
+			overlayWindow = false;
+		}
+		
+		if(BIKOTIC_MyList != "286")
+	    {
+			CHT_ShowStarred();
+		}
+		else
+		{
+			CHT_HideStarred()
+		}
+		
+	}
+	
+	
+	
+	
+	
+}
+
+function selColor(e, id)
+{
+	log(e.key + " " + id);
+}
+
+function FILTER_CheckIfBikeWasSorted(bike)
+{
+	var failColour = "#ffd2d2";
+	var bSort = document.getElementById("sortby").value;
+	if(bSort == "void") return "white";
+	if(bSort == 1){if(bike.price > 0) return "white"; else return failColour;}
+	if(bSort == 2){if(bike.price > 0) return "white"; else return failColour;}
+	//if(bSort == 3) sort = "ORDER BY model_year DESC";
+	//if(bSort == 4) sort = "ORDER BY model_year ASC";
+	if(bSort == 5){if(bike.weight < 99) return "white"; else return failColour;}
+	if(bSort == 6){if(bike.value_formula < 10) return "white"; else return failColour;}
+	if(bSort == 7){if(bike.geo_formula < 10) return "white"; else return failColour;}
+	if(bSort == 8){if(bike.clearance > 1) return "white"; else return failColour;}
+	//if(bSort == 9){sort = "ORDER BY price DESC"; bPM = "YES";}
+	//if(bSort == 10) sort = "hits";
+	//if(bSort == 11) sort = "brakes";
+	//if(bSort == 12) sort = "material";
+	if(bSort == 14){if(bike.gal_pics > 0) return "white"; else return failColour;}
+	//if(bSort == 15) sort = "speed";
+	if(bSort == 16){if(bike.motor_nm > 0) return "white"; else return failColour;}
+	if(bSort == 17){if(bike.battery_wh > 0) return "white"; else return failColour;}
+	return "white";
+}
+
+function FILTER_MakeBikeBox(bike, container)
+{
+	//keep a tally of how many bike boxes have been made..
+	howManyBikeBoxesHaveWeMade++;
+	
+	var box = document.createElement("DIV");
+	box.id = bike.id;
+	box.style.position = "relative";
+	box.setAttribute("class", "box");
+	
+	//check if the sort was succesful for this bike..
+	box.style.backgroundColor = FILTER_CheckIfBikeWasSorted(bike);
+	
+	box.onclick = function(e)
+	{ 
+		FILTER_DisplayBike(bike);	
+	}
+	box.onmouseover = function()
+	{
+		overBikeBox = box.id;
+	}
+	
+	var img = document.createElement("IMG");
+	img.src = "https://bikotic.com/SLRGT/BIKE-IMAGES/THUMBS-WEBP/" + bike.imagename + "-SML.webp";
+	box.append(img);
+	
+	var man = document.createElement("DIV");
+	//man.id = bike.id;
+	man.innerHTML = bike.model_year + " " + bike.manufacturer.toUpperCase();
+	man.style.fontSize = "14px";
+	man.style.fontWeight = "normal";
+	box.append(man);
+	man.style.marginTop = "-15px";
+	
+	var model = document.createElement("DIV");
+	//model.id = bike.id;
+	model.innerHTML = truncate(bike.model_des.toUpperCase()); 
+	model.style.fontSize = "16px";
+	box.append(model);
+	model.style.marginTop = "-5px";
+	
+	var group = document.createElement("DIV");
+	group.innerHTML = bike.groupset + " " + bike.groupset_speed + "spd";
+	group.style.fontSize = "14px";
+	group.style.fontWeight = "normal";
+	box.append(group);
+	group.style.marginTop = "-5px";
+	
+	var price = document.createElement("DIV");
+	//price.id = bike.id;
+	var pT = bike.price;
+	if(pT == -999999.00){ pT = "£?"; price.style.color = "grey"; }
+	else
+	{ 
+		pT = "£" + numberWithCommas(bike.price);
+		price.style.color = "#aa8694";
+	}
+	
+	//add weight to price..
+	var wT = bike.weight;
+	if(wT == 99) wT = "?";
+	pT+= " | " + wT + "kg"; 
+	
+	//add clearance..
+	if(bike.clearance != 0) pT+= " | " + bike.clearance + "mm"; 
+	
+	price.innerHTML = pT; 
+	price.style.fontSize = "14px";
+	//price.style.fontWeight = "normal";
+	box.append(price);
+	price.style.marginTop = "-5px";
+	
+	//add id..
+	var showID = document.createElement("DIV");
+	//showID.id = bike.id;
+	/*
+	showID.onclick = function(e)
+	{		
+		if(box.style.backgroundColor == "white") box.style.backgroundColor = "#e1f3db";
+		else box.style.backgroundColor = "white";
+		e.stopPropagation();
+	}*/
+	showID.style.position = "absolute";
+	showID.style.textAlign = "left";
+	showID.style.top = "2px";
+	showID.style.color = "#b5b5b5";
+	showID.style.fontSize = "10px";
+	showID.style.fontWeight = "normal";	
+	var idFs = "XD00" + bike.id;
+	
+	//add the value formula..
+	var vF = parseFloat(bike.value_formula).toFixed(3);
+	if(bike.value_formula == 10) vF = "?";
+	idFs+= "<span style='font-size:12px; color:#aa8694;'> | " + vF + "VF"; 
+	
+	//add the geo formula..
+	var gF = parseFloat(bike.geo_formula).toFixed(3);
+	if(bike.geo_formula == 10) gF = "?";
+	idFs+= " | " + gF + "GF | " + bike.hits + "HTS" + " | " + bike.gal_pics + "EXI</span>"; 
+	
+	//add frame material and brake type..
+	var bikeType = bike.bike_type;
+	if(bikeType == "ADVENTURE") bikeType = "GRAVEL";
+	if(bikeType == "RACE") bikeType = "CYCLO-CROSS";
+	idFs+= "<br>" + bikeType.toUpperCase() + "<br>" + bike.frame_material.toUpperCase() + "<br>" + bike.brake_type.toUpperCase();
+	
+	showID.innerHTML = idFs;
+	box.append(showID);
+	
+	//add the individual load icon..
+	var individualLoadIcon = document.createElement("IMG");
+	individualLoadIcon.style.position = "absolute";
+	individualLoadIcon.style.bottom = "6px";
+	individualLoadIcon.style.left = "6px";
+	individualLoadIcon.src = CODEBASE + "IMGz/individual_load.png";
+	individualLoadIcon.style.cursor = "pointer";
+	box.append(individualLoadIcon);
+	
+
+	//add the my list button..
+	var myListButt = document.createElement("IMG");
+	myListButt.style.position = "absolute";
+	myListButt.style.top = "2px";
+	myListButt.style.right = "2px";
+	myListButt.src = CODEBASE + "IMGz/buttonOff.png";
+	myListButt.onclick = function()
+	{ 
+		event.stopPropagation();
+		
+		if(myListButt.src == CODEBASE + "IMGz/buttonOff.png")
+		{
+			//add bike to my list..
+			if(!FILTER_AddBikeToMyList(bike.id)) return;
+			
+			FILTER_MyListButtonOn(myListButt); 
+		}
+		else
+		{
+			FILTER_MyListButtonOff(myListButt);
+			
+			//remove bike from my list..
+			FILTER_SubtractBikeFromMyList(bike.id);
+		}
+	}
+	
+	if(FILTER_CheckBikeAgainstMyList(bike.id)) FILTER_MyListButtonOn(myListButt); 
+	
+	box.append(myListButt);
+	
+	//check if bike is an e bike..
+	if(bike.motor_nm > 0)
+	{
+		//add electric bike icon..
+		var isAnE_Bike = document.createElement("IMG"); 
+		isAnE_Bike.style.position = "absolute";
+		isAnE_Bike.style.bottom = "28px";
+		isAnE_Bike.style.left = "9px";
+		isAnE_Bike.src = CODEBASE + "IMGz/electric_bike_icon.png";
+		box.append(isAnE_Bike);
+	}
+
+	
+	//this div sits on top of the box as a clickable area and holder for the slot loader..
+	var slotLoaderClickDIV = document.createElement("DIV");
+	slotLoaderClickDIV.style.position = "absolute";
+	slotLoaderClickDIV.style.left = "19px";
+	slotLoaderClickDIV.style.top = "35px";
+	slotLoaderClickDIV.style.width = "234px";
+	slotLoaderClickDIV.style.height = "153px";
+	//slotLoaderClickDIV.style.backgroundColor = "red";
+	slotLoaderClickDIV.onclick = function(e)
+	{
+		e.stopPropagation();
+		slotLoader.style.display = "block";
+		slotLoaderClickDIV.append(slotLoader);
+		filter_currentBike = bike;
+	}
+	box.append(slotLoaderClickDIV);
+	
+
+	//add the box to the contianer..
+	container.append(box);
+}
+
+//######################################################################SLOT LOADER..
+var slotLoader;
+var slotLoaderImg1;
+var slotLoaderImg2;
+function FILTER_MakeSlotLoaderDiv()
+{
+		//make selection overlay..
+		slotLoader = document.createElement("DIV");
+		slotLoader.style.position = "relative";
+		slotLoader.style.width = "234px";
+		slotLoader.style.height = "153px";
+		slotLoader.style.backgroundColor = "rgba(254,240,246,0.8)"; //"white";
+		slotLoader.style.borderStyle = "solid";
+		slotLoader.style.borderWidth = "1px";
+		slotLoader.style.borderRadius = "10px";
+		slotLoader.style.borderColor = "#818181";
+		slotLoader.onclick = function(e)
+		{ 
+			e.stopPropagation();
+			slotLoader.style.display = "none";
+		}
+		slotLoader.style.cursor = "default";
+			//slot cap..
+			var slotLoaderCap = document.createElement("DIV");
+			slotLoaderCap.style.fontSize = "20px";
+			slotLoaderCap.style.paddingTop = "4px";
+			slotLoaderCap.style.color = "#818181";
+			slotLoaderCap.innerHTML = "LOAD INTO:";
+			slotLoader.append(slotLoaderCap);
+			//slot 1..
+			var slotLoaderBike1 = document.createElement("DIV");
+			slotLoaderBike1.style.display = "inline-block";
+			slotLoaderBike1.style.backgroundColor = "white";
+			slotLoaderBike1.style.borderStyle = "solid";
+			slotLoaderBike1.style.borderWidth = "1px";
+			slotLoaderBike1.style.borderRadius = "5px";
+			slotLoaderBike1.style.borderColor = "#818181";
+			slotLoaderBike1.style.width = "104px";
+			slotLoaderBike1.style.height = "60px";
+			slotLoaderBike1.style.margin = "5px";
+			slotLoaderBike1.style.marginBottom = "0px";
+			slotLoaderBike1.style.overflow = "hidden";
+			slotLoaderBike1.style.cursor = "pointer";
+			slotLoaderBike1.onclick = function(e)
+			{
+				e.stopPropagation();
+				slotLoaderImg1.src = "https://bikotic.com/SLRGT/BIKE-IMAGES/THUMBS-WEBP/" + filter_currentBike.imagename + "-SML.webp";
+				slotLoaderImg1.style.width = "104px";
+				slotLoaderImg1.style.height = "60px";
+				filter_Bike1 = filter_currentBike;
+			}
+			slotLoader.append(slotLoaderBike1);
+				//image to hold bike 1..
+				slotLoaderImg1 = document.createElement("IMG");
+				slotLoaderImg1.src = CODEBASE + "IMGz/filter_bike1.png"; 
+				slotLoaderBike1.append(slotLoaderImg1);
+			//slot 2..
+			var slotLoaderBike2 = document.createElement("DIV");
+			slotLoaderBike2.style.display = "inline-block";
+			slotLoaderBike2.style.backgroundColor = "white";
+			slotLoaderBike2.style.borderStyle = "solid";
+			slotLoaderBike2.style.borderWidth = "1px";
+			slotLoaderBike2.style.borderRadius = "5px";
+			slotLoaderBike2.style.borderColor = "#818181";
+			slotLoaderBike2.style.width = "104px";
+			slotLoaderBike2.style.height = "60px";
+			slotLoaderBike2.style.margin = "5px";
+			slotLoaderBike2.style.marginBottom = "0px";
+			slotLoaderBike2.style.overflow = "hidden";
+			slotLoaderBike2.style.cursor = "pointer";
+			slotLoaderBike2.onclick = function(e)
+			{
+				e.stopPropagation();
+				slotLoaderImg2.src = "https://bikotic.com/SLRGT/BIKE-IMAGES/THUMBS-WEBP/" + filter_currentBike.imagename + "-SML.webp";
+				slotLoaderImg2.style.width = "104px";
+				slotLoaderImg2.style.height = "60px";
+				filter_Bike2 = filter_currentBike;
+			}
+			slotLoader.append(slotLoaderBike2);
+				//image to hold bike 2..
+				slotLoaderImg2 = document.createElement("IMG");
+				slotLoaderImg2.src = CODEBASE + "IMGz/filter_bike2.png"; 
+				slotLoaderBike2.append(slotLoaderImg2);
+			//load button....
+			var loadButton = document.createElement("DIV");
+			loadButton.style.backgroundColor = "rgba(170,134,148,1)"; 
+			loadButton.style.borderStyle = "solid";
+			loadButton.style.borderWidth = "1px";
+			loadButton.style.borderRadius = "5px";
+			loadButton.style.borderColor = "#818181";
+			loadButton.style.fontSize = "18px";
+			loadButton.style.color = "white";
+			loadButton.style.display = "block";
+			loadButton.style.width = "100px";
+			loadButton.style.margin = "auto";
+			loadButton.style.paddingTop = "3px";
+			loadButton.style.paddingBottom = "5px";
+			loadButton.style.paddingLeft = "10px";
+			loadButton.style.paddingRight = "10px";
+			loadButton.innerHTML = "GO!";
+			loadButton.style.cursor = "pointer";
+			loadButton.onclick = function(e)
+			{ 
+				e.stopPropagation();
+				if(filter_Bike1)
+				{
+					if(BIKOTIC_APP_TYPE == "DESKTOP") alpha = 0;
+					if(BIKOTIC_APP_TYPE == "MOBILE") CHT_AlphaValue = 0;
+					FILTER_DisplayBike(filter_Bike1);
+				}
+				if(filter_Bike2)
+				{
+					if(BIKOTIC_APP_TYPE == "DESKTOP") alpha = 1;
+					if(BIKOTIC_APP_TYPE == "MOBILE") CHT_AlphaValue = 1;
+					FILTER_DisplayBike(filter_Bike2);
+				}
+				
+			}
+			slotLoader.append(loadButton);
+			
+			//close button..
+			 var slotLoaderCB = document.createElement("IMG");
+			 slotLoaderCB.src = CODEBASE + "IMGz/filter_close.png"; 
+			 slotLoaderCB.style.position = "absolute";
+			 slotLoaderCB.style.right = "6px";
+			 slotLoaderCB.style.top = "6px";
+			 slotLoaderCB.style.cursor = "pointer";
+			 slotLoader.append(slotLoaderCB);
+}
+
+
+
+//######################################################################SLOT LOADER..
+
+
+
+function FILTER_AddBikeToMyList(id)
+{	
+	//check we haven't exceeded list length..
+	if(FILTER_SplitMyList() > 29){alert("List full!!"); return 0;}
+	
+	
+	//remove if the empty entry..
+	if(BIKOTIC_MyList == "286") 
+	{
+		BIKOTIC_MyList = id;
+	}
+	else
+	{
+		//update local list..
+		BIKOTIC_MyList+= "," + id;
+	}
+										
+	//update on server..
+		//FILTER_UpdateMyListOnServer();
+		
+	//update the URL..
+	BIKOTIC_UpdatePageNameURL("ADDED TO STARRED", true, "add");
+		
+	return 1;
+	
+}
+
+function FILTER_SubtractBikeFromMyList(id)
+{  
+	
+	//update local list..
+	var bits = FILTER_SplitMyList("bits");
+	var newList = "";
+	for(var i = 0; i < bits.length; i++)
+	{
+		if(id != bits[i]) newList+= bits[i] + ",";
+	}
+	
+	//loose the last comma..
+	BIKOTIC_MyList = newList.slice(0, -1); 
+	
+	//add 'no bikes in list' if empty..
+	if(BIKOTIC_MyList == "") BIKOTIC_MyList = "286";
+										
+										
+	//update on server..
+		//FILTER_UpdateMyListOnServer();
+		
+	//update the URL..
+	BIKOTIC_UpdatePageNameURL("REMOVED FROM STARRED", true, "rmv");
+	
+}
+
+function FILTER_CheckBikeAgainstMyList(id)
+{
+	var bits = FILTER_SplitMyList("bits");
+	
+	for(var i = 0; i < bits.length; i++)
+	{
+		if(id == bits[i]) return true;
+	}
+	
+	return false;
+}
+
+function FILTER_SplitMyList(returnType)
+{
+	//check if BIKOTIC_MyList is a number or a string..
+	var bits = [];
+	var chk = typeof(BIKOTIC_MyList);
+	if(chk == "number")
+	{
+		bits.push(BIKOTIC_MyList);
+	}
+	else
+	{
+		bits = BIKOTIC_MyList.split(",");
+	}
+	
+	if(returnType == "bits") return bits;
+	else return bits.length;
+}
+
+function FILTER_MyListButtonOn(myListButt)
+{
+	myListButt.src = CODEBASE + "IMGz/buttonOn.png";
+}
+function FILTER_MyListButtonOff(myListButt)
+{
+	myListButt.src = CODEBASE + "IMGz/buttonOff.png";
+}
+
+
+function FILTER_MakeSelect(target, id, voidTXT)
+{
+	var sel = document.createElement("SELECT");
+	sel.id = id;
+	sel.onchange = function()
+	{
+		colourThem();
+		
+		//if we are in my_list get the bikes..
+		if(myListONLY) FILTER_GetBikesButtonClick();
+	}
+	sel.setAttribute("class", "filter_select");
+	
+	//select heading..
+	FILTER_MakeOption(sel, "void", voidTXT, "#a2a2a2");
+	target.append(sel);
+	
+	return sel; 
+}
+
+function FILTER_MakeOption(target, value, txt, color)
+{ 
+	var anOption = document.createElement("OPTION");
+	anOption.innerHTML 	= txt;
+	anOption.value = value;
+	anOption.style.color = color;
+	target.append(anOption);
+}
+
+function FILTER_MakeWindow()
+{
+	win = document.createElement("DIV");
+	win.style.position = "absolute";
+	win.style.display = "block";
+	win.style.zIndex = 100;
+	win.style.width = "100%";
+	win.style.backgroundColor = "#fef0f6";
+	win.style.fontFamily = "Oswald";
+	win.style.color = "#818181";
+	win.style.fontSize = "26px";
+	win.style.fontWeight = "700";
+	win.style.textAlign = "center";
+	win.style.padding = "5px";
+	win.style.paddingBottom = "25px";
+	win.style.paddingTop = "15px";
+	document.body.append(win);
+	
+	var iconDiv = document.createElement("DIV");
+	iconDiv.style.height = "42px";
+	var search_icon = document.createElement("IMG");
+	search_icon.src = CODEBASE + "IMGz/BIKOTIC_SEARCH_ICON.png";
+	iconDiv.append(search_icon);
+	win.append(iconDiv);
+	
+	return win;
+}
+
+function FILTER_DisableFilters()
+{
+	//get bikes button..
+	filter_get_bikes_button.onclick = null;
+	filter_get_bikes_button.style.cursor = "default";
+	filter_get_bikes_button.style.opacity = 0.2;
+	
+	//manufacturer input..
+	filter_man_cont.style.opacity = 0.3;
+	filter_man_inpt.disabled = true;
+	
+	//model..
+	filter_model_cont.style.opacity = 0.3;
+	filter_model_inpt.disabled = true;
+	
+	document.getElementById("bike_type").disabled = true;
+	document.getElementById("bike_type").style.opacity = 0.4;
+	document.getElementById("sub_type").disabled = true;
+	document.getElementById("sub_type").style.opacity = 0.4;
+	document.getElementById("group").disabled = true;
+	document.getElementById("group").style.opacity = 0.4;
+	document.getElementById("minPrice").disabled = true;
+	document.getElementById("minPrice").style.opacity = 0.4;
+	document.getElementById("maxPrice").disabled = true;
+	document.getElementById("maxPrice").style.opacity = 0.4;
+}
+
+function FILTER_EnableFilters()
+{
+	//get bikes button..
+	filter_get_bikes_button.onclick = FILTER_GetBikesButtonClick;
+	filter_get_bikes_button.style.cursor = "pointer";
+	filter_get_bikes_button.style.opacity = 1.0;
+	
+	//manufacturer input..
+	filter_man_cont.style.opacity = 1;
+	filter_man_inpt.disabled = false;
+	
+	//model..
+	filter_model_cont.style.opacity = 1;
+	filter_model_inpt.disabled = false;
+	
+	document.getElementById("bike_type").disabled = false;
+	document.getElementById("bike_type").style.opacity = 1;
+	document.getElementById("sub_type").disabled = false;
+	document.getElementById("sub_type").style.opacity = 1;
+	document.getElementById("group").disabled = false;
+	document.getElementById("group").style.opacity = 1;
+	document.getElementById("minPrice").disabled = false;
+	document.getElementById("minPrice").style.opacity = 1;
+	document.getElementById("maxPrice").disabled = false;
+	document.getElementById("maxPrice").style.opacity = 1;
+}
+
+function FILTER_GetBikesButtonClick()
+{
+	makeYears = true;
+	GetTheBikes("all");	
+}
+
+
+var filter_get_bikes_button;
+function FILTER_MakeButton(target, txt, color)
+{
+	filter_get_bikes_button = document.createElement("DIV");
+	filter_get_bikes_button.setAttribute("class", "butt");
+	filter_get_bikes_button.style.backgroundColor = color;
+	filter_get_bikes_button.style.fontSize = "18px";
+	filter_get_bikes_button.innerHTML = txt;
+	filter_get_bikes_button.onclick = FILTER_GetBikesButtonClick;
+	target.append(filter_get_bikes_button);
+}
+
+function FILTER_MakeNextButton()
+{
+	//make div for next button..
+	var nextButDiv = document.createElement("DIV");
+	
+		nextBut = document.createElement("DIV");
+		nextBut.style.display = "none";
+		nextBut.setAttribute("class", "butt");
+		nextBut.style.fontSize = "18px";
+		nextBut.style.backgroundColor = "#aa8694";
+		nextBut.style.marginTop = "15px";
+		nextBut.innerHTML = "LOAD MORE";
+		nextBut.onclick = function()
+		{
+			clearBikeBoxes = false;
+			makeYears = false;
+			if(yearsSel.value == "ALL") GetTheBikes("all");
+			else GetTheBikes(yearsSel.value);
+		}
+		nextButDiv.append(nextBut);
+		
+	win.append(nextButDiv);
+}
+
+
+function FILTER_MakeSpacer()
+{
+	var spacer = document.createElement("DIV");
+	spacer.style.height = "20px";
+	win.append(spacer);
+}
+
+function truncate(input) 
+{
+   if (input.length > 25) 
+   {
+      return input.substring(0, 25) + '...';
+   }
+   return input;
+}
+
+function FILTER_MakeCloseButton()
+{ 
+	var cB = document.createElement("DIV");
+	cB.style.zIndex = "1000";
+	cB.style.position = "fixed";
+	cB.style.top = "16px";
+	cB.style.right = "16px";
+	cB.style.padding = "10px";
+	cB.style.paddingTop = "5px";
+	cB.style.paddingBottom = "5px";
+	cB.style.backgroundColor = "#fef0f6";
+	cB.style.borderRadius = "10px";
+	cB.style.borderStyle = "solid";
+	cB.style.borderWidth= "thin";
+	cB.style.fontSize = "16px";
+	cB.innerHTML = "X CLOSE";
+	cB.style.cursor = "pointer";
+		
+	cB.onclick = function()
+	{
+		
+		win.style.display = "none";
+		overlayWindow = false;
+		
+		BIKOTIC_UpdatePageNameURL("BIKOTIC SUB WIN EXIT", true, "cb");
+		
+		if(BIKOTIC_APP_TYPE == "MOBILE")
+		{
+			//do we have any starred bikes?
+		    if(BIKOTIC_MyList != "286")
+		    {
+				CHT_ShowStarred();
+			}
+			else
+			{
+				CHT_HideStarred()
+			}
+		}
+		else
+		{
+			draw();
+		}
+	}
+	
+	win.append(cB);
+}
+
+function FILTER_MakeBoxCont()
+{
+	yearsCont = document.createElement("DIV");
+	yearsCont.id = "yearsCont";
+		//years holder..
+		yearsHolder = document.createElement("DIV");
+		yearsHolder.id = "yearsHolder";
+		yearsHolder.style.display = "inline-block";
+		yearsCont.append(yearsHolder);
+		//average price holder..
+		averagePriceHolder = document.createElement("DIV");
+		averagePriceHolder.id = "yearsHolder";
+		averagePriceHolder.style.display = "inline-block";
+		averagePriceHolder.style.paddingLeft = "10px"
+		yearsCont.append(averagePriceHolder);
+	win.append(yearsCont);
+	
+	boxCont = document.createElement("DIV");
+	boxCont.id = "boxCont";
+	win.append(boxCont);
+}
+
+function FILTER_GetGroupOptions()
+{				
+	var xhttp = new XMLHttpRequest();
+	xhttp.onreadystatechange = function() 
+	{
+		if (this.readyState == 4 && this.status == 200) 
+		{ 
+			var options = JSON.parse(this.responseText);
+			var group = document.getElementById("group");
+			group.innerHTML = "";
+			
+			FILTER_MakeOption(group, "void", "GROUPSET", "#a2a2a2");
+			FILTER_MakeOption(group, "void", "ANY", bGrey);
+			FILTER_MakeOption(group, "oneby", "1 BY", bGrey);
+			
+			for(var i = 0; i < options.groups.length; i++)
+			{
+				FILTER_MakeOption(group, options.groups[i].id, options.groups[i].make + " " + options.groups[i].name, bGrey);
+			}
+		}
+	};
+	xhttp.open("POST", CODEBASE + "FILTER-V4/BIKOTIC-FILTER-GET-GROUPS.pl", true);
+	xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	xhttp.send();
+}
+
+function log(txt){console.log(txt);}
+
+
+
+

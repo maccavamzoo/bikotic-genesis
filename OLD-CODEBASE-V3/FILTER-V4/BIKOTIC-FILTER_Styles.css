@@ -1,0 +1,47 @@
+
+
+.filter_select
+{
+	font-family: Oswald;
+	font-size: 16px;
+	font-weight: 700;
+	color: #818181; 
+	border: 1px;
+	background-color: transparent;	
+	padding: 0px;
+	margin: 10px;
+}
+
+
+.butt
+{
+	display: inline-block;
+	font-family:	Oswald;
+	background-color: white; 
+	padding-top: 0px;
+	padding-bottom: 2px;
+	padding-left: 10px;
+	padding-right: 10px;
+	border-radius: 10px;
+	border-style: solid;
+	border-width: thin;
+	cursor: pointer;
+	color: white;
+}
+
+.box
+{
+	display: inline-block;
+	font-family:	Oswald;
+	background-color: white;
+	color: #818181; 
+	padding-top: 10px;
+	padding-bottom: 10px;
+	padding-left: 10px;
+	padding-right: 10px;
+	margin: 5px;
+	border-radius: 10px;
+	border-style: solid;
+	border-width: thin;
+	cursor: pointer;
+}

@@ -1,0 +1,5 @@
+SELECT b.model_des, COUNT(*) AS count
+FROM world_tour_wins w
+JOIN bikes b ON w.bike_id = b.id
+GROUP BY w.bike_id
+ORDER BY count DESC;

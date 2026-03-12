@@ -1,0 +1,147 @@
+
+select
+{
+	font-family: 		Oswald;
+	color:				#818181; 
+	border:				0px;
+	background-color:	transparent;	
+	padding:			0px;
+}
+
+select:focus 
+{
+    outline: none !important;
+    border:0px;
+    box-shadow: 0 0 3px;
+}
+
+option
+{
+	font-size: 			16px;
+}
+
+.manufacturer
+{
+	font-size:			2.2vw;
+	font-weight: 		800;
+}
+
+.model
+{
+	font-size:			1.2vw;
+}
+
+.model_des
+{
+	font-size:			1.4vw;
+	color:				#3e0042;
+}
+
+.info_div
+{
+	font-family: 		Oswald;
+	color:				#818181; 
+	border:				0px;
+	background-color:	transparent;	
+	padding-left:		.3vw;
+	padding-top:		.3vw;
+	font-size:			1.2vw;
+	line-height:		1.5vw;
+}
+
+.show_divs
+{
+	font-family: 		Oswald;
+	background-color:	white;
+	color:				#818181; 
+	padding:			20px;
+	border-radius: 		10px;
+	border-style: 		solid;
+	border-width: 		thin;
+	
+}
+
+.show_divs_mobile
+{
+	font-family: 		Oswald;
+	font-size:			26px;
+	background-color:	white;
+	color:				#818181; 
+	padding:			20px;
+}
+
+.spam
+{
+	font-size:			1.4vw;
+	font-weight: 		800;
+	line-height:		1.8vw;
+}
+
+.titch
+{
+	color:				#818181; 
+	font-style: 		italic;
+	font-size:			1vw;	
+}
+
+.date
+{
+	color:				#252525; 
+	font-style: 		oblique;
+	font-size:			.9vw;	
+}
+
+.man_link
+{
+	font-size:			.9vw;	
+	color:				#8c0095; 
+	text-decoration:	none;
+}
+
+.but_this_button
+{
+	background-color:	#8c0095;
+	border-radius: 		5px;	
+	color:				white;
+	display:			inline;
+	font-size:			.9vw;	
+	padding-left:		3px;
+	padding-right:		3px;
+	padding-bottom:		3px;
+	margin-top:			2px;
+}
+
+input
+{
+	font-family: 		Oswald;
+	font-size:			16px;	
+	color:				#818181; 
+}
+
+textarea
+{
+	font-family: 		Oswald;
+	font-size:			16px;	
+	color:				#818181; 
+}
+
+button
+{
+	font-family: 		Oswald;
+	font-size:			16px;	
+	color:				#818181; 
+	margin-right:		6px;
+}
+
+h3
+{
+	margin: 0px;
+	padding: 0px;
+}
+
+.mobile_select
+{
+	font-size: 26px;
+	font-weight: 800;
+	margin-top: 10px;
+}
