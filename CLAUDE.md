@@ -103,7 +103,8 @@ The canvas component must be designed as an **extensible layer system from day 1
 
 - **Vercel Postgres (Neon) database created** — connected to the bikotic-genesis project, London region, free tier
 - **Database name:** neon-chestnut-lever
-- **Migration has been run** — all 4 tables populated successfully via psql
+- **All MySQL data migrated to Postgres** — all 4 tables (bikes ~1,196 rows, manufacturers 165, groupset 71, models) populated successfully via psql
+- **App is live and querying the DB** — the `/compare` page and `/api/random-bike` route are confirmed working against the Neon database
 - **DB package installed:** `@neondatabase/serverless`
 - **DB connection:** `lib/db.ts` uses `DATABASE_URL` env var (confirmed present in Vercel env vars)
 - **Fixed migration file** saved at `migrations/001_initial_schema_fixed.sql` on `claude/check-token-usage-yRW2W` (MySQL escape chars fixed for PostgreSQL compatibility)
