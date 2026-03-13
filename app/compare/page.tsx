@@ -24,7 +24,7 @@ export default function ComparePage() {
 
   async function fetchRandomBike() {
     setLoading(true)
-    const res = await fetch('/api/random-bike', { cache: 'no-store' })
+    const res = await fetch(`/api/random-bike?t=${Date.now()}`)
     const data = await res.json()
     setBike(data)
     setLoading(false)
