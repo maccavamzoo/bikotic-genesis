@@ -105,7 +105,7 @@ The canvas component must be designed as an **extensible layer system from day 1
 - **Database name:** neon-chestnut-lever
 - **Migration has been run** — all 4 tables populated successfully via psql
 - **DB package installed:** `@neondatabase/serverless`
-- **DB connection:** `lib/db.ts` uses `POSTGRES_URL` env var (set automatically by Vercel/Neon integration) — wait, actually uses `DATABASE_URL` which is confirmed present in Vercel env vars
+- **DB connection:** `lib/db.ts` uses `DATABASE_URL` env var (confirmed present in Vercel env vars)
 - **Fixed migration file** saved at `migrations/001_initial_schema_fixed.sql` on `claude/check-token-usage-yRW2W` (MySQL escape chars fixed for PostgreSQL compatibility)
 - **Conversion script:** `scripts/mysql_to_postgres.py` on the `claude/explain-codebase-mmnbn77mhdbejcr5-9inOT` branch
 
@@ -126,7 +126,7 @@ The canvas component must be designed as an **extensible layer system from day 1
 - SERIAL primary keys with correct ALTER SEQUENCE RESTART values (bikes at 1399, models at 501, etc.)
 - MySQL types mapped: year→SMALLINT, mediumtext→TEXT, float→REAL, enum→TEXT
 - No URL slugs in the DB currently — need to generate them from manufacturer + model + year on import
-- **Migration has NOT been run yet** — the SQL file exists but hasn't been loaded into the Neon database
+- **Migration has been run** — all 4 tables populated successfully via psql
 
 ### What still needs doing
 
