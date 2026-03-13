@@ -1,5 +1,11 @@
 # CLAUDE.md — Bikotic Project Context
 
+## Instructions for Claude
+
+- **Keep this file updated.** Any decisions, new context, or changes agreed during a session should be added here before the session ends. This is the only persistent memory across sessions — if it's not in here, it's lost.
+
+---
+
 ## What is Bikotic?
 
 A cycling-focused website combining a content magazine (articles, reviews, tools/calculators) with a **hero app**: a visual bike comparison tool that lets users fade/wipe between two bike images side-by-side. The comparison tool is the core product — everything else supports it.
@@ -29,16 +35,20 @@ A cycling-focused website combining a content magazine (articles, reviews, tools
 
 ```
 app/layout.tsx          — Root layout (sticky header, nav, footer)
-app/page.tsx            — Homepage (hero CTA, latest articles/tools/reviews)
+app/page.tsx            — Homepage (hero CTA links to /compare, latest articles/tools/reviews)
+app/compare/page.tsx    — Compare page (client component, "Show Random Bike" button, fetches from DB)
+app/api/random-bike/    — API route returning a random bike from the DB (force-dynamic, no cache)
 app/articles/[slug]/    — Dynamic MDX article renderer
 app/reviews/[slug]/     — Dynamic MDX review renderer (YouTube embeds)
 app/tools/              — 6 interactive calculators (gear, VO2, KOM power, lap timer, track cycling, bike business)
+lib/db.ts               — Neon DB connection helper (uses DATABASE_URL env var)
 lib/mdx.ts              — Reads/parses MDX from content/articles/ and content/reviews/
 lib/tools.ts            — Aggregates tool metadata from per-tool metadata.json files
 mdx-components.tsx      — Custom MDX component mappings
 content/articles/       — 5 MDX articles (bike comparisons)
 content/reviews/        — MDX video review pages
 public/images/          — Bike comparison photos
+migrations/             — SQL migration files (001_initial_schema_fixed.sql is the one to use)
 ```
 
 ---
@@ -93,8 +103,12 @@ The canvas component must be designed as an **extensible layer system from day 1
 
 - **Vercel Postgres (Neon) database created** — connected to the bikotic-genesis project, London region, free tier
 - **Database name:** neon-chestnut-lever
-- **Migration file exists:** `migrations/001_initial_schema.sql` on the `claude/explain-codebase-mmnbn77mhdbejcr5-9inOT` branch (NOT yet merged to main)
-- **Conversion script:** `scripts/mysql_to_postgres.py` on the same branch
+- **All MySQL data migrated to Postgres** — all 4 tables (bikes ~1,196 rows, manufacturers 165, groupset 71, models) populated successfully via psql
+- **App is live and querying the DB** — the `/compare` page and `/api/random-bike` route are confirmed working against the Neon database
+- **DB package installed:** `@neondatabase/serverless`
+- **DB connection:** `lib/db.ts` uses `DATABASE_URL` env var (confirmed present in Vercel env vars)
+- **Fixed migration file** saved at `migrations/001_initial_schema_fixed.sql` on `claude/check-token-usage-yRW2W` (MySQL escape chars fixed for PostgreSQL compatibility)
+- **Conversion script:** `scripts/mysql_to_postgres.py` on the `claude/explain-codebase-mmnbn77mhdbejcr5-9inOT` branch
 
 ### Schema (4 tables)
 
@@ -113,14 +127,11 @@ The canvas component must be designed as an **extensible layer system from day 1
 - SERIAL primary keys with correct ALTER SEQUENCE RESTART values (bikes at 1399, models at 501, etc.)
 - MySQL types mapped: year→SMALLINT, mediumtext→TEXT, float→REAL, enum→TEXT
 - No URL slugs in the DB currently — need to generate them from manufacturer + model + year on import
-- **Migration has NOT been run yet** — the SQL file exists but hasn't been loaded into the Neon database
+- **Migration has been run** — all 4 tables populated successfully via psql
 
 ### What still needs doing
 
-1. Run the migration SQL against the Neon database (paste into Vercel query runner or use psql)
-2. Pull env variables locally with `vercel env pull`
-3. Set up DB connection in the Next.js app (@vercel/postgres)
-4. Generate URL slugs for all bikes
+1. Generate URL slugs for all bikes
 
 ---
 
@@ -189,7 +200,9 @@ Ben is learning Git. The established workflow is:
 - No `loading.tsx` or `error.tsx` boundaries anywhere
 - Tools are client-side calculators but may be missing `'use client'` directives — needs verification
 - README.md is basically empty
-- The old codebase analysis branch (`claude/explain-codebase-mmnbn77mhdbejcr5-9inOT`) still exists and contains the migration files that need to be extracted before it can be deleted
+- The old codebase analysis branch (`claude/explain-codebase-mmnbn77mhdbejcr5-9inOT`) still exists — migration files have been extracted to main branch, can be deleted when convenient
+- `.gitignore` added to repo (was missing)
+- Next.js version has a known security vulnerability — needs upgrading at some point
 
 ---
 
