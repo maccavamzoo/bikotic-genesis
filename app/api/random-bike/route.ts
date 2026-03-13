@@ -20,13 +20,14 @@ export async function GET() {
     const countRows = await sql`SELECT COUNT(*) as total FROM bikes WHERE publish = 1 AND price > 0`
     console.log(`[random-bike] Bikes matching filter: ${countRows[0].total}`)
 
+    const offset = Math.floor(Math.random() * 1000)
     const rows = await sql`
       SELECT id, model_year, model_des, price, weight, frame_material,
              bike_type_main, reach, stack, wheelbase, head_angle, chainstay, bb_drop
       FROM bikes
       WHERE publish = 1 AND price > 0
-      ORDER BY RANDOM()
       LIMIT 1
+      OFFSET ${offset}
     `
 
     console.log(`[random-bike] Query returned ${rows.length} rows`)
