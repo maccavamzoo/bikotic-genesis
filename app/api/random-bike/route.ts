@@ -17,6 +17,9 @@ export async function GET() {
     const sql = getDb()
     console.log('[random-bike] DB connection created, running query...')
 
+    const countRows = await sql`SELECT COUNT(*) as total FROM bikes WHERE publish = 1 AND price > 0`
+    console.log(`[random-bike] Bikes matching filter: ${countRows[0].total}`)
+
     const rows = await sql`
       SELECT id, model_year, model_des, price, weight, frame_material,
              bike_type_main, reach, stack, wheelbase, head_angle, chainstay, bb_drop
@@ -34,7 +37,7 @@ export async function GET() {
     }
 
     console.log(`[random-bike] Returning bike id: ${rows[0].id}`)
-    return NextResponse.json(rows[0])
+    return NextResponse.json({ ...rows[0], _debug_pool_size: Number(countRows[0].total) })
 
   } catch (e) {
     console.error('[random-bike] DB error:', e)
