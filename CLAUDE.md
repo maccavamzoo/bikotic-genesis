@@ -105,6 +105,7 @@ The canvas component must be designed as an **extensible layer system from day 1
 - **Database name:** neon-chestnut-lever
 - **All MySQL data migrated to Postgres** — all 4 tables (bikes ~1,196 rows, manufacturers 165, groupset 71, models) populated successfully via psql
 - **App is live and querying the DB** — the `/compare` page and `/api/random-bike` route are confirmed working against the Neon database
+- **Random bike confirmed working** — uses JS `Math.random()` offset rather than `ORDER BY RANDOM()` (Neon was caching the Postgres random query). Queries all 1,196 bikes with no filters.
 - **DB package installed:** `@neondatabase/serverless`
 - **DB connection:** `lib/db.ts` uses `DATABASE_URL` env var (confirmed present in Vercel env vars)
 - **Fixed migration file** saved at `migrations/001_initial_schema_fixed.sql` on `claude/check-token-usage-yRW2W` (MySQL escape chars fixed for PostgreSQL compatibility)
@@ -127,7 +128,6 @@ The canvas component must be designed as an **extensible layer system from day 1
 - SERIAL primary keys with correct ALTER SEQUENCE RESTART values (bikes at 1399, models at 501, etc.)
 - MySQL types mapped: year→SMALLINT, mediumtext→TEXT, float→REAL, enum→TEXT
 - No URL slugs in the DB currently — need to generate them from manufacturer + model + year on import
-- **Migration has been run** — all 4 tables populated successfully via psql
 
 ### What still needs doing
 
