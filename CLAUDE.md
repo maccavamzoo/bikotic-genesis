@@ -1,5 +1,11 @@
 # CLAUDE.md — Bikotic Project Context
 
+## Instructions for Claude
+
+- **Keep this file updated.** Any decisions, new context, or changes agreed during a session should be added here before the session ends. This is the only persistent memory across sessions — if it's not in here, it's lost.
+
+---
+
 ## What is Bikotic?
 
 A cycling-focused website combining a content magazine (articles, reviews, tools/calculators) with a **hero app**: a visual bike comparison tool that lets users fade/wipe between two bike images side-by-side. The comparison tool is the core product — everything else supports it.
