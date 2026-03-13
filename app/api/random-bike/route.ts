@@ -4,14 +4,40 @@ import { NextResponse } from 'next/server'
 export const dynamic = 'force-dynamic'
 
 export async function GET() {
-  const sql = getDb()
-  const rows = await sql`
-    SELECT id, model_year, model_des, price, weight, frame_material,
-           bike_type_main, reach, stack, wheelbase, head_angle, chainstay, bb_drop
-    FROM bikes
-    WHERE publish = 1 AND price > 0
-    ORDER BY RANDOM()
-    LIMIT 1
-  `
-  return NextResponse.json(rows[0])
+  console.log('[random-bike] Request received')
+
+  if (!process.env.DATABASE_URL) {
+    console.error('[random-bike] DATABASE_URL is not set')
+    return NextResponse.json({ error: 'DATABASE_URL not set' }, { status: 500 })
+  }
+
+  console.log('[random-bike] DATABASE_URL is present')
+
+  try {
+    const sql = getDb()
+    console.log('[random-bike] DB connection created, running query...')
+
+    const rows = await sql`
+      SELECT id, model_year, model_des, price, weight, frame_material,
+             bike_type_main, reach, stack, wheelbase, head_angle, chainstay, bb_drop
+      FROM bikes
+      WHERE publish = 1 AND price > 0
+      ORDER BY RANDOM()
+      LIMIT 1
+    `
+
+    console.log(`[random-bike] Query returned ${rows.length} rows`)
+
+    if (!rows[0]) {
+      console.error('[random-bike] No rows returned from query')
+      return NextResponse.json({ error: 'No bikes found' }, { status: 404 })
+    }
+
+    console.log(`[random-bike] Returning bike id: ${rows[0].id}`)
+    return NextResponse.json(rows[0])
+
+  } catch (e) {
+    console.error('[random-bike] DB error:', e)
+    return NextResponse.json({ error: String(e) }, { status: 500 })
+  }
 }
