@@ -40,7 +40,7 @@ app/compare/page.tsx    — Compare page (client component, "Show Random Bike" b
 app/api/random-bike/    — API route returning a random bike from the DB (force-dynamic, no cache)
 app/articles/[slug]/    — Dynamic MDX article renderer
 app/reviews/[slug]/     — Dynamic MDX review renderer (YouTube embeds)
-app/tools/              — 6 interactive calculators (gear, VO2, KOM power, lap timer, track cycling, bike business)
+app/tools/              — 5 interactive calculators (VO2, KOM power, lap timer, track cycling, bike business). The gear calculator moved out on 2026-11-03 to its own app (Vercel project bikotic-gearing, https://bikotic-gearing.vercel.app); /tools/gear-calculator redirects there (next.config.mjs)
 lib/db.ts               — Neon DB connection helper (uses DATABASE_URL env var)
 lib/mdx.ts              — Reads/parses MDX from content/articles/ and content/reviews/
 lib/tools.ts            — Aggregates tool metadata from per-tool metadata.json files
